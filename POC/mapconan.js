@@ -178,9 +178,8 @@ Conan.prototype.displayViewLine = function(id) {
         source = self.getCenter(id);
         destinations = self.getViewLines(id);
 
-        $.each(destinations, function(index) {
+        $.each(destinations, function(index, dest) {
             //get a dest
-            dest = destinations[index];
             currentDest = self.getCenter(dest.case);
 
             //draw line
@@ -204,8 +203,8 @@ Conan.prototype.displayViewLine = function(id) {
 Conan.prototype.clean = function(id) {
     var self = this;
 
-    $.each(self.toRemove, function(index){
-        self.toRemove[index].remove();
+    $.each(self.toRemove, function(index, element){
+        element.remove();
     });
 
     self.toRemove = [];
