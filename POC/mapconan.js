@@ -64,17 +64,38 @@ Theme.prototype.getText = function() {
 /**
  * Constructor
  */
-function Conan(paper, centerCoordonate, viewLine, icons, debug, theme) {
+function Conan(paper, centerCoordonate, viewLine, debug, theme) {
     this.paper            = paper;
     this.centerCoordonate = $.parseJSON(centerCoordonate);
     this.viewLine         = $.parseJSON(self.viewLine);
-    this.icons            = $.parseJSON(icons);
     this.debug            = debug;
     this.theme            = theme;
 
     this.toRemove = [];
 
     this.mapArea();
+}
+
+/**
+ * Create Raphael zones based on html map coordonates
+ */
+Conan.prototype.getCenter = function(id) {
+    var self = this;
+
+    if (self.centerCoordonate[id] != undefined) {
+        return self.centerCoordonate[id];
+    }
+}
+
+/**
+ * Create Raphael zones based on html map coordonates
+ */
+Conan.prototype.getViewLines = function(id) {
+    var self = this;
+
+    if (id && self.viewLine[id]['dest'] != undefined) {
+        return self.viewLine[id]['dest'];
+    }
 }
 
 /**
@@ -117,8 +138,8 @@ Conan.prototype.mapArea = function() {
 
         //DEBUG : display case id one the case
         if (self.debug) {
-            source = self.centerCoordonate[id];
-            var txt = self.paper.text(source.x, source.y, id);
+            center = self.getCenter(id);
+            var txt = self.paper.text(center.x, center.y, id);
             txt.attr(self.theme.getText());
             }
         }
@@ -131,7 +152,6 @@ Conan.prototype.mapArea = function() {
 Conan.prototype.coordProcess = function(coords) {
     var self = this;
 
-    //TODO REFACTO ??
     var res = [];
     coords = coords.split(',');
     $.each(coords, function(index){
@@ -155,14 +175,13 @@ Conan.prototype.displayViewLine = function(id) {
 
     if (self.viewLine[id] != undefined) {
 
-        source = self.centerCoordonate[id];
-        destinations = self.viewLine[id]['dest'];
+        source = self.getCenter(id);
+        destinations = self.getViewLines(id);
 
         $.each(destinations, function(index) {
             //get a dest
             dest = destinations[index];
-            currentDest = self.centerCoordonate[dest.case];
-
+            currentDest = self.getCenter(dest.case);
 
             //draw line
             line = self.drawLine(source.x, source.y, currentDest.x, currentDest.y);

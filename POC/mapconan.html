@@ -10,7 +10,7 @@
 
         <script type="text/javascript">
 
-            var debug = false;
+            var debug = true;
 
             var centerCoordonate = `{
                 "zogar"  : {"x": 589, "y": 184},
@@ -38,22 +38,6 @@
                 }
             }`;
 
-            var icons = '{}';
-
-            /*
-            var icons = '{
-                "c1": {
-                    "icon1": {
-                        "coordonates": {"x": 123, "y": 321},
-                        "img": ""
-                    },
-                    "icon2": {
-                        "coordonates": { "x": 123, "y": 321},
-                        "img": ""
-                    }
-                }
-            }';*/
-
             $(document).ready(function() {
                 var top       = $('#mapimage').offset().top;
                 var left      = $('#mapimage').offset().left;
@@ -62,7 +46,7 @@
 
                 var paper = Raphael(top, left, top + height, left + width);
                 var theme = new Theme(debug);
-                var conan = new Conan(paper, centerCoordonate, viewLine, icons, debug, theme);
+                var conan = new Conan(paper, centerCoordonate, viewLine, debug, theme);
             });
         </script>
     </head>
