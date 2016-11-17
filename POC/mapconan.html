@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset=utf-8 />
+        <title>Pictes</title>
+       
+        <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+        
+        <!--<script src="jquery-1.11.1.min.js"></script>-->
+        <script src="mapconan.js"></script>
+        <script src="raphael.min.js"></script>
+
+        <script type="text/javascript">
+
+            var debug = false;
+
+            var centerCoordonate = `{
+                "zogar"  : {"x": 589, "y": 184},
+                "snake"  : {"x": 659, "y": 442},
+                "center" : {"x":417,"y":415}
+            }`;
+
+            var viewLine = `{
+                "zogar"  : {
+                    "dest" : [
+                        {"case" : "snake", "icon" : "conan.png"}
+                    ]
+                },
+                "snake"  : {
+                    "dest" : [
+                        {"case" : "zogar",  "icon" : "conan.png"},
+                        {"case" : "center", "icon" : "conan.png"}
+                    ]
+                },
+                "center" : {
+                    "dest" : [
+                        {"case" : "zogar",  "icon" : "conan.png"},
+                        {"case" : "center", "icon" : ""}
+                    ]
+                }
+            }`;
+
+            var icons = '{}';
+
+            /*
+            var icons = '{
+                "c1": {
+                    "icon1": {
+                        "coordonates": {"x": 123, "y": 321},
+                        "img": ""
+                    },
+                    "icon2": {
+                        "coordonates": { "x": 123, "y": 321},
+                        "img": ""
+                    }
+                }
+            }';*/
+
+            $(document).ready(function() {
+                var top       = $('#mapimage').offset().top;
+                var left      = $('#mapimage').offset().left;
+                var height    = $('#mapimage').height();
+                var width     = $('#mapimage').width();
+
+                var paper = Raphael(top, left, top + height, left + width);
+                var theme = new Theme(debug);
+                var conan = new Conan(paper, centerCoordonate, viewLine, icons, debug, theme);
+            });
+        </script>
+    </head>
+    <body>
+        <div>
+            <img id="mapimage" src="./pictes.jpg" alt="" usemap="#map" />
+            <map name="map" id="map">
+                <area alt="" title="" href="#" shape="poly" id="snake"  coords="593,361,693,350,751,425,724,519,621,531,555,452" />
+                <area alt="" title="" href="#" shape="poly" id="zogar"  coords="590,104,540,121,512,153,512,195,529,223,564,245,604,250,639,238,654,228,667,164,654,133,629,115" />
+                <area alt="" title="" href="#" shape="poly" id="center" coords="362,338,455,326,512,384,483,488,387,506,327,434,363,341" />
+            </map>
+        </div>
+    </body>
+</html>
