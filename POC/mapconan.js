@@ -77,7 +77,7 @@ function Conan(paper, centerCoordonate, viewLine, debug, theme) {
 }
 
 /**
- * Create Raphael zones based on html map coordonates
+ * Getter for centerCoordonate data
  */
 Conan.prototype.getCenter = function(id) {
     var self = this;
@@ -88,12 +88,12 @@ Conan.prototype.getCenter = function(id) {
 }
 
 /**
- * Create Raphael zones based on html map coordonates
+ * Getter for viewLine data
  */
 Conan.prototype.getViewLines = function(id) {
     var self = this;
 
-    if (id && self.viewLine[id]['dest'] != undefined) {
+    if (self.viewLine[id]['dest'] != undefined) {
         return self.viewLine[id]['dest'];
     }
 }
@@ -123,7 +123,7 @@ Conan.prototype.mapArea = function() {
 
         if (id != undefined) {
 
-            coords = self.coordProcess(coords);
+            coords = self.coordConvert(coords);
 
             zone = self.paper.path(coords).attr(self.theme.getZone());
             zone.id = id;
@@ -149,7 +149,7 @@ Conan.prototype.mapArea = function() {
 /**
  * Transform area coordonates into Raphael coordonates
  */
-Conan.prototype.coordProcess = function(coords) {
+Conan.prototype.coordConvert = function(coords) {
     var self = this;
 
     var res = [];
@@ -163,7 +163,6 @@ Conan.prototype.coordProcess = function(coords) {
         res.push(coords[index]);
 
     });
-    self.log(res);
     return res;
 };
 

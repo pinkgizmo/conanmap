@@ -44,7 +44,7 @@
                 var height    = $('#mapimage').height();
                 var width     = $('#mapimage').width();
 
-                var paper = Raphael(top, left, top + height, left + width);
+                var paper = Raphael(top, left, width, height);
                 var theme = new Theme(debug);
                 var conan = new Conan(paper, centerCoordonate, viewLine, debug, theme);
             });
