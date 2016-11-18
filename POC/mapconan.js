@@ -13,9 +13,9 @@ Theme.prototype.getZone = function() {
         var res = `{
             "stroke": "black",
             "fill": "white",
-            "fill-opacity": 0.1,
+            "fill-opacity": 0.0,
             "stroke-width": 1,
-            "stroke-opacity": 0.1,
+            "stroke-opacity": 0.0,
             "stroke-linecap": "round",
             "stroke-linejoin": "round"
         }`;

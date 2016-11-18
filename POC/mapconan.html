@@ -10,30 +10,169 @@
 
         <script type="text/javascript">
 
-            var debug = true;
+            var debug = false;
 
             var centerCoordonate = `{
-                "zogar"  : {"x": 589, "y": 184},
-                "snake"  : {"x": 659, "y": 442},
-                "center" : {"x":417,"y":415}
-            }`;
+                "village1"  : {"x":293,"y":197},
+                "village2"  : {"x":464,"y":126},
+                "village3"  : {"x":369,"y":309},
+                "ext2"      : {"x":243,"y":53},
+                "village5"  : {"x":551,"y":343},
+                "village6"  : {"x":737,"y":309},
+                "village7"  : {"x":320,"y":515},
+                "village4"  : {"x":735,"y":152},
+                "village8"  : {"x":535,"y":557},
+                "village9"  : {"x":723,"y":566},
+                "village10" : {"x":868,"y":444},
+                "village11" : {"x":315,"y":748},
+                "village12" : {"x":548,"y":790},
+                "village13" : {"x":797,"y":707},
+                "ext3"      : {"x":1035,"y":548},
+                "ext4"      : {"x":37,"y":639},
+                "ext5"      : {"x":213,"y":876},
+                "ext6"      : {"x":1017,"y":757},
+                "ext7"      : {"x":818,"y":898},
+                "ext1"      : {"x":45,"y":223}
+                }`;
 
             var viewLine = `{
-                "zogar"  : {
+                "village1" : {
                     "dest" : [
-                        {"case" : "snake", "icon" : "conan.png"}
+                        {"case" : "village2"},
+                        {"case" : "village3"},
+                        {"case" : "ext2"},
+                        {"case" : "village5"},
+                        {"case" : "village7"}
                     ]
                 },
-                "snake"  : {
+                "village2" : {
                     "dest" : [
-                        {"case" : "zogar",  "icon" : "conan.png"},
-                        {"case" : "center", "icon" : "conan.png"}
+                        {"case" : "village1"},
+                        {"case" : "village3"}
                     ]
                 },
-                "center" : {
+                "village3" : {
                     "dest" : [
-                        {"case" : "zogar",  "icon" : "conan.png"},
-                        {"case" : "center", "icon" : ""}
+                        {"case" : "village1"},
+                        {"case" : "village2"},
+                        {"case" : "village6"},
+                        {"case" : "ext2"},
+                        {"case" : "village5"}
+                    ]
+                },
+                "village7" : {
+                    "dest" : [
+                        {"case" : "village8"},
+                        {"case" : "village1"},
+                        {"case" : "ext5"}
+                    ]
+                },
+                "village8" : {
+                    "dest" : [
+                        {"case" : "village9"},
+                        {"case" : "village5"},
+                        {"case" : "village12"},
+                        {"case" : "village7"}
+                    ]
+                },
+                "village10" : {
+                    "dest" : [
+                        {"case" : "village4"},
+                        {"case" : "village6"},
+                        {"case" : "ext3"}
+                    ]
+                },
+                "village6" : {
+                    "dest" : [
+                        {"case" : "village4"},
+                        {"case" : "village3"},
+                        {"case" : "village5"},
+                        {"case" : "village10"},
+                        {"case" : "ext3"}
+                    ]
+                },
+                "ext3" : {
+                    "dest" : [
+                        {"case" : "village10"},
+                        {"case" : "village6"},
+                        {"case" : "ext6"},
+                        {"case" : "ext7"}
+                    ]
+                },
+                "ext6" : {
+                    "dest" : [
+                        {"case" : "ext3"},
+                        {"case" : "ext7"}
+                    ]
+                },
+                "ext7" : {
+                    "dest" : [
+                        {"case" : "ext3"},
+                        {"case" : "ext6"}
+                    ]
+                },
+                "ext4" : {
+                    "dest" : [
+                        {"case" : "ext5"}
+                    ]
+                },
+                "ext5" : {
+                    "dest" : [
+                        {"case" : "ext4"},
+                        {"case" : "village7"},
+                        {"case" : "village11"},
+                        {"case" : "village12"}
+                    ]
+                },
+                "village9" : {
+                    "dest" : [
+                        {"case" : "village8"},
+                        {"case" : "village13"}
+                    ]
+                },
+                "village12" : {
+                    "dest" : [
+                        {"case" : "village8"},
+                        {"case" : "ext5"}
+                    ]
+                },
+                "village13" : {
+                    "dest" : [
+                        {"case" : "village9"}
+                    ]
+                },
+                "village4" : {
+                    "dest" : [
+                        {"case" : "village6"},
+                        {"case" : "village10"}
+                    ]
+                },
+                "village5" : {
+                    "dest" : [
+                        {"case" : "village1"},
+                        {"case" : "village3"},
+                        {"case" : "ext2"},
+                        {"case" : "village6"},
+                        {"case" : "village8"}
+                    ]
+                },
+                "village11" : {
+                    "dest" : [
+                        {"case" : "ext5"}
+                    ]
+                },
+                "ext1" : {
+                    "dest" : [
+                        {"case" : "ext2"}
+                    ]
+                },
+                "ext2" : {
+                    "dest" : [
+                        {"case" : "village1"},
+                        {"case" : "village3"},
+                        {"case" : "village5"},
+                        {"case" : "village7"},
+                        {"case" : "ext1"}
                     ]
                 }
             }`;
@@ -54,9 +193,26 @@
         <div>
             <img id="mapimage" src="./pictes.jpg" alt="" usemap="#map" />
             <map name="map" id="map">
-                <area alt="" title="" href="#" shape="poly" id="snake"  coords="593,361,693,350,751,425,724,519,621,531,555,452" />
-                <area alt="" title="" href="#" shape="poly" id="zogar"  coords="590,104,540,121,512,153,512,195,529,223,564,245,604,250,639,238,654,228,667,164,654,133,629,115" />
-                <area alt="" title="" href="#" shape="poly" id="center" coords="362,338,455,326,512,384,483,488,387,506,327,434,363,341" />
+                <area alt="" title="" href="#" shape="poly" id="village1"  coords="127,312,416,235,368,80,116,217" />
+                <area alt="" title="" href="#" shape="poly" id="village2"  coords="495,212,422,234,373,77,497,36,548,93,509,108,490,153,488,188" />
+                <area alt="" title="" href="#" shape="poly" id="village3"  coords="213,303,496,217,510,242,535,261,462,323,359,337,325,427,268,411,279,375" />
+                <area alt="" title="" href="#" shape="poly" id="ext2"      coords="4,3,152,160,197,124,231,142,501,5" />
+                <area alt="" title="" href="#" shape="poly" id="village5"  coords="466,330,519,383,503,437,554,447,591,354,630,352,618,271,573,275,540,264" />
+                <area alt="" title="" href="#" shape="poly" id="village6"  coords="622,271,633,351,693,345,732,394,873,327,829,246,658,257" />
+                <area alt="" title="" href="#" shape="poly" id="village7"  coords="266,417,321,429,383,509,432,499,417,581,375,579,349,586,321,620,278,594,295,545,251,472" />
+                <area alt="" title="" href="#" shape="poly" id="ext1"      coords="2,5,163,185,94,239,59,339,15,405,13,469,0,469" />
+                <area alt="" title="" href="#" shape="poly" id="village4"  coords="663,253,831,241,792,168,750,81,566,47,578,86,632,99,664,112,684,147,687,165" />
+                <area alt="" title="" href="#" shape="poly" id="village8"  coords="499,440,552,450,616,532,656,530,643,599,625,591,547,646,549,674,498,677,490,649,478,624,460,605,419,582,437,499,481,490" />
+                <area alt="" title="" href="#" shape="poly" id="village9"  coords="641,601,657,527,727,523,738,483,780,501,756,629,713,627" />
+                <area alt="" title="" href="#" shape="poly" id="village10" coords="735,395,874,328,961,401,976,492,947,588,925,616,898,572,906,521,781,500,740,481,754,425" />
+                <area alt="" title="" href="#" shape="poly" id="village11" coords="277,598,316,622,305,687,325,741,359,766,429,777,439,776,446,865,345,850,244,778,221,753,188,749,155,728,140,707,132,667,157,648,209,642,260,634" />
+                <area alt="" title="" href="#" shape="poly" id="village12" coords="442,775,466,759,482,739,493,708,496,682,549,678,547,746,623,791,668,770,736,834,625,864,583,878,526,880,447,864" />
+                <area alt="" title="" href="#" shape="poly" id="village13" coords="712,630,756,631,877,659,888,634,904,663,898,692,881,724,851,750,809,795,791,806,743,832,672,770,714,742" />
+                <area alt="" title="" href="#" shape="poly" id="ext3"      coords="950,588,988,603,981,626,1087,687,1085,463,1015,470,1015,485,980,494" />
+                <area alt="" title="" href="#" shape="poly" id="ext4"      coords="3,471,27,472,126,746,2,796" />
+                <area alt="" title="" href="#" shape="poly" id="ext5"      coords="1,801,123,751,159,773,187,783,225,777,343,856,328,895,577,920,577,928,4,930" />
+                <area alt="" title="" href="#" shape="poly" id="ext6"      coords="978,628,1085,688,1086,928,1052,930,895,766" />
+                <area alt="" title="" href="#" shape="poly" id="ext7"      coords="893,769,1045,930,579,930,580,922,648,912,707,899,779,855" />
             </map>
         </div>
     </body>
