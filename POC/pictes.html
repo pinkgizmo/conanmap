@@ -10,7 +10,9 @@
 
         <script type="text/javascript">
 
-            var debug = false;
+
+            var hash = window.location.hash;
+            var debug = (hash == '#debug') ? true : false;
 
             var centerCoordonate = `{
                 "village1"  : {"x":293,"y":197},

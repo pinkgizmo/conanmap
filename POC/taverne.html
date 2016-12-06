@@ -10,7 +10,8 @@
 
         <script type="text/javascript">
 
-            var debug = false;
+            var hash = window.location.hash;
+            var debug = (hash == '#debug') ? true : false;
 
             var centerCoordonate = `{
                 "ext1"  : {"x":118,"y":890},

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset=utf-8 />
+        <title>Citadelle</title>
+
+        <script src="jquery-3.1.1.js"></script>
+
+        <!--<script src="jquery-1.11.1.min.js"></script>-->
+        <script src="mapconan.js"></script>
+        <script src="raphael.min.js"></script>
+
+        <script type="text/javascript">
+
+            var hash = window.location.hash;
+            var debug = (hash == '#debug') ? true : false;
+
+            var centerCoordonate = `{
+                "ext1"  : {"x": 59, "y": 165},
+                "ext2"  : {"x": 28, "y": 469},
+                "ext3"  : {"x": 27, "y": 756},
+                "int1"  : {"x": 276, "y": 470},
+                "int2"  : {"x": 446, "y": 469},
+                "int3"  : {"x": 438, "y": 654},
+                "fosse"  : {"x": 496, "y": 575},
+                "salle1"  : {"x": 203, "y": 658},
+                "salle2"  : {"x": 203, "y": 820},
+                "salle3"  : {"x": 957, "y": 820},
+                "salle4"  : {"x": 956, "y": 654},
+                "salle5"  : {"x": 960, "y": 439},
+                "salle6"  : {"x": 442, "y": 306},
+                "salle7"  : {"x": 255, "y": 279},
+                "salle8"  : {"x": 255, "y": 125},
+                "salle9"  : {"x": 482, "y": 125},
+                "esc1"  : {"x": 373, "y": 821},
+                "esc2"  : {"x": 855, "y": 819},
+                "esc3"  : {"x": 570, "y": 306},
+                "esc4"  : {"x": 963, "y": 266},
+                "esc5"  : {"x": 630, "y": 563},
+                "coursive1"  : {"x": 533, "y": 819},
+                "coursive2"  : {"x": 728, "y": 820},
+                "coursive3"  : {"x": 719, "y": 650},
+                "coursive4"  : {"x": 714, "y": 431},
+                "coursive5"  : {"x": 700, "y": 310},
+                "coursive6"  : {"x": 698, "y": 148},
+                "coursive7"  : {"x": 897, "y": 61},
+                "prison1"  : {"x": 842, "y": 651},
+                "prison2"  : {"x": 842, "y": 439},
+                "cale"  : {"x": 823, "y": 263}
+            }`;
+
+            var viewLine = `{
+				"ext1" : {
+                    "dest" : [
+                        {"case" : "ext2"},
+                        {"case" : "ext3"}
+                    ]
+                },
+				"ext2" : {
+                    "dest" : [
+                        {"case" : "ext1"},
+                        {"case" : "int1"},
+                        {"case" : "int2"},
+                        {"case" : "ext3"}
+                    ]
+                },
+				"ext3" : {
+                    "dest" : [
+                        {"case" : "ext1"},
+                        {"case" : "ext2"}
+                    ]
+                },
+				"int1" : {
+                    "dest" : [
+                        {"case" : "ext2"},
+                        {"case" : "int2"},
+                        {"case" : "salle7"},
+                        {"case" : "salle8"},
+                        {"case" : "coursive4"},
+                        {"case" : "esc5"},
+                        {"case" : "int3"}
+                    ]
+                },
+				"int2" : {
+                    "dest" : [
+                        {"case" : "ext2"},
+                        {"case" : "int1"},
+                        {"case" : "fosse"},
+                        {"case" : "coursive4"},
+                        {"case" : "esc5"},
+                        {"case" : "int3"}
+                    ]
+                },
+				"int3" : {
+                    "dest" : [
+                        {"case" : "int2"},
+                        {"case" : "fosse"},
+                        {"case" : "coursive3"},
+                        {"case" : "esc5"},
+                        {"case" : "salle1"},
+                        {"case" : "int3"}
+                    ]
+                },
+				"fosse" : {
+                    "dest" : [
+                        {"case" : "int2"},
+                        {"case" : "int3"}
+                    ]
+                },
+				"esc5" : {
+                    "dest" : [
+                        {"case" : "int2"},
+                        {"case" : "int3"},
+                        {"case" : "fosse"},
+                        {"case" : "coursive3"},
+                        {"case" : "coursive4"}
+                    ]
+                },
+				"salle1" : {
+                    "dest" : [
+                        {"case" : "int3"},
+                        {"case" : "salle2"}
+                    ]
+                },
+				"salle2" : {
+                    "dest" : [
+                        {"case" : "salle1"},
+                        {"case" : "esc1"},
+                        {"case" : "coursive1"}
+                    ]
+                },
+				"esc1" : {
+                    "dest" : [
+                        {"case" : "salle2"},
+                        {"case" : "coursive2"},
+                        {"case" : "esc2"},
+                        {"case" : "coursive1"}
+                    ]
+                },
+				"esc2" : {
+                    "dest" : [
+                        {"case" : "salle3"},
+                        {"case" : "coursive2"},
+                        {"case" : "esc1"},
+                        {"case" : "coursive1"}
+                    ]
+                },
+				"coursive1" : {
+                    "dest" : [
+                        {"case" : "esc1"},
+                        {"case" : "coursive2"},
+                        {"case" : "esc2"},
+                        {"case" : "salle2"}
+                    ]
+                },
+				"coursive2" : {
+                    "dest" : [
+                        {"case" : "esc1"},
+                        {"case" : "coursive1"},
+                        {"case" : "coursive3"},
+                        {"case" : "coursive4"},
+                        {"case" : "coursive5"},
+                        {"case" : "coursive6"},
+                        {"case" : "esc2"},
+						{"case" : "salle3"}
+                    ]
+                },
+				"coursive3" : {
+                    "dest" : [
+                        {"case" : "esc5"},
+                        {"case" : "coursive2"},
+                        {"case" : "coursive4"},
+                        {"case" : "coursive5"},
+                        {"case" : "coursive6"},
+                        {"case" : "int3"}
+                    ]
+                },
+				"coursive4" : {
+                    "dest" : [
+                        {"case" : "esc5"},
+                        {"case" : "coursive3"},
+                        {"case" : "coursive2"},
+                        {"case" : "coursive5"},
+                        {"case" : "coursive6"},
+                        {"case" : "int1"},
+						{"case" : "int2"}
+                    ]
+                },
+				"coursive5" : {
+                    "dest" : [
+                        {"case" : "esc3"},
+                        {"case" : "coursive3"},
+                        {"case" : "coursive2"},
+                        {"case" : "coursive4"},
+                        {"case" : "coursive6"},
+                        {"case" : "salle6"},
+                        {"case" : "salle7"}
+                    ]
+                },
+				"coursive6" : {
+                    "dest" : [
+                        {"case" : "coursive3"},
+                        {"case" : "coursive2"},
+                        {"case" : "coursive4"},
+                        {"case" : "coursive5"},
+                        {"case" : "coursive7"},
+                        {"case" : "salle8"},
+                        {"case" : "salle9"}
+                    ]
+                },
+				"coursive7" : {
+                    "dest" : [
+                        {"case" : "esc4"},
+                        {"case" : "coursive6"},
+                        {"case" : "salle5"},
+                        {"case" : "cale"}
+                    ]
+                },
+				"esc4" : {
+                    "dest" : [
+                        {"case" : "salle5"},
+                        {"case" : "coursive7"},
+                        {"case" : "salle4"},
+                        {"case" : "salle3"}
+                    ]
+                },
+				"salle3" : {
+                    "dest" : [
+                        {"case" : "salle5"},
+                        {"case" : "salle4"},
+                        {"case" : "coursive2"},
+                        {"case" : "esc2"},
+                        {"case" : "esc4"}
+                    ]
+                },
+				"salle4" : {
+                    "dest" : [
+                        {"case" : "salle5"},
+                        {"case" : "salle3"},
+                        {"case" : "prison1"},
+                        {"case" : "esc4"}
+                    ]
+                },
+				"salle5" : {
+                    "dest" : [
+                        {"case" : "salle4"},
+                        {"case" : "salle3"},
+                        {"case" : "prison2"},
+                        {"case" : "esc4"},
+                        {"case" : "coursive7"}
+                    ]
+                },
+				"cale" : {
+                    "dest" : [
+                        {"case" : "coursive7"}
+                    ]
+                },
+				"prison1" : {
+                    "dest" : [
+                        {"case" : "salle4"}
+                    ]
+                },
+				"prison2" : {
+                    "dest" : [
+                        {"case" : "salle5"}
+                    ]
+                },
+				"esc3" : {
+                    "dest" : [
+                        {"case" : "salle6"},
+                        {"case" : "salle7"},
+                        {"case" : "coursive5"}
+                    ]
+                },
+				"salle6" : {
+                    "dest" : [
+                        {"case" : "salle7"},
+                        {"case" : "esc3"},
+                        {"case" : "coursive5"}
+                    ]
+                },
+				"salle7" : {
+                    "dest" : [
+                        {"case" : "salle6"},
+                        {"case" : "salle8"},
+                        {"case" : "esc3"},
+                        {"case" : "coursive5"},
+                        {"case" : "int1"}
+                    ]
+                },
+				"salle8" : {
+                    "dest" : [
+                        {"case" : "salle7"},
+                        {"case" : "salle9"},
+                        {"case" : "coursive6"},
+                        {"case" : "int1"}
+                    ]
+                },
+				"salle9" : {
+                    "dest" : [
+                        {"case" : "salle8"},
+                        {"case" : "coursive6"}
+                    ]
+                }
+            }`;
+
+            var icons = '{}';
+
+            /*
+            var icons = '{
+                "c1": {
+                    "icon1": {
+                        "coordonates": {"x": 123, "y": 321},
+                        "img": ""
+                    },
+                    "icon2": {
+                        "coordonates": { "x": 123, "y": 321},
+                        "img": ""
+                    }
+                }
+            }';*/
+
+            $(document).ready(function() {
+                var top       = $('#mapimage').offset().top;
+                var left      = $('#mapimage').offset().left;
+                var height    = $('#mapimage').height();
+                var width     = $('#mapimage').width();
+
+                var paper = Raphael(top, left, width, height);
+                var theme = new Theme(debug);
+                var conan = new Conan(paper, centerCoordonate, viewLine, icons, debug, theme);
+            });
+        </script>
+    </head>
+    <body>
+        <div>
+            <img id="mapimage" src="./Citadelle.png" alt="" usemap="#map" />
+            <map name="map" id="map">
+				<area alt="" title="" href="#" shape="poly" id="ext1" coords="121,340,0,338,0,0,123,1" />
+				<area alt="" title="" href="#" shape="poly" id="ext2" coords="1,341,122,341,122,388,143,387,143,377,165,379,166,550,123,552,123,574,84,574,69,586,68,595,0,595" />
+				<area alt="" title="" href="#" shape="poly" id="ext3" coords="1,597,67,596,69,911,2,911" />
+				<area alt="" title="" href="#" shape="poly" id="int1" coords="167,379,251,381,249,360,285,360,290,378,325,382,325,564,170,564,168,551" />
+				<area alt="" title="" href="#" shape="poly" id="int2" coords="327,566,327,383,390,381,534,381,613,381,616,569,538,567,537,485,456,484,456,568" />
+				<area alt="" title="" href="#" shape="poly" id="int3" coords="331,570,457,569,457,666,538,667,539,570,613,571,615,751,349,749,346,676,340,669,329,669,329,634,335,638,344,639,349,586" />
+				<area alt="" title="" href="#" shape="poly" id="fosse" coords="459,486,537,487,537,665,459,666" />
+				<area alt="" title="" href="#" shape="poly" id="salle1" coords="112,596,329,596,327,735,112,733" />
+				<area alt="" title="" href="#" shape="poly" id="salle2" coords="114,737,327,738,327,779,341,779,341,859,142,860,114,839" />
+				<area alt="" title="" href="#" shape="poly" id="esc1" coords="342,779,410,777,412,866,342,859" />
+				<area alt="" title="" href="#" shape="poly" id="coursive1" coords="413,778,658,781,659,875,411,867" />
+				<area alt="" title="" href="#" shape="poly" id="coursive2" coords="661,780,680,780,680,762,776,761,776,765,802,765,801,867,660,876" />
+				<area alt="" title="" href="#" shape="poly" id="coursive3" coords="681,544,777,544,777,636,778,680,778,761,679,760,678,741,657,724,654,699,662,701,676,699,677,678,667,672,656,673,656,626,662,628,676,627,678,604,667,597,655,597,654,553,663,554,677,553" />
+				<area alt="" title="" href="#" shape="poly" id="coursive4" coords="680,375,778,376,778,541,681,541,678,529,669,525,653,525,655,475,677,474,677,454,666,448,656,449,654,403,663,405,676,406,680,406" />
+				<area alt="" title="" href="#" shape="poly" id="coursive5" coords="682,375,778,373,776,252,667,250,664,254,619,258,618,357,646,355" />
+				<area alt="" title="" href="#" shape="poly" id="coursive6" coords="667,250,778,249,778,204,762,78,755,78,750,43,638,42,636,122,640,237" />
+				<area alt="" title="" href="#" shape="poly" id="coursive7" coords="766,76,779,61,780,41,1011,37,1008,227,913,227,910,203,864,205,856,217,831,215,828,201,781,201" />
+				<area alt="" title="" href="#" shape="poly" id="esc2" coords="803,767,904,766,905,857,805,866" />
+				<area alt="" title="" href="#" shape="poly" id="esc3" coords="532,259,614,258,616,359,532,353" />
+				<area alt="" title="" href="#" shape="poly" id="esc4" coords="913,229,1008,231,998,309,914,308" />
+				<area alt="" title="" href="#" shape="poly" id="salle3" coords="912,761,998,761,996,872,926,872,908,857,906,767,910,765" />
+				<area alt="" title="" href="#" shape="poly" id="salle4" coords="912,759,997,760,1002,545,981,548,963,532,931,530,954,540,955,545,909,547,909,636,880,631,878,668,907,671,908,673" />
+				<area alt="" title="" href="#" shape="poly" id="salle5" coords="914,311,997,311,996,524,961,528,931,529,911,528,911,456,881,453,879,417,909,415" />
+				<area alt="" title="" href="#" shape="poly" id="prison1" coords="798,555,880,552,878,631,880,739,801,745" />
+				<area alt="" title="" href="#" shape="poly" id="prison2" coords="801,348,876,346,878,414,878,456,879,528,801,528" />
+				<area alt="" title="" href="#" shape="poly" id="cale" coords="795,217,828,220,854,219,856,223,884,226,888,320,798,321" />
+				<area alt="" title="" href="#" shape="poly" id="salle6" coords="530,261,529,352,351,355,351,259" />
+				<area alt="" title="" href="#" shape="poly" id="salle7" coords="347,196,349,355,288,353,286,360,247,360,249,355,186,355,170,332,171,195" />
+				<area alt="" title="" href="#" shape="poly" id="salle8" coords="171,195,347,195,347,161,350,99,346,44,207,41,197,50,171,65" />
+				<area alt="" title="" href="#" shape="poly" id="salle9" coords="351,101,364,100,369,91,370,43,599,41,600,236,368,238,366,160,351,160" />
+				<area alt="" title="" href="#" shape="poly" id="esc5" coords="616,383,652,383,653,752,616,752" />
+            </map>
+        </div>
+    </body>
+</html>

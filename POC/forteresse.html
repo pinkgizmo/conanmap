@@ -10,7 +10,8 @@
 
         <script type="text/javascript">
 
-            var debug = false;
+            var hash = window.location.hash;
+            var debug = (hash == '#debug') ? true : false;
 
             var centerCoordonate = `{
                 "ext1"  : {"x":128,"y":43},
@@ -92,12 +93,12 @@
 				"ext6" : {
                     "dest" : [
                         {"case" : "ext5"}
-					]	
+					]
                 },
 				"ext8" : {
                     "dest" : [
                         {"case" : "debris4"}
-					]	
+					]
                 },
 				"int1" : {
                     "dest" : [
@@ -109,8 +110,8 @@
                         {"case" : "int5"},
                         {"case" : "debris1"},
                         {"case" : "debris2"},
-                        {"case" : "debris3"}						
-					]	
+                        {"case" : "debris3"}
+					]
                 },
 				"int2" : {
                     "dest" : [
@@ -121,7 +122,7 @@
 						{"case" : "debris1"},
 						{"case" : "debris2"},
 						{"case" : "debris3"}
-					]	
+					]
                 },
 				"int3" : {
                     "dest" : [
@@ -132,7 +133,7 @@
                         {"case" : "salle2"},
 						{"case" : "debris2"},
 						{"case" : "debris3"}
-					]	
+					]
                 },
 				"int4" : {
                     "dest" : [
@@ -141,7 +142,7 @@
                         {"case" : "int3"},
 						{"case" : "debris2"},
 						{"case" : "debris3"}
-					]	
+					]
                 },
 				"int5" : {
                     "dest" : [
@@ -150,12 +151,12 @@
                         {"case" : "int3"},
                         {"case" : "debris1"},
                         {"case" : "tour6"}
-					]	
+					]
                 },
 				"salle2" : {
                     "dest" : [
                         {"case" : "int3"}
-					]	
+					]
                 },
 				"remp1" : {
                     "dest" : [
@@ -167,7 +168,7 @@
                         {"case" : "int5"},
                         {"case" : "debris1"},
                         {"case" : "debris3"}
-					]	
+					]
                 },
 				"remp2" : {
                     "dest" : [
@@ -180,7 +181,7 @@
                         {"case" : "tour1"},
                         {"case" : "tour2"},
 						{"case" : "debris3"}
-					]	
+					]
                 },
 				"remp3" : {
                     "dest" : [
@@ -192,7 +193,7 @@
                         {"case" : "int5"},
                         {"case" : "tour2"},
                         {"case" : "debris3"}
-					]	
+					]
                 },
 				"remp4" : {
                     "dest" : [
@@ -205,7 +206,7 @@
                         {"case" : "tour3"},
                         {"case" : "debris3"},
                         {"case" : "debris4"}
-					]	
+					]
                 },
 				"remp5" : {
                     "dest" : [
@@ -216,7 +217,7 @@
                         {"case" : "int4"},
                         {"case" : "int5"},
                         {"case" : "tour3"}
-					]	
+					]
                 },
 				"remp6" : {
                     "dest" : [
@@ -227,7 +228,7 @@
                         {"case" : "int4"},
                         {"case" : "int5"},
                         {"case" : "tour6"}
-					]	
+					]
                 },
 				"remp7" : {
                     "dest" : [
@@ -241,7 +242,7 @@
                         {"case" : "debris1"},
                         {"case" : "debris2"},
                         {"case" : "debris3"}
-					]	
+					]
                 },
 				"remp8" : {
                     "dest" : [
@@ -254,7 +255,7 @@
                         {"case" : "debris1"},
                         {"case" : "debris2"},
                         {"case" : "debris3"}
-					]	
+					]
                 },
 				"tour1" : {
                     "dest" : [
@@ -354,7 +355,7 @@
                 <area alt="" title="" href="#" shape="poly" id="ext1" coords="2,0,202,209,221,184,219,172,225,172,219,161,217,153,199,148,199,135,195,119,207,115,215,117,223,106,219,94,235,87,252,81,278,88,304,81,311,72,340,69,340,1" />
 				<area alt="" title="" href="#" shape="poly" id="ext2" coords="342,2,341,69,754,67,788,31,817,14,908,12,908,2" />
 				<area alt="" title="" href="#" shape="poly" id="ext3" coords="5,10,199,211,178,241,169,248,167,259,151,262,140,270,130,282,130,294,133,304,124,304,128,318,123,322,122,334,114,336,108,336,100,331,91,333,89,365,2,365" />
-				<area alt="" title="" href="#" shape="poly" id="ext4" coords="3,368,88,368,86,635,69,668,57,704,53,738,0,737" />           
+				<area alt="" title="" href="#" shape="poly" id="ext4" coords="3,368,88,368,86,635,69,668,57,704,53,738,0,737" />
 				<area alt="" title="" href="#" shape="poly" id="ext5" coords="0,739,53,740,57,766,64,798,81,823,98,843,115,859,144,873,178,885,198,885,197,908,4,909" />
 				<area alt="" title="" href="#" shape="poly" id="ext6" coords="198,888,198,909,908,908,908,903,841,895,811,877,793,858,299,851,271,871,242,883" />
 				<area alt="" title="" href="#" shape="poly" id="ext7" coords="1054,762,1062,763,1061,908,910,909,910,904,946,894,978,886,1008,862,1037,816" />
