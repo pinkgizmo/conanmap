@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--VERSION 1.1-->
 <html>
     <head>
         <meta charset=utf-8 />
@@ -55,24 +56,36 @@
                     "dest" : [
                         {"case" : "ext2"},
                         {"case" : "int1"},
+                        {"case" : "int2"},
                         {"case" : "ext3"},
                         {"case" : "debris1"},
                         {"case" : "debris2"},
-                        {"case" : "ext4"}
+                        {"case" : "ext4"},
+                        {"case" : "remp1"},
+                        {"case" : "remp5"},
+                        {"case" : "remp8"}
                     ]
                 },
                 "ext2" : {
                     "dest" : [
-                        {"case" : "ext1"}
+                        {"case" : "ext1"},
+                        {"case" : "remp2"},
+                        {"case" : "remp1"}
                     ]
                 },
 				"ext3" : {
                     "dest" : [
                         {"case" : "ext1"},
                         {"case" : "int1"},
+                        {"case" : "int2"},
+                        {"case" : "int3"},
                         {"case" : "ext4"},
                         {"case" : "ext5"},
                         {"case" : "debris2"},
+                        {"case" : "remp1"},
+                        {"case" : "remp3"},
+                        {"case" : "remp4"},
+                        {"case" : "remp8"},
                         {"case" : "debris1"}
                     ]
                 },
@@ -80,7 +93,9 @@
                     "dest" : [
                         {"case" : "ext1"},
                         {"case" : "ext3"},
-                        {"case" : "ext5"}
+                        {"case" : "ext5"},
+                        {"case" : "remp7"},
+                        {"case" : "remp8"}
                     ]
                 },
 				"ext5" : {
@@ -92,16 +107,28 @@
                 },
 				"ext6" : {
                     "dest" : [
-                        {"case" : "ext5"}
+                        {"case" : "ext5"},
+                        {"case" : "remp5"},
+                        {"case" : "remp6"}
 					]
                 },
 				"ext8" : {
                     "dest" : [
-                        {"case" : "debris4"}
+                        {"case" : "debris4"},
+                        {"case" : "remp3"},
+                        {"case" : "remp4"}
 					]
                 },
 				"int1" : {
                     "dest" : [
+						{"case" : "remp1"},
+						{"case" : "remp2"},
+						{"case" : "remp3"},
+						{"case" : "remp4"},
+						{"case" : "remp5"},
+						{"case" : "remp6"},
+						{"case" : "remp7"},
+						{"case" : "remp8"},
                         {"case" : "ext1"},
                         {"case" : "ext3"},
                         {"case" : "int2"},
@@ -115,10 +142,20 @@
                 },
 				"int2" : {
                     "dest" : [
+						{"case" : "remp1"},
+						{"case" : "remp2"},
+						{"case" : "remp3"},
+						{"case" : "remp4"},
+						{"case" : "remp5"},
+						{"case" : "remp6"},
+						{"case" : "remp7"},
+						{"case" : "remp8"},
                         {"case" : "int1"},
                         {"case" : "int3"},
                         {"case" : "int4"},
                         {"case" : "int5"},
+                        {"case" : "ext1"},
+                        {"case" : "ext3"},
 						{"case" : "debris1"},
 						{"case" : "debris2"},
 						{"case" : "debris3"}
@@ -126,10 +163,19 @@
                 },
 				"int3" : {
                     "dest" : [
+						{"case" : "remp1"},
+						{"case" : "remp2"},
+						{"case" : "remp3"},
+						{"case" : "remp4"},
+						{"case" : "remp5"},
+						{"case" : "remp6"},
+						{"case" : "remp7"},
+						{"case" : "remp8"},
                         {"case" : "int1"},
                         {"case" : "int2"},
                         {"case" : "int4"},
                         {"case" : "int5"},
+                        {"case" : "ext3"},
                         {"case" : "salle2"},
 						{"case" : "debris2"},
 						{"case" : "debris3"}
@@ -137,6 +183,14 @@
                 },
 				"int4" : {
                     "dest" : [
+						{"case" : "remp1"},
+						{"case" : "remp2"},
+						{"case" : "remp3"},
+						{"case" : "remp4"},
+						{"case" : "remp5"},
+						{"case" : "remp6"},
+						{"case" : "remp7"},
+						{"case" : "remp8"},
                         {"case" : "int1"},
                         {"case" : "int2"},
                         {"case" : "int3"},
@@ -146,6 +200,14 @@
                 },
 				"int5" : {
                     "dest" : [
+						{"case" : "remp1"},
+						{"case" : "remp2"},
+						{"case" : "remp3"},
+						{"case" : "remp4"},
+						{"case" : "remp5"},
+						{"case" : "remp6"},
+						{"case" : "remp7"},
+						{"case" : "remp8"},
                         {"case" : "int1"},
                         {"case" : "int2"},
                         {"case" : "int3"},
@@ -155,24 +217,47 @@
                 },
 				"salle2" : {
                     "dest" : [
-                        {"case" : "int3"}
+                        {"case" : "int3"},
+                        {"case" : "remp4"}
+					]
+                },
+				"salle1" : {
+                    "dest" : [
+                        {"case" : "remp5"},
+                        {"case" : "remp6"}
 					]
                 },
 				"remp1" : {
                     "dest" : [
                         {"case" : "remp2"},
+						{"case" : "remp3"},
+						{"case" : "remp4"},
+						{"case" : "remp5"},
+						{"case" : "remp6"},
+						{"case" : "remp7"},
+						{"case" : "remp8"},
+                        {"case" : "ext1"},
+                        {"case" : "ext2"},
+                        {"case" : "ext3"},
                         {"case" : "int1"},
                         {"case" : "int2"},
                         {"case" : "int3"},
                         {"case" : "int4"},
                         {"case" : "int5"},
                         {"case" : "debris1"},
+                        {"case" : "debris2"},
                         {"case" : "debris3"}
 					]
                 },
 				"remp2" : {
                     "dest" : [
                         {"case" : "remp1"},
+						{"case" : "remp4"},
+						{"case" : "remp5"},
+						{"case" : "remp6"},
+						{"case" : "remp7"},
+						{"case" : "remp8"},
+                        {"case" : "ext2"},
                         {"case" : "int1"},
                         {"case" : "int2"},
                         {"case" : "int3"},
@@ -185,76 +270,125 @@
                 },
 				"remp3" : {
                     "dest" : [
-                        {"case" : "remp4"},
+						{"case" : "remp1"},
+						{"case" : "remp4"},
+						{"case" : "remp5"},
+						{"case" : "remp6"},
+						{"case" : "remp7"},
+						{"case" : "remp8"},
                         {"case" : "int1"},
                         {"case" : "int2"},
                         {"case" : "int3"},
                         {"case" : "int4"},
                         {"case" : "int5"},
+                        {"case" : "ext8"},
+                        {"case" : "ext3"},
                         {"case" : "tour2"},
+                        {"case" : "debris2"},
                         {"case" : "debris3"}
 					]
                 },
 				"remp4" : {
                     "dest" : [
-                        {"case" : "remp3"},
+						{"case" : "remp2"},
+						{"case" : "remp3"},
+						{"case" : "remp1"},
+						{"case" : "remp6"},
+						{"case" : "remp7"},
+						{"case" : "remp8"},
                         {"case" : "int1"},
                         {"case" : "int2"},
                         {"case" : "int3"},
                         {"case" : "int4"},
                         {"case" : "int5"},
+                        {"case" : "ext3"},
+                        {"case" : "ext8"},
                         {"case" : "tour3"},
                         {"case" : "debris3"},
-                        {"case" : "debris4"}
+                        {"case" : "debris4"},
+                        {"case" : "debris2"},
+                        {"case" : "salle2"}
 					]
                 },
 				"remp5" : {
                     "dest" : [
-                        {"case" : "remp6"},
+                        {"case" : "remp2"},
+						{"case" : "remp3"},
+						{"case" : "remp1"},
+						{"case" : "remp6"},
+						{"case" : "remp7"},
+						{"case" : "remp8"},
                         {"case" : "int1"},
                         {"case" : "int2"},
                         {"case" : "int3"},
                         {"case" : "int4"},
                         {"case" : "int5"},
-                        {"case" : "tour3"}
+                        {"case" : "ext1"},
+                        {"case" : "ext6"},
+                        {"case" : "tour3"},
+                        {"case" : "salle1"},
+                        {"case" : "debris1"}
 					]
                 },
 				"remp6" : {
                     "dest" : [
-                        {"case" : "remp5"},
+                        {"case" : "remp2"},
+						{"case" : "remp3"},
+						{"case" : "remp4"},
+						{"case" : "remp5"},
+						{"case" : "remp1"},
+						{"case" : "remp8"},
                         {"case" : "int1"},
                         {"case" : "int2"},
                         {"case" : "int3"},
                         {"case" : "int4"},
                         {"case" : "int5"},
-                        {"case" : "tour6"}
+                        {"case" : "ext6"},
+                        {"case" : "tour6"},
+                        {"case" : "salle1"},
+                        {"case" : "debris1"}
 					]
                 },
 				"remp7" : {
                     "dest" : [
-                        {"case" : "remp8"},
+                        {"case" : "remp2"},
+						{"case" : "remp3"},
+						{"case" : "remp4"},
+						{"case" : "remp5"},
+						{"case" : "remp1"},
+						{"case" : "remp8"},
                         {"case" : "int1"},
                         {"case" : "int2"},
                         {"case" : "int3"},
                         {"case" : "int4"},
                         {"case" : "int5"},
+                        {"case" : "ext4"},
                         {"case" : "tour6"},
                         {"case" : "debris1"},
-                        {"case" : "debris2"},
                         {"case" : "debris3"}
 					]
                 },
 				"remp8" : {
                     "dest" : [
-                        {"case" : "remp7"},
+                        {"case" : "remp2"},
+						{"case" : "remp3"},
+						{"case" : "remp4"},
+						{"case" : "remp5"},
+						{"case" : "remp6"},
+						{"case" : "remp7"},
+						{"case" : "remp1"},
                         {"case" : "int1"},
                         {"case" : "int2"},
                         {"case" : "int3"},
                         {"case" : "int4"},
                         {"case" : "int5"},
+                        {"case" : "ext1"},
+                        {"case" : "ext3"},
+                        {"case" : "ext4"},
                         {"case" : "debris1"},
                         {"case" : "debris2"},
-                        {"case" : "debris3"}
+                        {"case" : "debris3"},
+                        {"case" : "debris1"}
 					]
                 },
 				"tour1" : {
@@ -303,12 +437,17 @@
                         {"case" : "int2"},
                         {"case" : "int5"},
                         {"case" : "debris2"},
-                        {"case" : "remp1"}
+                        {"case" : "remp1"},
+                        {"case" : "remp6"},
+                        {"case" : "remp5"},
+                        {"case" : "remp8"}
 					]
                 },
 				"debris2" : {
                     "dest" : [
                         {"case" : "remp8"},
+                        {"case" : "remp3"},
+                        {"case" : "remp4"},
                         {"case" : "ext1"},
                         {"case" : "ext3"},
                         {"case" : "int1"},
@@ -316,7 +455,8 @@
                         {"case" : "int3"},
                         {"case" : "int4"},
                         {"case" : "debris1"},
-                        {"case" : "debris3"}
+                        {"case" : "debris3"},
+                        {"case" : "remp1"}
 					]
                 },
 				"debris3" : {

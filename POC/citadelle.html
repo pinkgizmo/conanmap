@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--VERSION 1.1-->
 <html>
     <head>
         <meta charset=utf-8 />
@@ -36,7 +37,7 @@
                 "esc2"  : {"x": 855, "y": 819},
                 "esc3"  : {"x": 570, "y": 306},
                 "esc4"  : {"x": 963, "y": 266},
-                "esc5"  : {"x": 630, "y": 563},
+                "balcon"  : {"x": 630, "y": 563},
                 "coursive1"  : {"x": 533, "y": 819},
                 "coursive2"  : {"x": 728, "y": 820},
                 "coursive3"  : {"x": 719, "y": 650},
@@ -49,7 +50,7 @@
                 "cale"  : {"x": 823, "y": 263}
             }`;
 
-            var viewLine = `{
+var viewLine = `{
 				"ext1" : {
                     "dest" : [
                         {"case" : "ext2"},
@@ -61,7 +62,8 @@
                         {"case" : "ext1"},
                         {"case" : "int1"},
                         {"case" : "int2"},
-                        {"case" : "ext3"}
+                        {"case" : "ext3"},
+                        {"case" : "balcon"}
                     ]
                 },
 				"ext3" : {
@@ -76,8 +78,9 @@
                         {"case" : "int2"},
                         {"case" : "salle7"},
                         {"case" : "salle8"},
+                        {"case" : "coursive1"},
                         {"case" : "coursive4"},
-                        {"case" : "esc5"},
+                        {"case" : "balcon"},
                         {"case" : "int3"}
                     ]
                 },
@@ -86,34 +89,41 @@
                         {"case" : "ext2"},
                         {"case" : "int1"},
                         {"case" : "fosse"},
-                        {"case" : "coursive4"},
-                        {"case" : "esc5"},
-                        {"case" : "int3"}
+                        {"case" : "balcon"},
+                        {"case" : "int3"},
+                        {"case" : "salle6"},
+                        {"case" : "coursive1"}
                     ]
                 },
 				"int3" : {
                     "dest" : [
                         {"case" : "int2"},
                         {"case" : "fosse"},
-                        {"case" : "coursive3"},
-                        {"case" : "esc5"},
+                        {"case" : "balcon"},
                         {"case" : "salle1"},
-                        {"case" : "int3"}
+                        {"case" : "salle6"},
+                        {"case" : "int3"},
+						{"case" : "coursive1"}
                     ]
                 },
 				"fosse" : {
                     "dest" : [
-                        {"case" : "int2"},
-                        {"case" : "int3"}
-                    ]
-                },
-				"esc5" : {
-                    "dest" : [
+                        {"case" : "balcon"},
                         {"case" : "int2"},
                         {"case" : "int3"},
+                        {"case" : "coursive1"}
+                    ]
+                },
+				"balcon" : {
+                    "dest" : [
+                        {"case" : "int1"},
+                        {"case" : "int2"},
+                        {"case" : "int3"},
+                        {"case" : "ext2"},
                         {"case" : "fosse"},
                         {"case" : "coursive3"},
-                        {"case" : "coursive4"}
+                        {"case" : "coursive4"},
+                        {"case" : "coursive1"}
                     ]
                 },
 				"salle1" : {
@@ -132,30 +142,30 @@
 				"esc1" : {
                     "dest" : [
                         {"case" : "salle2"},
-                        {"case" : "coursive2"},
-                        {"case" : "esc2"},
                         {"case" : "coursive1"}
                     ]
                 },
 				"esc2" : {
                     "dest" : [
                         {"case" : "salle3"},
-                        {"case" : "coursive2"},
-                        {"case" : "esc1"},
-                        {"case" : "coursive1"}
+                        {"case" : "coursive2"}
                     ]
                 },
 				"coursive1" : {
                     "dest" : [
                         {"case" : "esc1"},
                         {"case" : "coursive2"},
-                        {"case" : "esc2"},
-                        {"case" : "salle2"}
+                        {"case" : "fosse"},
+                        {"case" : "int3"},
+                        {"case" : "int1"},
+                        {"case" : "int2"},
+                        {"case" : "salle2"},
+                        {"case" : "salle6"},
+                        {"case" : "balcon"}
                     ]
                 },
 				"coursive2" : {
                     "dest" : [
-                        {"case" : "esc1"},
                         {"case" : "coursive1"},
                         {"case" : "coursive3"},
                         {"case" : "coursive4"},
@@ -167,23 +177,25 @@
                 },
 				"coursive3" : {
                     "dest" : [
-                        {"case" : "esc5"},
+                        {"case" : "balcon"},
                         {"case" : "coursive2"},
                         {"case" : "coursive4"},
                         {"case" : "coursive5"},
                         {"case" : "coursive6"},
-                        {"case" : "int3"}
+                        {"case" : "prison1"},
+                        {"case" : "salle4"}
                     ]
                 },
 				"coursive4" : {
                     "dest" : [
-                        {"case" : "esc5"},
+                        {"case" : "balcon"},
                         {"case" : "coursive3"},
                         {"case" : "coursive2"},
                         {"case" : "coursive5"},
                         {"case" : "coursive6"},
-                        {"case" : "int1"},
-						{"case" : "int2"}
+                        {"case" : "prison2"},
+                        {"case" : "salle5"},
+                        {"case" : "int1"}
                     ]
                 },
 				"coursive5" : {
@@ -238,7 +250,8 @@
                         {"case" : "salle5"},
                         {"case" : "salle3"},
                         {"case" : "prison1"},
-                        {"case" : "esc4"}
+                        {"case" : "esc4"},
+                        {"case" : "coursive3"}
                     ]
                 },
 				"salle5" : {
@@ -247,7 +260,8 @@
                         {"case" : "salle3"},
                         {"case" : "prison2"},
                         {"case" : "esc4"},
-                        {"case" : "coursive7"}
+                        {"case" : "coursive7"},
+                        {"case" : "coursive4"}
                     ]
                 },
 				"cale" : {
@@ -257,12 +271,14 @@
                 },
 				"prison1" : {
                     "dest" : [
-                        {"case" : "salle4"}
+                        {"case" : "salle4"},
+                        {"case" : "coursive3"}
                     ]
                 },
 				"prison2" : {
                     "dest" : [
-                        {"case" : "salle5"}
+                        {"case" : "salle5"},
+                        {"case" : "coursive4"}
                     ]
                 },
 				"esc3" : {
@@ -276,7 +292,10 @@
                     "dest" : [
                         {"case" : "salle7"},
                         {"case" : "esc3"},
-                        {"case" : "coursive5"}
+                        {"case" : "coursive5"},
+                        {"case" : "int2"},
+                        {"case" : "int3"},
+						{"case" : "coursive1"}
                     ]
                 },
 				"salle7" : {
@@ -366,7 +385,7 @@
 				<area alt="" title="" href="#" shape="poly" id="salle7" coords="347,196,349,355,288,353,286,360,247,360,249,355,186,355,170,332,171,195" />
 				<area alt="" title="" href="#" shape="poly" id="salle8" coords="171,195,347,195,347,161,350,99,346,44,207,41,197,50,171,65" />
 				<area alt="" title="" href="#" shape="poly" id="salle9" coords="351,101,364,100,369,91,370,43,599,41,600,236,368,238,366,160,351,160" />
-				<area alt="" title="" href="#" shape="poly" id="esc5" coords="616,383,652,383,653,752,616,752" />
+				<area alt="" title="" href="#" shape="poly" id="balcon" coords="616,383,652,383,653,752,616,752" />
             </map>
         </div>
     </body>
