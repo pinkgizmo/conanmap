@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--VERSION 1.1-->
 <html>
     <head>
         <meta charset=utf-8 />
@@ -73,7 +74,6 @@
                         {"case" : "int5"},
                         {"case" : "parquet3"},
                         {"case" : "esc1"},
-                        {"case" : "esc2"},
                         {"case" : "esc3"},
                         {"case" : "bar1"},
                         {"case" : "bar2"},
@@ -83,7 +83,8 @@
                         {"case" : "salle1"},
 						{"case" : "couloir1"},
                         {"case" : "couloir2"},
-                        {"case" : "couloir3"}
+                        {"case" : "couloir3"},
+                        {"case" : "couloir8"}
                     ]
                 },
 				"int2" : {
@@ -175,7 +176,6 @@
                         {"case" : "bar3"},
                         {"case" : "caisse2"},
                         {"case" : "caisse1"},
-						{"case" : "parquet1"},
 						{"case" : "parquet3"},
 						{"case" : "couloir1"},
                         {"case" : "couloir2"},
@@ -196,7 +196,6 @@
                         {"case" : "caisse3"},
                         {"case" : "caisse2"},
                         {"case" : "caisse1"},
-                        {"case" : "parquet3"},
 						{"case" : "couloir1"},
                         {"case" : "couloir2"},
                         {"case" : "couloir3"}
@@ -220,7 +219,8 @@
                         {"case" : "parquet3"},
 						{"case" : "couloir1"},
                         {"case" : "couloir2"},
-                        {"case" : "couloir3"}
+                        {"case" : "couloir3"},
+                        {"case" : "couloir8"}
                     ]
                 },
 				"salle1" : {
@@ -236,9 +236,7 @@
                 },
 				"parquet1" : {
                     "dest" : [
-                        {"case" : "int5"},
-                        {"case" : "esc1"},
-                        {"case" : "bar1"}
+                        {"case" : "int5"}
                     ]
                 },
 				"parquet2" : {
@@ -252,10 +250,10 @@
                         {"case" : "salle1"},
                         {"case" : "int1"},
                         {"case" : "bar1"},
-                        {"case" : "bar2"},
                         {"case" : "bar3"},
                         {"case" : "caisse3"},
                         {"case" : "caisse2"},
+                        {"case" : "couloir8"},
                         {"case" : "esc3"}
                     ]
                 },
@@ -289,6 +287,7 @@
                         {"case" : "int2"},
                         {"case" : "esc1"},
                         {"case" : "esc2"},
+                        {"case" : "esc3"},
                         {"case" : "parquet3"},
 						{"case" : "couloir1"},
                         {"case" : "couloir2"},
@@ -308,6 +307,7 @@
                         {"case" : "esc3"},
                         {"case" : "parquet3"},
                         {"case" : "couloir2"},
+						{"case" : "couloir8"},
                         {"case" : "couloir3"}
                     ]
                 },
@@ -328,7 +328,6 @@
                 },
 				"esc1" : {
                     "dest" : [
-                        {"case" : "parquet1"},
                         {"case" : "esc2"},
                         {"case" : "int1"},
                         {"case" : "int2"},
@@ -340,13 +339,14 @@
                         {"case" : "bar3"},
                         {"case" : "caisse1"},
                         {"case" : "caisse2"},
-                        {"case" : "couloir1"}
+                        {"case" : "couloir1"},
+                        {"case" : "couloir2"},
+                        {"case" : "couloir3"}
                     ]
                 },
 				"esc2" : {
                     "dest" : [
                         {"case" : "esc1"},
-                        {"case" : "int1"},
                         {"case" : "int2"},
                         {"case" : "int3"},
                         {"case" : "int4"},
@@ -357,6 +357,8 @@
                         {"case" : "caisse1"},
                         {"case" : "caisse2"},
                         {"case" : "caisse3"},
+                        {"case" : "couloir1"},
+                        {"case" : "couloir2"},
                         {"case" : "couloir3"}
                     ]
                 },
@@ -367,7 +369,6 @@
                         {"case" : "parquet2"},
                         {"case" : "int1"},
                         {"case" : "bar3"},
-                        {"case" : "bar1"},
                         {"case" : "caisse2"},
                         {"case" : "caisse3"}
                     ]
@@ -457,6 +458,7 @@
                     "dest" : [
                         {"case" : "couloir5"},
                         {"case" : "couloir7"},
+                        {"case" : "chambre6"},
                         {"case" : "couloir8"}
                     ]
                 },
@@ -464,6 +466,7 @@
                     "dest" : [
                         {"case" : "couloir5"},
                         {"case" : "couloir6"},
+                        {"case" : "chambre7"},
                         {"case" : "couloir8"}
                     ]
                 },
@@ -471,8 +474,13 @@
                     "dest" : [
                         {"case" : "couloir5"},
                         {"case" : "couloir6"},
-                        {"case" : "couloir7"},
-                        {"case" : "esc3"}
+                        {"case" : "couloir6"},
+                        {"case" : "chambre8"},
+                        {"case" : "esc3"},
+                        {"case" : "parquet3"},
+                        {"case" : "int1"},
+                        {"case" : "bar3"},
+                        {"case" : "caisse3"}
                     ]
                 }
             }`;

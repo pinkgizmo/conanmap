@@ -41,13 +41,14 @@ Theme.prototype.getZone = function() {
 Theme.prototype.getViewLine = function() {
     var res = `{
         "stroke": "white",
-        "stroke-width": 5,
-        "stroke-opacity": 0.6,
+        "stroke-width": 2,
+        "stroke-opacity": 1,
         "stroke-linecap": "round",
         "stroke-linejoin": "round"
     }`;
     return $.parseJSON(res);
 };
+
 
 /**
  * Get attributes for debug text
@@ -183,7 +184,12 @@ Conan.prototype.displayViewLine = function(id) {
 
             //draw line
             line = self.drawLine(source.x, source.y, currentDest.x, currentDest.y);
+			//draw circle
+			circle = self.drawCircle(currentDest.x, currentDest.y);
             self.toRemove.push(line);
+			self.toRemove.push(circle);
+			
+
 
             //draw icons
             if (dest.icon != undefined && dest.icon != '')  {
@@ -217,5 +223,16 @@ Conan.prototype.drawLine = function(xFrom, yFrom, xTo, yTo) {
     return this.paper
         .path("M" + xFrom + " " + yFrom + "L"+ xTo + " " + yTo)
         .attr(self.theme.getViewLine())
+        .toBack();
+};
+
+/**
+ * Draw a circle with Raphael
+ */
+Conan.prototype.drawCircle = function(xTo, yTo) {
+    var self = this;
+    return this.paper
+        .circle(xTo,yTo,8)
+        .attr("fill", "#0F0")
         .toBack();
 };
