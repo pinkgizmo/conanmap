@@ -1,3 +1,9 @@
+"use strict";
+
+/******************************************
+THEME
+*******************************************/
+
 /**
  * Constructor
  */
@@ -61,6 +67,117 @@ Theme.prototype.getText = function() {
     return $.parseJSON(res);
 };
 
+/******************************************
+Line
+*******************************************/
+
+function Line(line)
+{
+    this.case1 = line[0];
+    this.case2 = line[1];
+    this.type  = (line[2] != "") ? line[2]: false;
+    this.text  = (line[3] != "") ? line[3]: false;
+    this.debug = (line[4] != "") ? line[4]: false;
+}
+
+Line.prototype.getCase1 = function() {
+    return this.case1;
+}
+
+Line.prototype.getCase2 = function() {
+    return this.case2;
+}
+
+Line.prototype.getType = function() {
+    return this.type;
+}
+
+Line.prototype.getText = function() {
+    return this.text;
+}
+
+Line.prototype.getDebug = function() {
+    return this.debug;
+}
+
+Line.prototype.isReciproque = function() {
+    return true;
+}
+
+Line.prototype.isElligibleToCase = function(caseId) {
+
+    if (this.getCase1() == caseId) {
+        return true;
+    }
+
+    if (this.isReciproque && this.getCase2() == caseId) {
+        return true;
+    }
+
+    return false;
+}
+
+Line.prototype.getDestination = function(caseId) {
+    if (this.getCase1() == caseId) {
+        return this.getCase2();
+    }
+
+    if (this.getCase2() == caseId) {
+        return this.getCase1();
+    }
+}
+
+
+/*Line.prototype.getLinesCoordonates = function() {
+    var lines = [];
+
+    lines.push([this.getCase1(), this.getCase2()]);
+    if (this.isReciproque()) {
+        lines.push([this.getCase2(), this.getCase1()]);
+    }
+
+    return lines;
+}*/
+
+/******************************************
+Line
+*******************************************/
+
+function ServiceLines(viewLines)
+{
+    var self = this;
+    self.viewLines = [];
+    $.each(viewLines, function(key, line){
+        self.viewLines.push(new Line(line));
+    });
+}
+
+
+/**
+ * Getter for viewLine data
+ */
+ServiceLines.prototype.getViewLines = function() {
+    return this.viewLines;
+}
+
+/**
+ * Getter for viewLine data
+ */
+ServiceLines.prototype.getLinesByCase = function(caseId) {
+    var self = this;
+    var eligibleLines = [];
+
+    $.each(this.getViewLines(), function(key, line){
+        if (line.isElligibleToCase(caseId)) {
+            eligibleLines.push(line);
+        }
+    });
+    return eligibleLines;
+}
+
+/******************************************
+Line
+*******************************************/
 
 /**
  * Constructor
@@ -68,9 +185,10 @@ Theme.prototype.getText = function() {
 function Conan(paper, centerCoordonate, viewLine, debug, theme) {
     this.paper            = paper;
     this.centerCoordonate = $.parseJSON(centerCoordonate);
-    this.viewLine         = $.parseJSON(self.viewLine);
+    this.viewLine         = new ServiceLines(viewLine);
     this.debug            = debug;
     this.theme            = theme;
+
 
     this.toRemove = [];
 
@@ -85,17 +203,6 @@ Conan.prototype.getCenter = function(id) {
 
     if (self.centerCoordonate[id] != undefined) {
         return self.centerCoordonate[id];
-    }
-}
-
-/**
- * Getter for viewLine data
- */
-Conan.prototype.getViewLines = function(id) {
-    var self = this;
-
-    if (self.viewLine[id]['dest'] != undefined) {
-        return self.viewLine[id]['dest'];
     }
 }
 
@@ -118,28 +225,28 @@ Conan.prototype.mapArea = function() {
 
     $("#map area").each(function(){
 
-        area = $(this);
-        coords = area.attr('coords');
-        id = area.attr('id');
+        var area = $(this);
+        var coords = area.attr('coords');
+        var id = area.attr('id');
 
         if (id != undefined) {
 
             coords = self.coordConvert(coords);
 
-            zone = self.paper.path(coords).attr(self.theme.getZone());
+            var zone = self.paper.path(coords).attr(self.theme.getZone());
             zone.id = id;
             zone.hover(
                 function() {
-                    self.displayViewLine(this.id);
+                    self.displayViewLines(this.id);
                 },
                 function() {
                     self.clean();
                 }
             );
 
-        //DEBUG : display case id one the case
+        //DEBUG : display case id on the case
         if (self.debug) {
-            center = self.getCenter(id);
+            var center = self.getCenter(id);
             var txt = self.paper.text(center.x, center.y, id);
             txt.attr(self.theme.getText());
             }
@@ -170,32 +277,33 @@ Conan.prototype.coordConvert = function(coords) {
 /**
  * Display all view lines for a case
  */
-Conan.prototype.displayViewLine = function(id) {
+Conan.prototype.displayViewLines = function(caseId) {
     var self = this;
+    var source;
+    var destination;
+    var circle;
+    var lines = self.viewLine.getLinesByCase(caseId);
 
-    if (self.viewLine[id] != undefined) {
+    if (lines.length > 0) {
 
-        source = self.getCenter(id);
-        destinations = self.getViewLines(id);
+        $.each(lines, function(key, line) {
 
-        $.each(destinations, function(index, dest) {
-            //get a dest
-            currentDest = self.getCenter(dest.case);
+            source        = self.getCenter(caseId);
+            destination   = self.getCenter(line.getDestination(caseId));
 
             //draw line
-            line = self.drawLine(source.x, source.y, currentDest.x, currentDest.y);
-			//draw circle
-			circle = self.drawCircle(currentDest.x, currentDest.y);
-            self.toRemove.push(line);
-			self.toRemove.push(circle);
-			
+            line = self.drawLine(source.x, source.y, destination.x, destination.y);
 
+            //draw circle
+            circle = self.drawCircle(destination.x, destination.y);
+            self.toRemove.push(line);
+            self.toRemove.push(circle);
 
             //draw icons
-            if (dest.icon != undefined && dest.icon != '')  {
-                xIcon = parseInt((source.x + currentDest.x) / 2);
-                yIcon = parseInt((source.y + currentDest.y) / 2);
-                icon = self.paper.image(dest.icon, xIcon, yIcon, 50, 50).toBack();
+            if (destination.icon != undefined && destination.icon != '')  {
+                xIcon = parseInt((source.x + destination.x) / 2);
+                yIcon = parseInt((source.y + destination.y) / 2);
+                icon = self.paper.image(destination.icon, xIcon, yIcon, 50, 50).toBack();
                 self.toRemove.push(icon);
             }
         });
