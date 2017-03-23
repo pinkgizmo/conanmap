@@ -39,7 +39,7 @@ Theme.prototype.getZone = function() {
 
     }
     return $.parseJSON(res);
-};
+}
 
 /**
  * Get attributes for viewlines
@@ -53,7 +53,7 @@ Theme.prototype.getViewLine = function() {
         "stroke-linejoin": "round"
     }`;
     return $.parseJSON(res);
-};
+}
 
 
 /**
@@ -65,7 +65,40 @@ Theme.prototype.getText = function() {
         "stroke-width": 1
     }`;
     return $.parseJSON(res);
-};
+}
+
+/******************************************
+Case
+*******************************************/
+
+function Tile(id, tile)
+{
+    var self = this;
+    var defaultZone = 'A';
+
+    self.centers = {};
+    self.id = id;
+
+    if (!$.isArray(tile)) {
+        $.each(tile, function(key, centers) {
+            self.centers[key] = centers;
+        });
+    } else {
+        self.centers[defaultZone] = tile;
+    }
+}
+
+Tile.prototype.getId = function() {
+    return this.id;
+}
+
+Tile.prototype.getCenters = function(suffix) {
+    return this.centers;
+}
+
+Tile.prototype.getCenter = function(suffix) {
+    return this.centers[suffix];
+}
 
 /******************************************
 Line
@@ -73,11 +106,19 @@ Line
 
 function Line(line)
 {
-    this.case1 = line[0];
-    this.case2 = line[1];
+    this.case1 = this.format(line[0]);
+    this.case2 = this.format(line[1]);
     this.type  = (line[2] != "") ? line[2]: false;
     this.text  = (line[3] != "") ? line[3]: false;
     this.debug = (line[4] != "") ? line[4]: false;
+}
+
+Line.prototype.format = function(caseId)
+{
+    if (caseId.split('-')[1] === undefined) {
+        return caseId + '-A';
+    }
+    return caseId;
 }
 
 Line.prototype.getCase1 = function() {
@@ -118,7 +159,8 @@ Line.prototype.isElligibleToCase = function(caseId) {
 }
 
 Line.prototype.getDestination = function(caseId) {
-    if (this.getCase1() == caseId) {
+
+    if ( this.getCase1() == caseId) {
         return this.getCase2();
     }
 
@@ -127,20 +169,36 @@ Line.prototype.getDestination = function(caseId) {
     }
 }
 
+/******************************************
+Service Line
+*******************************************/
 
-/*Line.prototype.getLinesCoordonates = function() {
-    var lines = [];
+function ServiceTiles(centers)
+{
+    var self = this;
+    var centers = $.parseJSON(centers);
 
-    lines.push([this.getCase1(), this.getCase2()]);
-    if (this.isReciproque()) {
-        lines.push([this.getCase2(), this.getCase1()]);
-    }
+    self.tiles = [];
 
-    return lines;
-}*/
+    $.each(centers, function(key, tile){
+        self.tiles.push(new Tile(key, tile));
+    });
+}
+
+ServiceTiles.prototype.getTile = function(id)
+{
+    var selectedTile;
+    $.each(this.tiles, function(key, tile){
+        if (tile.getId() == id) {
+            selectedTile = tile;
+            return;
+        }
+    });
+    return selectedTile;
+}
 
 /******************************************
-Line
+Service Line
 *******************************************/
 
 function ServiceLines(viewLines)
@@ -150,8 +208,8 @@ function ServiceLines(viewLines)
     $.each(viewLines, function(key, line){
         self.viewLines.push(new Line(line));
     });
+    console.log(self.viewLines);
 }
-
 
 /**
  * Getter for viewLine data
@@ -176,34 +234,23 @@ ServiceLines.prototype.getLinesByCase = function(caseId) {
 }
 
 /******************************************
-Line
+Conan
 *******************************************/
 
 /**
  * Constructor
  */
-function Conan(paper, centerCoordonate, viewLine, debug, theme) {
-    this.paper            = paper;
-    this.centerCoordonate = $.parseJSON(centerCoordonate);
-    this.viewLine         = new ServiceLines(viewLine);
-    this.debug            = debug;
-    this.theme            = theme;
+function Conan(paper, centers, viewLine, debug, theme) {
+    this.paper    = paper;
+    this.tiles    = new ServiceTiles(centers);
+    this.viewLine = new ServiceLines(viewLine);
+    this.debug    = debug;
+    this.theme    = theme;
 
 
     this.toRemove = [];
 
     this.mapArea();
-}
-
-/**
- * Getter for centerCoordonate data
- */
-Conan.prototype.getCenter = function(id) {
-    var self = this;
-
-    if (self.centerCoordonate[id] != undefined) {
-        return self.centerCoordonate[id];
-    }
 }
 
 /**
@@ -244,11 +291,13 @@ Conan.prototype.mapArea = function() {
                 }
             );
 
-        //DEBUG : display case id on the case
-        if (self.debug) {
-            var center = self.getCenter(id);
-            var txt = self.paper.text(center.x, center.y, id);
-            txt.attr(self.theme.getText());
+            //DEBUG : display case id on the case
+            if (self.debug) {
+                var centers = self.tiles.getTile(id).getCenters();
+                $.each(centers, function(key, center) {
+                    var txt = self.paper.text(center[0], center[1], id + key);
+                    txt.attr(self.theme.getText());
+                });
             }
         }
     });
@@ -280,32 +329,44 @@ Conan.prototype.coordConvert = function(coords) {
 Conan.prototype.displayViewLines = function(caseId) {
     var self = this;
     var source;
+    var centerId;
     var destination;
     var circle;
-    var lines = self.viewLine.getLinesByCase(caseId);
 
+    //the current case data
+    source = self.tiles.getTile(caseId);
+    
     if (lines.length > 0) {
+        //loop on each center of the current case
+        $.each(source.getCenters(), function(suffix, sourceCoords) { 
 
-        $.each(lines, function(key, line) {
+            //one of the center of the case
+            var centerId = source.id + '-' + suffix;
 
-            source        = self.getCenter(caseId);
-            destination   = self.getCenter(line.getDestination(caseId));
+             //all the line for a given case
+            var lines = self.viewLine.getLinesByCase(centerId);
 
-            //draw line
-            line = self.drawLine(source.x, source.y, destination.x, destination.y);
+            //loop on each line of sight
+            $.each(lines, function(key, line) {    
+          
+                //one of the center of the case
+                centerId = source.id + '-' + suffix;
+                
+                destination = line.getDestination(centerId);
+                var dest = destination.split('-')[0];
+                var destSuffix = destination.split('-')[1];
+              
+                var destCoords = self.tiles.getTile(dest).getCenter(destSuffix);
+                
+                //draw line
+                line = self.drawLine(sourceCoords[0], sourceCoords[1], destCoords[0], destCoords[1]);
+                self.toRemove.push(line);
 
-            //draw circle
-            circle = self.drawCircle(destination.x, destination.y);
-            self.toRemove.push(line);
-            self.toRemove.push(circle);
-
-            //draw icons
-            if (destination.icon != undefined && destination.icon != '')  {
-                xIcon = parseInt((source.x + destination.x) / 2);
-                yIcon = parseInt((source.y + destination.y) / 2);
-                icon = self.paper.image(destination.icon, xIcon, yIcon, 50, 50).toBack();
-                self.toRemove.push(icon);
-            }
+                //draw circle
+                circle = self.drawCircle(destCoords[0],  destCoords[1]);
+                self.toRemove.push(circle);
+                
+            });
         });
     }
 };

@@ -15,32 +15,99 @@
             var debug = (hash == '#debug') ? true : false;
             var debug = true;
 
-            var cases = `{
-                "ext1"      : {"x":45,"y":223},
-                "ext2"      : {"x":243,"y":53},
-                "ext3"      : {"x":1035,"y":548},
-                "ext4"      : {"x":37,"y":639},
-                "ext5"      : {"x":213,"y":876},
-                "ext6"      : {"x":1017,"y":757},
-                "ext7"      : {"x":818,"y":898},
-                "village1"  : {"x":293,"y":197},
-                "village2"  : {"x":464,"y":126},
-                "village3"  : {"x":369,"y":309},
-                "village4"  : {"x":735,"y":152},
-                "village5"  : {"x":551,"y":343},
-                "village6"  : {"x":737,"y":309},
-                "village7"  : {"x":320,"y":515},
-                "village8"  : {"x":535,"y":557},
-                "village9"  : {"x":723,"y":566},
-                "village10" : {"x":868,"y":444},
-                "village11" : {"x":315,"y":748},
-                "village12" : {"x":548,"y":790},
-                "village13" : {"x":797,"y":707}
-            }`;
+            var centers = `{
+    "ext1": [
+        45,
+        223
+    ],
+    "ext2": [
+        243,
+        53
+    ],
+    "ext3": [
+        1035,
+        548
+    ],
+    "ext4": [
+        37,
+        639
+    ],
+    "ext5": [
+        213,
+        876
+    ],
+    "ext6": [
+        1017,
+        757
+    ],
+    "ext7": [
+        818,
+        898
+    ],
+    "village1": {
+        "A": [293,197],
+
+        "B": [220,240]
+    },
+    "village2": [
+        464,
+        126
+    ],
+    "village3": [
+        369,
+        309
+    ],
+    "village4": [
+        735,
+        152
+    ],
+    "village5": [
+        551,
+        343
+    ],
+    "village6": [
+        737,
+        309
+    ],
+    "village7": [
+        320,
+        515
+    ],
+    "village8": [
+        535,
+        557
+    ],
+    "village9": [
+        723,
+        566
+    ],
+    "village10": [
+        868,
+        444
+    ],
+    "village11": [
+        315,
+        748
+    ],
+    "village12": [
+        548,
+        790
+    ],
+    "village13": [
+        797,
+        707
+    ]
+}`;
 
            var lines = [
 
-                ['ext1', 'ext2'],
+                ['ext1', 'village1-A'],
+                ['ext2', 'village1-A'],
+
+                ['village2', 'village1-B'],
+                ['village3', 'village1-B'],
+
+                /*['ext1', 'ext2'],
 
                 ['ext2', 'village1'],
                 ['ext2', 'village3'],
@@ -82,7 +149,7 @@
 
                 ['village8', 'village9'],
 
-                ['village8', 'village9'],
+                ['village8', 'village9'],*/
 
             ];
             /*var viewLine = `{
@@ -228,7 +295,7 @@
 
                 var paper = Raphael(top, left, width, height);
                 var theme = new Theme(debug);
-                var conan = new Conan(paper, cases, lines, debug, theme);
+                var conan = new Conan(paper, centers, lines, debug, theme);
             });
 
         </script>
