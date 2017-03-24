@@ -55,6 +55,19 @@ Theme.prototype.getViewLine = function() {
     return $.parseJSON(res);
 }
 
+/**
+ * Get attributes for viewlines
+ */
+Theme.prototype.getViewLineDebug = function() {
+    var res = `{
+        "stroke": "red",
+        "stroke-width": 2,
+        "stroke-opacity": 1,
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+    }`;
+    return $.parseJSON(res);
+}
 
 /**
  * Get attributes for debug text
@@ -208,7 +221,6 @@ function ServiceLines(viewLines)
     $.each(viewLines, function(key, line){
         self.viewLines.push(new Line(line));
     });
-    console.log(self.viewLines);
 }
 
 /**
@@ -359,8 +371,8 @@ Conan.prototype.displayViewLines = function(caseId) {
                 var destCoords = self.tiles.getTile(dest).getCenter(destSuffix);
                 
                 //draw line
-                line = self.drawLine(sourceCoords[0], sourceCoords[1], destCoords[0], destCoords[1]);
-                self.toRemove.push(line);
+                var drawnLine = self.drawLine(sourceCoords[0], sourceCoords[1], destCoords[0], destCoords[1], line.getDebug());
+                self.toRemove.push(drawnLine);
 
                 //draw circle
                 circle = self.drawCircle(destCoords[0],  destCoords[1]);
@@ -387,11 +399,17 @@ Conan.prototype.clean = function(id) {
 /**
  * Draw a line with Raphael
  */
-Conan.prototype.drawLine = function(xFrom, yFrom, xTo, yTo) {
+Conan.prototype.drawLine = function(xFrom, yFrom, xTo, yTo, debug = false) {
     var self = this;
+
+    var theme = self.theme.getViewLine()
+    if (debug) {
+        theme = self.theme.getViewLineDebug()
+    }
+
     return this.paper
         .path("M" + xFrom + " " + yFrom + "L"+ xTo + " " + yTo)
-        .attr(self.theme.getViewLine())
+        .attr(theme)
         .toBack();
 };
 
