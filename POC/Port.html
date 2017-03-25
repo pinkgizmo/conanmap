@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<!--VERSION 1.1-->
+<html>
+    <head>
+        <meta charset=utf-8 />
+        <title>Port</title>
+
+        <script src="jquery-3.1.1.js"></script>
+        <script src="mapconan.js"></script>
+        <script src="raphael.min.js"></script>
+
+        <script type="text/javascript">
+
+            var hash = window.location.hash;
+            var debug = (hash == '#debug') ? true : false;
+
+            var centerCoordonate = `{
+                "int1"  : {"x":150,"y":100},
+                "int2"  : {"x":470,"y":62},
+                "int3"  : {"x":150,"y":199},
+                "int4"  : {"x":336,"y":177},
+                "int5"  : {"x":559,"y":158},
+                "int6"  : {"x":853,"y":144},
+                "int7"  : {"x":895,"y":56},
+                "int8"  : {"x":969,"y":195},
+                "int9"  : {"x":86,"y":455},
+                "int10"  : {"x":340,"y":472},
+                "int11"  : {"x":126,"y":646},
+                "int12"  : {"x":331,"y":678},
+                "int13"  : {"x":601,"y":457},
+                "int14"  : {"x":647,"y":676},
+                "int15"  : {"x":990,"y":443},
+                "int16"  : {"x":917,"y":576},
+                "ext1"  : {"x":698,"y":45},
+                "ext2"  : {"x":711,"y":209},
+                "ext3"  : {"x":43,"y":330},
+                "ext4"  : {"x":189,"y":349},
+                "ext5"  : {"x":507,"y":343},
+                "ext6"  : {"x":724,"y":329},
+                "ext7"  : {"x":936,"y":317},
+                "ext8"  : {"x":483,"y":652},
+                "esc1"  : {"x":222,"y":444},
+                "esc2"  : {"x":199,"y":703},
+                "quai1"  : {"x":85,"y":807},
+                "quai2"  : {"x":212,"y":808},
+                "quai3"  : {"x":443,"y":806},
+                "quai4"  : {"x":665,"y":803},
+                "quai5"  : {"x":944,"y":800},
+                "eau1"  : {"x":131,"y":887},
+                "eau2"  : {"x":307,"y":887},
+                "eau3"  : {"x":505,"y":887},
+                "eau4"  : {"x":780,"y":886},
+                "eau5"  : {"x":1003,"y":887}
+                }`;
+
+            var viewLine = `{
+                "ext1" : {
+                    "dest" : [
+                        {"case" : "ext2"}
+                    ]
+                },
+                "ext2" : {
+                    "dest" : [
+                        {"case" : "ext1"}
+                    ]
+                }
+            }`;
+
+            $(window).on("load", function() {
+                var top       = $('#mapimage').offset().top;
+                var left      = $('#mapimage').offset().left;
+                var height    = $('#mapimage').height();
+                var width     = $('#mapimage').width();
+
+                var paper = Raphael(top, left, width, height);
+                var theme = new Theme(debug);
+                var conan = new Conan(paper, centerCoordonate, viewLine, debug, theme);
+            });
+        </script>
+    </head>
+    <body>
+        <div>
+            <img id="mapimage" src="./Port.png" alt="" usemap="#map" />
+            <map name="map" id="map">
+				<area alt="" title="" href="#" shape="poly" id="int1" coords="336,120,329,36,26,34,26,116" />
+				<area alt="" title="" href="#" shape="poly" id="int2" coords="357,25,624,29,480,131,362,132" />
+				<area alt="" title="" href="#" shape="poly" id="int3" coords="24,147,201,146,201,260,20,267" />
+				<area alt="" title="" href="#" shape="poly" id="int4" coords="203,148,248,145,247,122,312,122,315,144,344,145,362,134,480,135,488,253,203,260" />
+				<area alt="" title="" href="#" shape="poly" id="int5" coords="623,38,638,262,491,251,483,134" />
+				<area alt="" title="" href="#" shape="poly" id="int6" coords="839,29,932,143,793,232,783,34" />
+				<area alt="" title="" href="#" shape="poly" id="int7" coords="844,29,935,142,1039,186,1040,31" />
+				<area alt="" title="" href="#" shape="poly" id="int8" coords="795,235,936,145,1044,188,1041,246,790,250" />
+				<area alt="" title="" href="#" shape="poly" id="int9" coords="1,400,175,409,178,500,190,498,189,489,253,492,251,502,259,504,255,548,3,565" />
+				<area alt="" title="" href="#" shape="poly" id="int10" coords="254,579,271,417,427,420,421,611" />
+				<area alt="" title="" href="#" shape="poly" id="int11" coords="0,567,254,551,242,652,235,655,233,666,172,664,170,650,159,649,152,740,4,736" />
+				<area alt="" title="" href="#" shape="poly" id="int12" coords="254,582,416,615,411,751,246,744,246,653" />
+				<area alt="" title="" href="#" shape="poly" id="int13" coords="567,424,606,409,770,405,775,552,568,573" />
+				<area alt="" title="" href="#" shape="poly" id="int14" coords="569,578,778,556,778,563,796,557,807,717,680,712,628,717,575,715" />
+				<area alt="" title="" href="#" shape="poly" id="int15" coords="792,410,952,408,999,404,1034,402,1042,564,795,517" />
+				<area alt="" title="" href="#" shape="poly" id="int16" coords="795,522,1048,571,1049,716,810,726" />
+				<area alt="" title="" href="#" shape="poly" id="ext1" coords="656,1,750,2,757,93,670,141,667,121,632,130,629,80,659,65" />
+				<area alt="" title="" href="#" shape="poly" id="ext2" coords="671,143,756,97,758,148,789,146,787,190,759,192,764,279,675,283" />
+				<area alt="" title="" href="#" shape="poly" id="ext3" coords="1,304,95,303,113,391,2,387" />
+				<area alt="" title="" href="#" shape="poly" id="ext4" coords="99,303,119,302,122,265,183,265,188,304,396,299,387,402,261,400,251,403,186,401,183,395,115,390" />
+				<area alt="" title="" href="#" shape="poly" id="ext5" coords="400,299,389,402,435,405,430,513,541,483,536,399,569,420,605,406,580,383,582,374,629,371,620,294" />
+				<area alt="" title="" href="#" shape="poly" id="ext6" coords="623,293,634,369,851,366,850,285,767,285,762,281,677,285,679,289" />
+				<area alt="" title="" href="#" shape="poly" id="ext7" coords="854,282,912,281,911,248,961,248,964,277,1062,273,1061,360,996,362,998,401,954,405,953,364,854,366" />
+				<area alt="" title="" href="#" shape="poly" id="ext8" coords="430,517,539,486,548,748,419,738" />
+				<area alt="" title="" href="#" shape="poly" id="esc1" coords="187,403,255,404,250,492,189,489" />
+				<area alt="" title="" href="#" shape="poly" id="esc2" coords="169,668,234,671,227,746,168,745" />
+				<area alt="" title="" href="#" shape="poly" id="quai1" coords="2,745,116,749,132,865,3,862" />
+				<area alt="" title="" href="#" shape="poly" id="quai2" coords="119,750,164,751,165,745,225,749,236,754,324,757,324,863,133,863" />
+				<area alt="" title="" href="#" shape="poly" id="quai3" coords="326,865,327,759,417,760,420,742,556,751,557,864" />
+				<area alt="" title="" href="#" shape="poly" id="quai4" coords="560,863,559,750,626,745,629,724,679,713,679,748,799,741,822,864" />
+				<area alt="" title="" href="#" shape="poly" id="quai5" coords="803,741,826,865,1062,865,1059,725" />
+				<area alt="" title="" href="#" shape="poly" id="eau1" coords="256,867,253,909,1,909,2,868" />
+				<area alt="" title="" href="#" shape="poly" id="eau2" coords="256,907,258,868,428,867,423,909" />
+				<area alt="" title="" href="#" shape="poly" id="eau3" coords="424,908,430,868,709,869,676,908" />
+				<area alt="" title="" href="#" shape="poly" id="eau4" coords="682,909,712,870,897,870,911,908" />
+				<area alt="" title="" href="#" shape="poly" id="eau5" coords="900,869,913,908,1062,909,1062,868" />
+				</map>
+        </div>
+    </body>
+</html>

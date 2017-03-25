@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<!--VERSION 1.1-->
+<html>
+    <head>
+        <meta charset=utf-8 />
+        <title>Souk</title>
+
+        <script src="lib/jquery-3.1.1.js"></script>
+        <script src="lib/mapconan.js"></script>
+        <script src="lib/raphael.min.js"></script>
+
+        <script type="text/javascript">
+
+            var hash = window.location.hash;
+            var debug = (hash == '#debug') ? true : false;
+	
+            var centers = `{
+                "ponton1"  : [20,96],
+                "ponton2"  : [20,343],
+                "ponton3"  : [19,572],
+                "ponton4"  : [18,725],
+                "barque1"  : [142,122],
+                "barque2"  : [142,377],
+                "barque3"  : [158,602],
+                "eau1"  : [88,783],
+                "salle1"  : [324,175],
+                "salle2"  : [413,105],
+                "salle3"  : [494,393],
+                "salle4"  : [327,586],
+                "salle5"  : [189,813],
+                "salle6"  : [669,802],
+                "bois1"  : [260,393],
+                "bois2"  : {"A":[388,284],"B":[571,285]},
+                "bois3"  : [252,591],
+                "bois4"  : [360,785],
+                "bois5"  : [547,651],
+                "bois6"  : [679,554],
+                "bois7"  : [634,334],
+                "eau2"  : [653,93],
+                "eau3"  : [682,209],
+                "eau4"  : [744,444],
+                "eau5"  : [851,592],
+                "eau6"  : [820,732],
+                "terre1"  : [763,84],
+                "terre2"  : [921,73],
+                "terre3"  : [801,253],
+                "terre4"  : [974,263],
+                "terre5"  : [853,366],
+                "terre6"  : [1006,554],
+                "passerelle1"  : [941,662],
+                "passerelle2"  : [786,523],
+                "passerelle3"  : [684,358],
+                "autel"  : [897,760]
+                }`;
+
+            var lines = [
+                ['ponton1', 'ponton2'],
+                ['ponton1', 'ponton3']
+            ];
+
+            $(window).on("load", function() {
+                var top       = $('#mapimage').offset().top;
+                var left      = $('#mapimage').offset().left;
+                var height    = $('#mapimage').height();
+                var width     = $('#mapimage').width();
+
+                var paper = Raphael(top, left, width, height);
+                var theme = new Theme(debug);
+                var conan = new Conan(paper, centers, lines, debug, theme);
+            });
+        </script>
+    </head>
+    <body>
+        <div>
+            <img id="mapimage" src="./Souk.png" alt="" usemap="#map" />
+            <map name="map" id="map">
+				<area alt="" title="" href="#" shape="poly" id="ponton1" coords="61,213,0,212,1,0,61,1" />
+				<area alt="" title="" href="#" shape="poly" id="ponton2" coords="1,214,61,215,60,480,2,480" />
+				<area alt="" title="" href="#" shape="poly" id="ponton3" coords="1,482,60,483,59,669,2,668" />
+				<area alt="" title="" href="#" shape="poly" id="ponton4" coords="2,671,59,671,59,909,1,909" />
+				<area alt="" title="" href="#" shape="poly" id="barque1" coords="64,2,64,244,225,244,215,3" />
+				<area alt="" title="" href="#" shape="poly" id="barque2" coords="63,248,224,248,233,516,62,515" />
+				<area alt="" title="" href="#" shape="poly" id="barque3" coords="62,520,233,519,240,704,63,707" />
+				<area alt="" title="" href="#" shape="poly" id="eau1" coords="63,710,130,709,133,906,64,909" />
+				<area alt="" title="" href="#" shape="poly" id="salle1" coords="251,18,378,26,381,95,394,95,396,138,381,140,381,226,258,226" />
+				<area alt="" title="" href="#" shape="poly" id="salle2" coords="399,25,591,26,587,220,401,225" />
+				<area alt="" title="" href="#" shape="poly" id="salle3" coords="379,434,431,432,440,583,580,575,575,347,382,347" />
+				<area alt="" title="" href="#" shape="poly" id="salle4" coords="304,457,409,449,424,648,322,652" />
+				<area alt="" title="" href="#" shape="poly" id="salle5" coords="146,721,233,721,230,877,148,877" />
+				<area alt="" title="" href="#" shape="poly" id="salle6" coords="486,752,770,751,773,887,486,888" />
+				<area alt="" title="" href="#" shape="poly" id="bois1" coords="229,248,292,248,303,232,335,231,328,249,368,249,370,319,360,321,359,363,378,378,379,414,358,405,353,437,283,444,285,456,234,456" />
+				<area alt="" title="" href="#" shape="poly" id="bois2" coords="375,249,373,319,590,318,590,248" />
+				<area alt="" title="" href="#" shape="poly" id="bois3" coords="236,461,284,461,303,658,242,657" />
+				<area alt="" title="" href="#" shape="poly" id="bois4" coords="241,661,303,664,303,666,351,667,358,653,390,653,392,665,442,662,477,721,456,727,455,871,455,909,244,909" />
+				<area alt="" title="" href="#" shape="poly" id="bois5" coords="443,606,513,601,508,582,543,580,551,599,596,594,703,719,644,723,645,742,600,742,598,723,484,724,447,659" />
+				<area alt="" title="" href="#" shape="poly" id="bois6" coords="604,580,711,470,736,524,723,535,727,549,732,559,738,560,740,573,773,557,795,593,795,720,707,719,602,594" />
+				<area alt="" title="" href="#" shape="poly" id="bois7" coords="593,247,609,247,656,355,626,377,630,388,637,392,643,398,650,408,656,415,677,396,707,465,602,572,600,320,593,319" />
+				<area alt="" title="" href="#" shape="poly" id="eau2" coords="619,3,700,3,707,177,615,210" />
+				<area alt="" title="" href="#" shape="poly" id="eau3" coords="614,215,708,182,714,308,659,352,615,245" />
+				<area alt="" title="" href="#" shape="poly" id="eau4" coords="678,394,744,342,809,482,740,525" />
+				<area alt="" title="" href="#" shape="poly" id="eau5" coords="775,553,838,514,912,579,914,685,854,685" />
+				<area alt="" title="" href="#" shape="poly" id="eau6" coords="798,595,797,908,846,908,850,688" />
+				<area alt="" title="" href="#" shape="poly" id="terre1" coords="705,1,808,1,847,114,712,164" />
+				<area alt="" title="" href="#" shape="poly" id="terre2" coords="814,1,878,189,1038,90,1037,1" />
+				<area alt="" title="" href="#" shape="poly" id="terre3" coords="711,169,849,118,906,286,768,386,747,341,748,333,735,322,731,316,719,306,717,306" />
+				<area alt="" title="" href="#" shape="poly" id="terre4" coords="879,192,1038,95,1038,404,964,449" />
+				<area alt="" title="" href="#" shape="poly" id="terre5" coords="770,390,906,290,961,452,850,518,840,511,847,503,841,499,836,486,826,475,813,480" />
+				<area alt="" title="" href="#" shape="poly" id="terre6" coords="852,521,1038,412,1037,578,971,580,968,572,962,571,961,577,953,576,951,571,939,573,920,574,911,574" />
+				<area alt="" title="" href="#" shape="poly" id="passerelle1" coords="914,577,921,579,930,582,937,582,944,577,948,576,951,579,960,580,964,577,967,577,970,681,968,696,959,696,951,693,947,693,936,693,930,691,923,694,920,687,917,684" />
+				<area alt="" title="" href="#" shape="poly" id="passerelle2" coords="824,477,830,482,828,487,833,492,842,501,846,504,846,507,744,569,743,566,746,564,739,553,734,554,732,551,727,537" />
+				<area alt="" title="" href="#" shape="poly" id="passerelle3" coords="629,378,718,309,725,316,729,323,731,322,744,335,655,407" />
+				<area alt="" title="" href="#" shape="poly" id="autel" coords="871,705,922,704,921,698,969,700,1000,707,1004,889,872,888" />
+			</map>
+        </div>
+    </body>
+</html>
