@@ -501,12 +501,19 @@ Conan
  * @param {Boolean} debug    - Debug mode flag
  * @param {Theme}   theme    - Theme holder
  */
-function Conan(paper, centers, viewLine, debug, theme) {
-    this.paper    = paper;
+function Conan(centers, viewLine) {
+
+    var mapimage  = $('#mapimage');
+    var top       = mapimage.offset().top;
+    var left      = mapimage.offset().left;
+    var height    = mapimage.height();
+    var width     = mapimage.width();
+
+    this.paper    = Raphael(top, left, width, height);
     this.tiles    = new ServiceTiles(centers);
     this.viewLine = new ServiceLines(viewLine);
-    this.debug    = debug;
-    this.theme    = theme;
+    this.debug    = (window.location.hash === '#debug');
+    this.theme    = new Theme(this.debug);
     this.toRemove = [];
 
     this.processCoordonates();

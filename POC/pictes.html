@@ -11,9 +11,6 @@
 
         <script type="text/javascript">
 
-            var hash = window.location.hash;
-            var debug = (hash == '#debug') ? true : false;
-
             var centers = `{
                 "ext1"     : [45, 223],
                 "ext2"     : [243, 53],
@@ -81,26 +78,19 @@
 
                 ['village8', 'village9'],
 
-                ['village8', 'village9'],
+                ['village8', 'village9']
 
             ];
 
            $(window).on("load", function() {
-                var top       = $('#mapimage').offset().top;
-                var left      = $('#mapimage').offset().left;
-                var height    = $('#mapimage').height();
-                var width     = $('#mapimage').width();
-
-                var paper = Raphael(top, left, width, height);
-                var theme = new Theme(debug);
-                var conan = new Conan(paper, centers, lines, debug, theme);
-            });
+               new Conan(centers, lines);
+           });
 
         </script>
     </head>
     <body>
         <div>
-            <img id="mapimage" src="./Pictes.jpg" alt="" usemap="#map" />
+            <img id="mapimage" src="maps/Pictes.jpg" alt="" usemap="#map" />
             <map name="map" id="map">
                 <area alt="" title="" href="#" shape="poly" id="village1"  coords="127,312,416,235,368,80,116,217" />
                 <area alt="" title="" href="#" shape="poly" id="village2"  coords="495,212,422,234,373,77,497,36,548,93,509,108,490,153,488,188" />

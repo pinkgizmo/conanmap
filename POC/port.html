@@ -11,9 +11,6 @@
 
         <script type="text/javascript">
 
-            var hash = window.location.hash;
-            var debug = (hash == '#debug') ? true : false;
-
             var centers = `{
                 "int1"  : [150,100],
                 "int2"  : [470,62],
@@ -154,24 +151,17 @@
 				['quai4', 'eau4'],
 
 				['quai5', 'eau4',false,false,true],				
-				['quai5', 'eau5'],	
+				['quai5', 'eau5']
             ];
 
             $(window).on("load", function() {
-                var top       = $('#mapimage').offset().top;
-                var left      = $('#mapimage').offset().left;
-                var height    = $('#mapimage').height();
-                var width     = $('#mapimage').width();
-
-                var paper = Raphael(top, left, width, height);
-                var theme = new Theme(debug);
-                var conan = new Conan(paper, centers, lines, debug, theme);
+                new Conan(centers, lines);
             });
         </script>
     </head>
     <body>
         <div>
-            <img id="mapimage" src="./Port.png" alt="" usemap="#map" />
+            <img id="mapimage" src="maps/Port.png" alt="" usemap="#map" />
             <map name="map" id="map">
 				<area alt="" title="" href="#" shape="poly" id="int1" coords="336,120,329,36,26,34,26,116" />
 				<area alt="" title="" href="#" shape="poly" id="int2" coords="357,25,624,29,480,131,362,132" />
