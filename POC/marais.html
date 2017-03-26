@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--VERSION 1.1-->
 <html>
     <head>
         <meta charset=utf-8 />
@@ -13,444 +14,288 @@
             var hash = window.location.hash;
             var debug = (hash == '#debug') ? true : false;
 
-            var centerCoordonate = `{
-                "marais1"  : {"x": 70, "y": 197},
-                "marais2"  : {"x": 165, "y": 102},
-                "marais3"  : {"x": 337, "y": 38},
-                "marais4"  : {"x": 566, "y": 33},
-                "marais5"  : {"x": 732, "y": 47},
-                "marais6"  : {"x": 1006, "y": 46},
-                "marais7"  : {"x": 383, "y": 278},
-                "marais8"  : {"x": 547, "y": 311},
-                "marais9"  : {"x": 679, "y": 225},
-                "marais10"  : {"x": 803, "y": 261},
-                "marais11"  : {"x": 1004, "y": 260},
-                "marais12"  : {"x": 822, "y": 378},
-                "marais13"  : {"x": 996, "y": 377},
-                "marais14"  : {"x": 27, "y": 544},
-                "marais15"  : {"x": 27, "y": 647},
-                "marais16"  : {"x": 276, "y": 545},
-                "marais17"  : {"x": 347, "y": 646},
-                "marais18"  : {"x": 799, "y": 502},
-                "marais19"  : {"x": 777, "y": 630},
-                "marais20"  : {"x": 993, "y": 527},
-                "marais21"  : {"x": 27, "y": 884},
-                "marais22"  : {"x": 239, "y": 872},
-                "marais23"  : {"x": 430, "y": 868},
-                "marais24"  : {"x": 651, "y": 850},
-                "marais25"  : {"x": 639, "y": 742},
-                "marais26"  : {"x": 982, "y": 861},
-                "hutte1"  : {"x": 165, "y": 410},
-                "hutte2"  : {"x": 298, "y": 365},
-                "hutte3"  : {"x": 673, "y": 369},
-                "hutte4"  : {"x": 152, "y": 756},
-                "hutte5"  : {"x": 468, "y": 740},
-                "hutte6"  : {"x": 881, "y": 754},
-                "ponton1"  : {"x": 298, "y": 148},
-                "ponton2"  : {"x": 294, "y": 245},
-                "ponton3"  : {"x": 474, "y": 138},
-                "ponton4"  : {"x": 645, "y": 142},
-                "ponton5"  : {"x": 750, "y": 142},
-                "ponton6"  : {"x": 896, "y": 125},
-                "ponton7"  : {"x": 900, "y": 279},
-                "ponton8"  : {"x": 900, "y": 429},
-                "ponton9"  : {"x": 895, "y": 572},
-                "ponton10"  : {"x": 736, "y": 714},
-                "ponton11"  : {"x": 636, "y": 629},
-                "ponton12"  : {"x": 671, "y": 531},
-                "ponton13"  : {"x": 581, "y": 260},
-                "ponton14"  : {"x": 476, "y": 291},
-                "ponton15"  : {"x": 530, "y": 368},
-                "ponton16"  : {"x": 428, "y": 370},
-                "ponton17"  : {"x": 156, "y": 577},
-                "ponton18"  : {"x": 317, "y": 745},
-                "ponton19"  : {"x": 553, "y": 647},
-                "pierre1"  : {"x": 376, "y": 446},
-                "pierre2"  : {"x": 585, "y": 466},
-                "pierre3"  : {"x": 482, "y": 515},
-                "pierre4"  : {"x": 476, "y": 624}
-
+            var centers = `{
+                "marais1"  : [70,197],
+                "marais2"  : [165,102],
+                "marais3"  : [337,38],
+                "marais4"  : [566,33],
+                "marais5"  : [732,47],
+                "marais6"  : [1006,46],
+                "marais7"  : [383,278],
+                "marais8"  : [547,311],
+                "marais9"  : [679,225],
+                "marais10"  : [803,261],
+                "marais11"  : [1004,260],
+                "marais12"  : [822,378],
+                "marais13"  : [996,377],
+                "marais14"  : [27,544],
+                "marais15"  : [27,647],
+                "marais16"  : [276,545],
+                "marais17"  : [347,646],
+                "marais18"  : [799,502],
+                "marais19"  : [777,630],
+                "marais20"  : [993,527],
+                "marais21"  : [27,884],
+                "marais22"  : [239,872],
+                "marais23"  : [430,868],
+                "marais24"  : [651,850],
+                "marais25"  : [639,742],
+                "marais26"  : [982,861],
+                "hutte1"  : [165,410],
+                "hutte2"  : [298,365],
+                "hutte3"  : [673,369],
+                "hutte4"  : [152,756],
+                "hutte5"  : [468,740],
+                "hutte6"  : [881,754],
+                "ponton1"  : [298,148],
+                "ponton2"  : [294,245],
+                "ponton3"  : [474,138],
+                "ponton4"  : [645,142],
+                "ponton5"  : [750,142],
+                "ponton6"  : [896,125],
+                "ponton7"  : [900,279],
+                "ponton8"  : [900,429],
+                "ponton9"  : [895,572],
+                "ponton10"  : [736,714],
+                "ponton11"  : [636,629],
+                "ponton12"  : [671,531],
+                "ponton13"  : [581,260],
+                "ponton14"  : [476,291],
+                "ponton15"  : [530,368],
+                "ponton16"  : [428,370],
+                "ponton17"  : [156,577],
+                "ponton18"  : [317,745],
+                "ponton19"  : [553,647],
+                "pierre1"  : [376,446],
+                "pierre2"  : [585,466],
+                "pierre3"  : [482,515],
+                "pierre4"  : [476,624]
             }`;
 
-            var viewLine = `{
-				"marais1" : {
-                    "dest" : [
-                        {"case" : "marais2"},
-                        {"case" : "marais14"},
-                        {"case" : "marais15"},
-                        {"case" : "ponton1"},
-                        {"case" : "ponton2"}
-                    ]
-                },
-				"marais2" : {
-                    "dest" : [
-                        {"case" : "marais1"},
-                        {"case" : "marais3"},
-						{"case" : "ponton1"},
-                        {"case" : "ponton2"}
-                    ]
-                },
-				"marais3" : {
-                    "dest" : [
-                        {"case" : "marais2"},
-                        {"case" : "ponton1"},
-                        {"case" : "ponton3"}
-                    ]
-                },
-				"marais4" : {
-                    "dest" : [
-                        {"case" : "marais5"},
-                        {"case" : "ponton4"},
-                        {"case" : "ponton3"}
-                    ]
-                },
-				"marais5" : {
-                    "dest" : [
-                        {"case" : "marais4"},
-                        {"case" : "ponton4"},
-                        {"case" : "ponton5"},
-                        {"case" : "ponton6"}
-                    ]
-                },
-				"marais6" : {
-                    "dest" : [
-                        {"case" : "marais11"},
-                        {"case" : "marais13"},
-                        {"case" : "marais20"},
-                        {"case" : "ponton6"}
-                    ]
-                },
-				"marais7" : {
-                    "dest" : [
-                        {"case" : "ponton1"},
-                        {"case" : "ponton2"},
-                        {"case" : "ponton3"},
-                        {"case" : "ponton14"},
-                        {"case" : "ponton16"}
-                    ]
-                },
-				"marais8" : {
-                    "dest" : [
-                        {"case" : "ponton3"},
-                        {"case" : "ponton13"},
-                        {"case" : "hutte3"},
-                        {"case" : "ponton14"},
-                        {"case" : "ponton15"}
-                    ]
-                },
-				"marais9" : {
-                    "dest" : [
-                        {"case" : "ponton3"},
-                        {"case" : "ponton4"},
-                        {"case" : "ponton5"},
-                        {"case" : "ponton7"},
-                        {"case" : "ponton13"},
-                        {"case" : "marais10"}
-                    ]
-                },
-				"marais10" : {
-                    "dest" : [
-                        {"case" : "ponton3"},
-                        {"case" : "ponton4"},
-                        {"case" : "ponton5"},
-                        {"case" : "ponton6"},
-                        {"case" : "ponton7"},
-						{"case" : "ponton8"},
-						{"case" : "ponton9"},
-                        {"case" : "ponton13"},
-                        {"case" : "marais9"},
-                        {"case" : "marais12"},
-                        {"case" : "marais18"},
-                        {"case" : "marais19"}
-                    ]
-                },
-				"marais11" : {
-                    "dest" : [
-                        {"case" : "ponton6"},
-                        {"case" : "ponton7"},
-						{"case" : "ponton8"},
-						{"case" : "ponton9"},
-                        {"case" : "marais6"},
-                        {"case" : "marais13"},
-                        {"case" : "marais20"}
-                    ]
-                },
-				"marais12" : {
-                    "dest" : [
-                        {"case" : "ponton5"},
-                        {"case" : "ponton6"},
-                        {"case" : "ponton7"},
-						{"case" : "ponton8"},
-						{"case" : "ponton10"},
-						{"case" : "ponton11"},
-						{"case" : "ponton12"},
-						{"case" : "ponton9"},
-                        {"case" : "marais10"},
-                        {"case" : "marais12"},
-                        {"case" : "marais18"},
-                        {"case" : "marais19"}
-                    ]
-                },
-				"marais13" : {
-                    "dest" : [
-                        {"case" : "ponton6"},
-                        {"case" : "ponton7"},
-						{"case" : "ponton8"},
-						{"case" : "ponton9"},
-                        {"case" : "marais6"},
-                        {"case" : "marais11"},
-                        {"case" : "marais20"},
-                        {"case" : "hutte6"}
-                    ]
-                },
-				"marais14" : {
-                    "dest" : [
-						{"case" : "ponton17"},
-                        {"case" : "marais1"},
-                        {"case" : "marais15"}
-                    ]
-                },
-				"marais15" : {
-                    "dest" : [
-						{"case" : "ponton17"},
-                        {"case" : "marais1"},
-                        {"case" : "marais14"}
-                    ]
-                },
-				"marais16" : {
-                    "dest" : [
-						{"case" : "ponton11"},
-						{"case" : "ponton17"},
-						{"case" : "ponton18"},
-                        {"case" : "marais17"},
-                        {"case" : "hutte3"},
-                        {"case" : "pierre1"},
-                        {"case" : "pierre3"},
-                        {"case" : "pierre4"}
-                    ]
-                },
-				"marais17" : {
-                    "dest" : [
-						{"case" : "ponton15"},
-						{"case" : "ponton17"},
-						{"case" : "ponton18"},
-                        {"case" : "marais16"},
-                        {"case" : "pierre1"},
-                        {"case" : "pierre3"},
-                        {"case" : "pierre4"}
-                    ]
-                },
-				"marais18" : {
-                    "dest" : [
-						{"case" : "ponton9"},
-						{"case" : "ponton7"},
-						{"case" : "ponton8"},
-						{"case" : "ponton12"},
-						{"case" : "ponton11"},
-						{"case" : "ponton10"},
-                        {"case" : "marais10"},
-                        {"case" : "marais19"},
-                        {"case" : "marais12"}
-                    ]
-                },
-				"marais19" : {
-                    "dest" : [
-						{"case" : "ponton9"},
-						{"case" : "ponton7"},
-						{"case" : "ponton8"},
-						{"case" : "ponton12"},
-						{"case" : "ponton11"},
-						{"case" : "ponton10"},
-                        {"case" : "marais10"},
-                        {"case" : "marais18"},
-                        {"case" : "marais12"}
-                    ]
-                },
-				"marais20" : {
-                    "dest" : [
-                        {"case" : "ponton6"},
-                        {"case" : "ponton7"},
-						{"case" : "ponton8"},
-						{"case" : "ponton9"},
-                        {"case" : "marais6"},
-                        {"case" : "marais11"},
-                        {"case" : "marais13"}
-                    ]
-                },
-				"marais21" : {
-                    "dest" : [
-                        {"case" : "marais22"},
-                        {"case" : "marais23"},
-                        {"case" : "marais24"}
-                    ]
-                },
-				"marais22" : {
-                    "dest" : [
-                        {"case" : "marais21"},
-                        {"case" : "marais23"},
-                        {"case" : "marais24"}
-                    ]
-                },
-				"marais23" : {
-                    "dest" : [
-                        {"case" : "marais22"},
-                        {"case" : "marais21"},
-                        {"case" : "marais24"},
-                        {"case" : "ponton18"},
-                        {"case" : "hutte4"}
-                    ]
-                },
-				"marais24" : {
-                    "dest" : [
-                        {"case" : "marais22"},
-                        {"case" : "marais23"},
-                        {"case" : "marais25"},
-                        {"case" : "marais21"},
-                        {"case" : "ponton11"},
-                        {"case" : "ponton19"}
-                    ]
-                },
-				"marais25" : {
-                    "dest" : [
-                        {"case" : "marais24"},
-                        {"case" : "ponton11"},
-                        {"case" : "ponton19"},
-                        {"case" : "ponton10"}
-                    ]
-                },
-				"hutte6" : {
-                    "dest" : [
-                        {"case" : "marais13"}
-                    ]
-                },
-				"ponton1" : {
-                    "dest" : [
-                        {"case" : "marais1"},
-                        {"case" : "marais2"},
-                        {"case" : "marais3"},
-                        {"case" : "marais7"},
-                        {"case" : "ponton2"},
-                        {"case" : "ponton3"},
-                        {"case" : "ponton4"},
-                        {"case" : "ponton5"},
-                        {"case" : "ponton6"},
-                        {"case" : "ponton10"},
-                        {"case" : "ponton11"},
-                        {"case" : "ponton12"},
-                        {"case" : "ponton13"},
-                        {"case" : "ponton14"},
-                        {"case" : "ponton15"},
-                        {"case" : "ponton16"},
-                        {"case" : "ponton19"},
-                        {"case" : "ponton7"},
-						{"case" : "pierre2"},
-                        {"case" : "pierre3"},
-                        {"case" : "hutte2"},
-                        {"case" : "hutte3"}
-                    ]
-                },
-				"ponton2" : {
-                    "dest" : [
-                        {"case" : "marais1"},
-                        {"case" : "marais2"},
-                        {"case" : "marais7"},
-                        {"case" : "ponton1"},
-                        {"case" : "ponton3"},
-                        {"case" : "ponton4"},
-                        {"case" : "ponton5"},
-                        {"case" : "ponton6"},
-                        {"case" : "ponton10"},
-                        {"case" : "ponton11"},
-                        {"case" : "ponton12"},
-                        {"case" : "ponton13"},
-                        {"case" : "ponton14"},
-                        {"case" : "ponton15"},
-                        {"case" : "ponton16"},
-						{"case" : "pierre2"},
-                        {"case" : "pierre1"},
-                        {"case" : "hutte2"},
-                        {"case" : "hutte3"}
-                    ]
-                },
-				"ponton3" : {
-                    "dest" : [
-                        {"case" : "marais3"},
-                        {"case" : "marais4"},
-                        {"case" : "marais8"},
-                        {"case" : "marais7"},
-                        {"case" : "marais9"},
-                        {"case" : "ponton1"},
-                        {"case" : "ponton2"},
-                        {"case" : "ponton4"},
-                        {"case" : "ponton5"},
-                        {"case" : "ponton6"},
-                        {"case" : "ponton7"},
-                        {"case" : "ponton10"},
-                        {"case" : "ponton11"},
-                        {"case" : "ponton12"},
-                        {"case" : "ponton13"},
-                        {"case" : "ponton14"},
-                        {"case" : "ponton15"},
-                        {"case" : "ponton16"},
-                        {"case" : "ponton18"},
-                        {"case" : "ponton19"},
-						{"case" : "pierre2"},
-                        {"case" : "pierre1"},
-                        {"case" : "pierre3"},
-                        {"case" : "pierre4"},
-                        {"case" : "hutte1"},
-                        {"case" : "hutte3"}
-                    ]
-                },
-				"ponton4" : {
-                    "dest" : [
-                        {"case" : "marais4"},
-                        {"case" : "marais5"},
-                        {"case" : "marais9"},
-                        {"case" : "marais10"},
-                        {"case" : "ponton1"},
-                        {"case" : "ponton2"},
-                        {"case" : "ponton3"},
-                        {"case" : "ponton5"},
-                        {"case" : "ponton6"},
-                        {"case" : "ponton7"},
-                        {"case" : "ponton8"},
-                        {"case" : "ponton13"},
-                        {"case" : "ponton14"},
-                        {"case" : "ponton15"},
-                        {"case" : "ponton16"},
-                        {"case" : "ponton18"},
-                        {"case" : "ponton19"},
-						{"case" : "pierre2"},
-                        {"case" : "pierre1"},
-                        {"case" : "pierre3"},
-                        {"case" : "pierre4"}
-                    ]
-                },
-				"ponton5" : {
-                    "dest" : [
-                        {"case" : "marais5"},
-                        {"case" : "marais9"},
-                        {"case" : "marais10"},
-                        {"case" : "marais12"},
-                        {"case" : "ponton1"},
-                        {"case" : "ponton2"},
-                        {"case" : "ponton3"},
-                        {"case" : "ponton4"},
-                        {"case" : "ponton6"},
-                        {"case" : "ponton7"},
-                        {"case" : "ponton8"},
-                        {"case" : "ponton9"},
-                        {"case" : "ponton13"},
-                        {"case" : "ponton14"},
-                        {"case" : "ponton15"},
-                        {"case" : "ponton16"},
-                        {"case" : "ponton17"},
-                        {"case" : "pierre1"}
+            var lines = [
 
-                    ]
-                }
-            }`;
+                        ['marais1','marais2'],
+                        ['marais1','marais14'],
+                        ['marais1','marais15'],
+                        ['marais1','ponton1'],
+                        ['marais1','ponton2'],
+
+                        ['marais2','marais3'],
+						['marais2','ponton1'],
+                        ['marais2','ponton2'],
+
+                        ['marais3','ponton1'],
+                        ['marais3','ponton3'],
+
+                        ['marais4','marais5'],
+                        ['marais4','ponton4'],
+                        ['marais4','ponton3'],
+
+                        ['marais5','ponton4'],
+                        ['marais5','ponton5'],
+                        ['marais5','ponton6'],
+
+                        ['marais6','marais11'],
+                        ['marais6','marais13'],
+                        ['marais6','marais20'],
+                        ['marais6','ponton6'],
+
+                        ['marais7','ponton1'],
+                        ['marais7','ponton2'],
+                        ['marais7','ponton3'],
+                        ['marais7','ponton14'],
+                        ['marais7','ponton16'],
+
+                        ['marais8','ponton3'],
+                        ['marais8','ponton13'],
+                        ['marais8','hutte3'],
+                        ['marais8','ponton14'],
+                        ['marais8','ponton15'],
+
+                        ['marais9','ponton3'],
+                        ['marais9','ponton4'],
+                        ['marais9','ponton5'],
+                        ['marais9','ponton7'],
+                        ['marais9','ponton13'],
+
+                        ['marais10','ponton3'],
+                        ['marais10','ponton4'],
+                        ['marais10','ponton5'],
+                        ['marais10','ponton6'],
+                        ['marais10','ponton7'],
+						['marais10','ponton8'],
+						['marais10','ponton9'],
+                        ['marais10','ponton13'],
+                        ['marais10','marais12'],
+                        ['marais10','marais18'],
+                        ['marais10','marais19'],
+
+                        ['marais11','ponton6'],
+                        ['marais11','ponton7'],
+						['marais11','ponton8'],
+						['marais11','ponton9'],
+                        ['marais11','marais13'],
+                        ['marais11','marais20'],
+
+                        ['marais12','ponton5'],
+                        ['marais12','ponton6'],
+                        ['marais12','ponton7'],
+						['marais12','ponton8'],
+						['marais12','ponton10'],
+						['marais12','ponton11'],
+						['marais12','ponton12'],
+						['marais12','ponton9'],
+                        ['marais12','marais12'],
+                        ['marais12','marais18'],
+                        ['marais12','marais19'],
+
+                        ['marais13','ponton6'],
+                        ['marais13','ponton7'],
+						['marais13','ponton8'],
+						['marais13','ponton9'],
+                        ['marais13','marais20'],
+                        ['marais13','hutte6'],
+
+						['marais14','ponton17'],
+                        ['marais14','marais15'],
+
+						['marais15','ponton17'],
+
+						['marais16','ponton11'],
+						['marais16','ponton17'],
+						['marais16','ponton18'],
+                        ['marais16','marais17'],
+                        ['marais16','hutte3'],
+                        ['marais16','pierre1'],
+                        ['marais16','pierre3'],
+                        ['marais16','pierre4'],
+
+						['marais17','ponton15'],
+						['marais17','ponton17'],
+						['marais17','ponton18'],
+                        ['marais17','pierre1'],
+                        ['marais17','pierre3'],
+                        ['marais17','pierre4'],
+
+						['marais18','ponton9'],
+						['marais18','ponton7'],
+						['marais18','ponton8'],
+						['marais18','ponton12'],
+						['marais18','ponton11'],
+                        ['marais18','marais19'],
+
+						['marais19','ponton9'],
+						['marais19','ponton7'],
+						['marais19','ponton8'],
+						['marais19','ponton12'],
+						['marais19','ponton11'],
+						['marais19','ponton10'],
+
+                        ['marais20','ponton6'],
+                        ['marais20','ponton7'],
+						['marais20','ponton8'],
+						['marais20','ponton9'],
+
+                        ['marais21','marais22'],
+                        ['marais21','marais23'],
+                        ['marais21','marais24'],
+
+                        ['marais22','marais23'],
+                        ['marais22','marais24'],
+
+                        ['marais23','marais24'],
+                        ['marais23','ponton18'],
+                        ['marais23','hutte4'],
+
+                        ['marais24','marais25'],
+                        ['marais24','ponton11'],
+                        ['marais24','ponton19'],
+
+                        ['marais25','ponton11'],
+                        ['marais25','ponton19'],
+                        ['marais25','ponton10'],
+
+                        ['ponton1','ponton2'],
+                        ['ponton1','ponton3'],
+                        ['ponton1','ponton4'],
+                        ['ponton1','ponton5'],
+                        ['ponton1','ponton6'],
+                        ['ponton1','ponton10'],
+                        ['ponton1','ponton11'],
+                        ['ponton1','ponton12'],
+                        ['ponton1','ponton13'],
+                        ['ponton1','ponton14'],
+                        ['ponton1','ponton15'],
+                        ['ponton1','ponton16'],
+                        ['ponton1','ponton19'],
+                        ['ponton1','ponton7'],
+						['ponton1','pierre2'],
+                        ['ponton1','pierre3'],
+                        ['ponton1','hutte2'],
+                        ['ponton1','hutte3'],
+
+                        ['ponton2','ponton3'],
+                        ['ponton2','ponton4'],
+                        ['ponton2','ponton5'],
+                        ['ponton2','ponton6'],
+                        ['ponton2','ponton10'],
+                        ['ponton2','ponton11'],
+                        ['ponton2','ponton12'],
+                        ['ponton2','ponton13'],
+                        ['ponton2','ponton14'],
+                        ['ponton2','ponton15'],
+                        ['ponton2','ponton16'],
+						['ponton2','pierre2'],
+                        ['ponton2','pierre1'],
+                        ['ponton2','hutte2'],
+                        ['ponton2','hutte3'],
+
+                        ['ponton3','ponton4'],
+                        ['ponton3','ponton5'],
+                        ['ponton3','ponton6'],
+                        ['ponton3','ponton7'],
+                        ['ponton3','ponton10'],
+                        ['ponton3','ponton11'],
+                        ['ponton3','ponton12'],
+                        ['ponton3','ponton13'],
+                        ['ponton3','ponton14'],
+                        ['ponton3','ponton15'],
+                        ['ponton3','ponton16'],
+                        ['ponton3','ponton18'],
+                        ['ponton3','ponton19'],
+						['ponton3','pierre2'],
+                        ['ponton3','pierre1'],
+                        ['ponton3','pierre3'],
+                        ['ponton3','pierre4'],
+                        ['ponton3','hutte1'],
+                        ['ponton3','hutte3'],
+
+                        ['ponton4','ponton5'],
+                        ['ponton4','ponton6'],
+                        ['ponton4','ponton7'],
+                        ['ponton4','ponton8'],
+                        ['ponton4','ponton13'],
+                        ['ponton4','ponton14'],
+                        ['ponton4','ponton15'],
+                        ['ponton4','ponton16'],
+                        ['ponton4','ponton18'],
+                        ['ponton4','ponton19'],
+						['ponton4','pierre2'],
+                        ['ponton4','pierre1'],
+                        ['ponton4','pierre3'],
+                        ['ponton4','pierre4'],
+
+                        ['ponton5','ponton6'],
+                        ['ponton5','ponton7'],
+                        ['ponton5','ponton8'],
+                        ['ponton5','ponton9'],
+                        ['ponton5','ponton13'],
+                        ['ponton5','ponton14'],
+                        ['ponton5','ponton15'],
+                        ['ponton5','ponton16'],
+                        ['ponton5','ponton17'],
+                        ['ponton5','pierre1']
+           ];
 
             var icons = '{}';
 
@@ -468,7 +313,7 @@
                 }
             }';*/
 
-            $(document).ready(function() {
+            $(window).on("load", function() {
                 var top       = $('#mapimage').offset().top;
                 var left      = $('#mapimage').offset().left;
                 var height    = $('#mapimage').height();
@@ -476,7 +321,7 @@
 
                 var paper = Raphael(top, left, width, height);
                 var theme = new Theme(debug);
-                var conan = new Conan(paper, centerCoordonate, viewLine, debug, theme);
+                var conan = new Conan(paper, centers, lines, debug, theme);
             });
         </script>
     </head>

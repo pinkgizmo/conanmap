@@ -5,66 +5,58 @@
         <meta charset=utf-8 />
         <title>Port</title>
 
-        <script src="jquery-3.1.1.js"></script>
-        <script src="mapconan.js"></script>
-        <script src="raphael.min.js"></script>
+        <script src="lib/jquery-3.1.1.js"></script>
+        <script src="lib/mapconan.js"></script>
+        <script src="lib/raphael.min.js"></script>
 
         <script type="text/javascript">
 
             var hash = window.location.hash;
             var debug = (hash == '#debug') ? true : false;
 
-            var centerCoordonate = `{
-                "int1"  : {"x":150,"y":100},
-                "int2"  : {"x":470,"y":62},
-                "int3"  : {"x":150,"y":199},
-                "int4"  : {"x":336,"y":177},
-                "int5"  : {"x":559,"y":158},
-                "int6"  : {"x":853,"y":144},
-                "int7"  : {"x":895,"y":56},
-                "int8"  : {"x":969,"y":195},
-                "int9"  : {"x":86,"y":455},
-                "int10"  : {"x":340,"y":472},
-                "int11"  : {"x":126,"y":646},
-                "int12"  : {"x":331,"y":678},
-                "int13"  : {"x":601,"y":457},
-                "int14"  : {"x":647,"y":676},
-                "int15"  : {"x":990,"y":443},
-                "int16"  : {"x":917,"y":576},
-                "ext1"  : {"x":698,"y":45},
-                "ext2"  : {"x":711,"y":209},
-                "ext3"  : {"x":43,"y":330},
-                "ext4"  : {"x":189,"y":349},
-                "ext5"  : {"x":507,"y":343},
-                "ext6"  : {"x":724,"y":329},
-                "ext7"  : {"x":936,"y":317},
-                "ext8"  : {"x":483,"y":652},
-                "esc1"  : {"x":222,"y":444},
-                "esc2"  : {"x":199,"y":703},
-                "quai1"  : {"x":85,"y":807},
-                "quai2"  : {"x":212,"y":808},
-                "quai3"  : {"x":443,"y":806},
-                "quai4"  : {"x":665,"y":803},
-                "quai5"  : {"x":944,"y":800},
-                "eau1"  : {"x":131,"y":887},
-                "eau2"  : {"x":307,"y":887},
-                "eau3"  : {"x":505,"y":887},
-                "eau4"  : {"x":780,"y":886},
-                "eau5"  : {"x":1003,"y":887}
+            var centers = `{
+                "int1"  : [150,100],
+                "int2"  : [470,62],
+                "int3"  : [150,199],
+                "int4"  : [336,177],
+                "int5"  : [559,158],
+                "int6"  : [853,144],
+                "int7"  : [895,56],
+                "int8"  : [969,195],
+                "int9"  : [86,455],
+                "int10"  : [340,472],
+                "int11"  : [126,646],
+                "int12"  : [331,678],
+                "int13"  : [601,457],
+                "int14"  : [647,676],
+                "int15"  : [990,443],
+                "int16"  : [917,576],
+                "ext1"  : [698,45],
+                "ext2"  : [711,209],
+                "ext3"  : [43,330],
+                "ext4"  : [189,349],
+                "ext5"  : [507,343],
+                "ext6"  : [724,329],
+                "ext7"  : [936,317],
+                "ext8"  : [483,652],
+                "esc1"  : [222,444],
+                "esc2"  : [199,703],
+                "quai1"  : [85,807],
+                "quai2"  : [212,808],
+                "quai3"  : [443,806],
+                "quai4"  : [665,803],
+                "quai5"  : [944,800],
+                "eau1"  : [131,887],
+                "eau2"  : [307,887],
+                "eau3"  : [505,887],
+                "eau4"  : [780,886],
+                "eau5"  : [1003,887]
                 }`;
 
-            var viewLine = `{
-                "ext1" : {
-                    "dest" : [
-                        {"case" : "ext2"}
-                    ]
-                },
-                "ext2" : {
-                    "dest" : [
-                        {"case" : "ext1"}
-                    ]
-                }
-            }`;
+            var lines = [
+                ['int2', 'int4'],
+                ['int2', 'int5']
+            ];
 
             $(window).on("load", function() {
                 var top       = $('#mapimage').offset().top;
@@ -74,7 +66,7 @@
 
                 var paper = Raphael(top, left, width, height);
                 var theme = new Theme(debug);
-                var conan = new Conan(paper, centerCoordonate, viewLine, debug, theme);
+                var conan = new Conan(paper, centers, lines, debug, theme);
             });
         </script>
     </head>

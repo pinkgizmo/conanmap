@@ -14,478 +14,231 @@
             var hash = window.location.hash;
             var debug = (hash == '#debug') ? true : false;
 
-            var centerCoordonate = `{
-                "ext1"  : {"x":118,"y":890},
-                "ext2"  : {"x":713,"y":890},
-                "int1"  : {"x":451,"y":731},
-                "int2"  : {"x":454,"y":563},
-                "int3"  : {"x":428,"y":337},
-                "int4"  : {"x":236,"y":294},
-                "int5"  : {"x":176,"y":442},
-                "parquet1"  : {"x":724,"y":414},
-                "parquet2"  : {"x":789,"y":559},
-                "parquet3"  : {"x":625,"y":736},
-                "bar1"  : {"x":216,"y":524},
-                "bar2"  : {"x":344,"y":525},
-                "bar3"  : {"x":344,"y":744},
-                "caisse1"  : {"x":120,"y":571},
-                "caisse2"  : {"x":282,"y":585},
-                "caisse3"  : {"x":291,"y":758},
-                "salle1"  : {"x":138,"y":709},
-                "salle2"  : {"x":641,"y":557},
-                "salle3"  : {"x":730,"y":292},
-                "esc1"  : {"x":76,"y":294},
-                "esc2"  : {"x":578,"y":289},
-                "esc3"  : {"x":752,"y":771},
-                "couloir1"  : {"x":118,"y":185},
-                "couloir2"  : {"x":316,"y":187},
-                "couloir3"  : {"x":535,"y":185},
-                "couloir4"  : {"x":735,"y":186},
-                "couloir5"  : {"x":877,"y":189},
-                "couloir6"  : {"x":877,"y":258},
-                "couloir7"  : {"x":878,"y":510},
-                "couloir8"  : {"x":871,"y":769},
-                "chambre1"  : {"x":115,"y":77},
-                "chambre2"  : {"x":317,"y":75},
-                "chambre3"  : {"x":533,"y":76},
-                "chambre4"  : {"x":736,"y":75},
-                "chambre5"  : {"x":948,"y":75},
-                "chambre6"  : {"x":990,"y":259},
-                "chambre7"  : {"x":963,"y":511},
-                "chambre8"  : {"x":962,"y":769}
+            var centers = `{
+                "ext1"  : [118,890],
+                "ext2"  : [713,890],
+                "int1"  : [451,731],
+                "int2"  : [454,563],
+                "int3"  : [428,337],
+                "int4"  : [236,294],
+                "int5"  : [176,442],
+                "parquet1"  : [724,414],
+                "parquet2"  : [789,559],
+                "parquet3"  : [625,736],
+                "bar1"  : [216,524],
+                "bar2"  : [344,525],
+                "bar3"  : [344,744],
+                "caisse1"  : [120,571],
+                "caisse2"  : [282,585],
+                "caisse3"  : [291,758],
+                "salle1"  : [138,709],
+                "salle2"  : [641,557],
+                "salle3"  : [730,292],
+                "esc1"  : [76,294],
+                "esc2"  : [578,289],
+                "esc3"  : [752,771],
+                "couloir1"  : [118,185],
+                "couloir2"  : [316,187],
+                "couloir3"  : [535,185],
+                "couloir4"  : [735,186],
+                "couloir5"  : [877,189],
+                "couloir6"  : [877,258],
+                "couloir7"  : [878,510],
+                "couloir8"  : [871,769],
+                "chambre1"  : [115,77],
+                "chambre2"  : [317,75],
+                "chambre3"  : [533,76],
+                "chambre4"  : [736,75],
+                "chambre5"  : [948,75],
+                "chambre6"  : [990,259],
+                "chambre7"  : [963,511],
+                "chambre8"  : [962,769]
                 }`;
 
-            var viewLine = `{
-                "ext1" : {
-                    "dest" : [
-                        {"case" : "ext2"}
-                    ]
-                },
-                "ext2" : {
-                    "dest" : [
-                        {"case" : "ext1"}
-                    ]
-                },
-				 "int1" : {
-                    "dest" : [
-                        {"case" : "int2"},
-                        {"case" : "int3"},
-                        {"case" : "int4"},
-                        {"case" : "int5"},
-                        {"case" : "parquet3"},
-                        {"case" : "esc1"},
-                        {"case" : "esc3"},
-                        {"case" : "bar1"},
-                        {"case" : "bar2"},
-                        {"case" : "bar3"},
-                        {"case" : "caisse2"},
-                        {"case" : "caisse3"},
-                        {"case" : "salle1"},
-						{"case" : "couloir1"},
-                        {"case" : "couloir2"},
-                        {"case" : "couloir3"},
-                        {"case" : "couloir8"}
-                    ]
-                },
-				"int2" : {
-                    "dest" : [
-                        {"case" : "int1"},
-                        {"case" : "int3"},
-                        {"case" : "int4"},
-                        {"case" : "int5"},
-                        {"case" : "esc1"},
-                        {"case" : "esc2"},
-                        {"case" : "bar1"},
-                        {"case" : "bar2"},
-                        {"case" : "bar3"},
-                        {"case" : "caisse2"},
-                        {"case" : "caisse3"},
-                        {"case" : "caisse1"},
-						{"case" : "couloir1"},
-                        {"case" : "couloir2"},
-                        {"case" : "couloir3"}
-                    ]
-                },
-				"int3" : {
-                    "dest" : [
-                        {"case" : "int2"},
-                        {"case" : "int1"},
-                        {"case" : "int4"},
-                        {"case" : "int5"},
-						{"case" : "esc1"},
-                        {"case" : "esc2"},
-                        {"case" : "bar1"},
-                        {"case" : "bar2"},
-                        {"case" : "bar3"},
-                        {"case" : "caisse2"},
-                        {"case" : "caisse3"},
-                        {"case" : "caisse1"},
-						{"case" : "couloir1"},
-                        {"case" : "couloir2"},
-                        {"case" : "couloir3"}
-                    ]
-                },
-				"int4" : {
-                    "dest" : [
-                        {"case" : "int2"},
-                        {"case" : "int3"},
-                        {"case" : "int1"},
-                        {"case" : "int5"},
-                        {"case" : "esc1"},
-                        {"case" : "esc2"},
-                        {"case" : "bar1"},
-                        {"case" : "bar2"},
-                        {"case" : "bar3"},
-                        {"case" : "caisse2"},
-                        {"case" : "caisse3"},
-                        {"case" : "caisse1"},
-						{"case" : "couloir1"},
-                        {"case" : "couloir2"},
-                        {"case" : "couloir3"}
-                    ]
-                },
-				"int5" : {
-                    "dest" : [
-                        {"case" : "int2"},
-                        {"case" : "int3"},
-                        {"case" : "int1"},
-                        {"case" : "int4"},
-                        {"case" : "esc1"},
-                        {"case" : "esc2"},
-                        {"case" : "bar1"},
-                        {"case" : "bar2"},
-                        {"case" : "bar3"},
-                        {"case" : "caisse2"},
-                        {"case" : "caisse1"},
-						{"case" : "parquet1"},
-						{"case" : "couloir1"},
-                        {"case" : "couloir2"},
-                        {"case" : "couloir3"}
-                    ]
-                },
-				"bar1" : {
-                    "dest" : [
-                        {"case" : "int2"},
-                        {"case" : "int3"},
-                        {"case" : "int1"},
-                        {"case" : "int4"},
-                        {"case" : "int5"},
-                        {"case" : "esc1"},
-                        {"case" : "esc2"},
-                        {"case" : "bar2"},
-                        {"case" : "bar3"},
-                        {"case" : "caisse2"},
-                        {"case" : "caisse1"},
-						{"case" : "parquet3"},
-						{"case" : "couloir1"},
-                        {"case" : "couloir2"},
-                        {"case" : "couloir3"}
-                    ]
-                },
-				"bar2" : {
-                    "dest" : [
-                        {"case" : "int2"},
-                        {"case" : "int3"},
-                        {"case" : "int1"},
-                        {"case" : "int4"},
-                        {"case" : "int5"},
-                        {"case" : "esc1"},
-                        {"case" : "esc2"},
-                        {"case" : "bar1"},
-                        {"case" : "bar3"},
-                        {"case" : "caisse3"},
-                        {"case" : "caisse2"},
-                        {"case" : "caisse1"},
-						{"case" : "couloir1"},
-                        {"case" : "couloir2"},
-                        {"case" : "couloir3"}
-                    ]
-                },
-				"bar3" : {
-                    "dest" : [
-                        {"case" : "int2"},
-                        {"case" : "int3"},
-                        {"case" : "int1"},
-                        {"case" : "int4"},
-                        {"case" : "int5"},
-                        {"case" : "esc1"},
-                        {"case" : "esc2"},
-                        {"case" : "bar1"},
-                        {"case" : "bar2"},
-                        {"case" : "caisse3"},
-                        {"case" : "caisse2"},
-                        {"case" : "caisse2"},
-                        {"case" : "esc3"},
-                        {"case" : "parquet3"},
-						{"case" : "couloir1"},
-                        {"case" : "couloir2"},
-                        {"case" : "couloir3"},
-                        {"case" : "couloir8"}
-                    ]
-                },
-				"salle1" : {
-                    "dest" : [
-                        {"case" : "int1"},
-                        {"case" : "parquet3"}
-                    ]
-                },
-				"salle3" : {
-                    "dest" : [
-                        {"case" : "parquet2"}
-                    ]
-                },
-				"parquet1" : {
-                    "dest" : [
-                        {"case" : "int5"}
-                    ]
-                },
-				"parquet2" : {
-                    "dest" : [
-                        {"case" : "salle3"},
-                        {"case" : "esc3"}
-                    ]
-                },
-				"parquet3" : {
-                    "dest" : [
-                        {"case" : "salle1"},
-                        {"case" : "int1"},
-                        {"case" : "bar1"},
-                        {"case" : "bar3"},
-                        {"case" : "caisse3"},
-                        {"case" : "caisse2"},
-                        {"case" : "couloir8"},
-                        {"case" : "esc3"}
-                    ]
-                },
-				"caisse1" : {
-                    "dest" : [
-                        {"case" : "caisse2"},
-                        {"case" : "bar1"},
-                        {"case" : "bar2"},
-                        {"case" : "int5"},
-                        {"case" : "int4"},
-                        {"case" : "int3"},
-                        {"case" : "int2"},
-                        {"case" : "esc1"},
-                        {"case" : "esc2"},
-						{"case" : "couloir1"},
-                        {"case" : "couloir2"},
-                        {"case" : "couloir3"}
-                    ]
-                },
-				"caisse2" : {
-                    "dest" : [
-                        {"case" : "caisse1"},
-                        {"case" : "caisse3"},
-                        {"case" : "bar1"},
-                        {"case" : "bar2"},
-                        {"case" : "bar3"},
-                        {"case" : "int1"},
-                        {"case" : "int5"},
-                        {"case" : "int4"},
-                        {"case" : "int3"},
-                        {"case" : "int2"},
-                        {"case" : "esc1"},
-                        {"case" : "esc2"},
-                        {"case" : "esc3"},
-                        {"case" : "parquet3"},
-						{"case" : "couloir1"},
-                        {"case" : "couloir2"},
-                        {"case" : "couloir3"}
-                    ]
-                },
-				"caisse3" : {
-                    "dest" : [
-                        {"case" : "caisse2"},
-                        {"case" : "bar2"},
-                        {"case" : "bar3"},
-                        {"case" : "int1"},
-                        {"case" : "int4"},
-                        {"case" : "int3"},
-                        {"case" : "int2"},
-                        {"case" : "esc2"},
-                        {"case" : "esc3"},
-                        {"case" : "parquet3"},
-                        {"case" : "couloir2"},
-						{"case" : "couloir8"},
-                        {"case" : "couloir3"}
-                    ]
-                },
-				"chambre6" : {
-                    "dest" : [
-                        {"case" : "couloir6"}
-                    ]
-                },
-				"chambre7" : {
-                    "dest" : [
-                        {"case" : "couloir7"}
-                    ]
-                },
-				"chambre8" : {
-                    "dest" : [
-                        {"case" : "couloir8"}
-                    ]
-                },
-				"esc1" : {
-                    "dest" : [
-                        {"case" : "esc2"},
-                        {"case" : "int1"},
-                        {"case" : "int2"},
-                        {"case" : "int3"},
-                        {"case" : "int4"},
-                        {"case" : "int5"},
-                        {"case" : "bar1"},
-                        {"case" : "bar2"},
-                        {"case" : "bar3"},
-                        {"case" : "caisse1"},
-                        {"case" : "caisse2"},
-                        {"case" : "couloir1"},
-                        {"case" : "couloir2"},
-                        {"case" : "couloir3"}
-                    ]
-                },
-				"esc2" : {
-                    "dest" : [
-                        {"case" : "esc1"},
-                        {"case" : "int2"},
-                        {"case" : "int3"},
-                        {"case" : "int4"},
-                        {"case" : "int5"},
-                        {"case" : "bar1"},
-                        {"case" : "bar2"},
-                        {"case" : "bar3"},
-                        {"case" : "caisse1"},
-                        {"case" : "caisse2"},
-                        {"case" : "caisse3"},
-                        {"case" : "couloir1"},
-                        {"case" : "couloir2"},
-                        {"case" : "couloir3"}
-                    ]
-                },
-				"esc3" : {
-                    "dest" : [
-                        {"case" : "couloir8"},
-                        {"case" : "parquet3"},
-                        {"case" : "parquet2"},
-                        {"case" : "int1"},
-                        {"case" : "bar3"},
-                        {"case" : "caisse2"},
-                        {"case" : "caisse3"}
-                    ]
-                },
-				"couloir1" : {
-                    "dest" : [
-                        {"case" : "esc1"},
-                        {"case" : "int1"},
-                        {"case" : "int2"},
-                        {"case" : "int3"},
-                        {"case" : "int4"},
-                        {"case" : "int5"},
-                        {"case" : "bar1"},
-                        {"case" : "bar2"},
-                        {"case" : "bar3"},
-                        {"case" : "caisse1"},
-                        {"case" : "caisse2"},
-                        {"case" : "esc2"},
-                        {"case" : "couloir2"},
-                        {"case" : "couloir3"},
-                        {"case" : "couloir4"},
-                        {"case" : "couloir5"}
-                    ]
-                },
-				"couloir2" : {
-                    "dest" : [
-                        {"case" : "esc1"},
-                        {"case" : "int1"},
-                        {"case" : "int2"},
-                        {"case" : "int3"},
-                        {"case" : "int4"},
-                        {"case" : "int5"},
-                        {"case" : "bar1"},
-                        {"case" : "bar2"},
-                        {"case" : "bar3"},
-                        {"case" : "caisse1"},
-                        {"case" : "caisse2"},
-                        {"case" : "caisse3"},
-                        {"case" : "esc2"},
-                        {"case" : "couloir1"},
-                        {"case" : "couloir3"},
-                        {"case" : "couloir4"},
-                        {"case" : "couloir5"}
-                    ]
-                },
-				"couloir3" : {
-                    "dest" : [
-                        {"case" : "esc1"},
-                        {"case" : "int1"},
-                        {"case" : "int2"},
-                        {"case" : "int3"},
-                        {"case" : "int4"},
-                        {"case" : "int5"},
-                        {"case" : "bar1"},
-                        {"case" : "bar2"},
-                        {"case" : "bar3"},
-                        {"case" : "caisse1"},
-                        {"case" : "caisse2"},
-                        {"case" : "caisse3"},
-                        {"case" : "esc2"},
-                        {"case" : "couloir2"},
-                        {"case" : "couloir1"},
-                        {"case" : "couloir4"},
-                        {"case" : "couloir5"}
-                    ]
-                },
-				"couloir4" : {
-                    "dest" : [
-                        {"case" : "couloir1"},
-                        {"case" : "couloir2"},
-                        {"case" : "couloir3"},
-                        {"case" : "couloir5"}
-                    ]
-                },
-				"couloir5" : {
-                    "dest" : [
-                        {"case" : "couloir1"},
-                        {"case" : "couloir2"},
-                        {"case" : "couloir3"},
-                        {"case" : "couloir4"},
-                        {"case" : "couloir6"},
-                        {"case" : "couloir7"},
-                        {"case" : "couloir8"}
-                    ]
-                },
-				"couloir6" : {
-                    "dest" : [
-                        {"case" : "couloir5"},
-                        {"case" : "couloir7"},
-                        {"case" : "chambre6"},
-                        {"case" : "couloir8"}
-                    ]
-                },
-				"couloir7" : {
-                    "dest" : [
-                        {"case" : "couloir5"},
-                        {"case" : "couloir6"},
-                        {"case" : "chambre7"},
-                        {"case" : "couloir8"}
-                    ]
-                },
-				"couloir8" : {
-                    "dest" : [
-                        {"case" : "couloir5"},
-                        {"case" : "couloir6"},
-                        {"case" : "couloir6"},
-                        {"case" : "chambre8"},
-                        {"case" : "esc3"},
-                        {"case" : "parquet3"},
-                        {"case" : "int1"},
-                        {"case" : "bar3"},
-                        {"case" : "caisse3"}
-                    ]
-                }
-            }`;
+            var lines = [
 
-            $(document).ready(function() {
+                        ['ext1', 'ext2'],
+
+                        ['int1', 'int2'],
+                        ['int1', 'int3'],
+                        ['int1', 'int4'],
+                        ['int1', 'int5'],
+                        ['int1', 'parquet3'],
+                        ['int1', 'esc1'],
+                        ['int1', 'esc3'],
+                        ['int1', 'bar1'],
+                        ['int1', 'bar2'],
+                        ['int1', 'bar3'],
+                        ['int1', 'caisse2'],
+                        ['int1', 'caisse3'],
+                        ['int1', 'salle1',false,false,true],
+						['int1', 'couloir1'],
+                        ['int1', 'couloir2'],
+                        ['int1', 'couloir3'],
+                        ['int1', 'couloir8'],
+
+                        ['int2', 'int3'],
+                        ['int2', 'int4'],
+                        ['int2', 'int5'],
+                        ['int2', 'esc1'],
+                        ['int2', 'esc2'],
+                        ['int2', 'bar1'],
+                        ['int2', 'bar2'],
+                        ['int2', 'bar3'],
+                        ['int2', 'caisse2'],
+                        ['int2', 'caisse3'],
+                        ['int2', 'caisse1'],
+						['int2', 'couloir1'],
+                        ['int2', 'couloir2'],
+                        ['int2', 'couloir3'],
+
+                        ['int3', 'int4'],
+                        ['int3', 'int5'],
+						['int3', 'esc1'],
+                        ['int3', 'esc2'],
+                        ['int3', 'bar1'],
+                        ['int3', 'bar2'],
+                        ['int3', 'bar3'],
+                        ['int3', 'caisse2'],
+                        ['int3', 'caisse3'],
+                        ['int3', 'caisse1'],
+						['int3', 'couloir1'],
+                        ['int3', 'couloir2'],
+                        ['int3', 'couloir3'],
+
+                        ['int4', 'int5'],
+                        ['int4', 'esc1'],
+                        ['int4', 'esc2'],
+                        ['int4', 'bar1'],
+                        ['int4', 'bar2'],
+                        ['int4', 'bar3'],
+                        ['int4', 'caisse2'],
+                        ['int4', 'caisse3'],
+                        ['int4', 'caisse1'],
+						['int4', 'couloir1'],
+                        ['int4', 'couloir2'],
+                        ['int4', 'couloir3'],
+
+                        ['int5', 'esc1'],
+                        ['int5', 'esc2'],
+                        ['int5', 'bar1'],
+                        ['int5', 'bar2'],
+                        ['int5', 'bar3'],
+                        ['int5', 'caisse2'],
+                        ['int5', 'caisse1'],
+						['int5', 'parquet1'],
+						['int5', 'couloir1'],
+                        ['int5', 'couloir2'],
+                        ['int5', 'couloir3'],
+
+                        ['bar1', 'esc1'],
+                        ['bar1', 'esc2'],
+                        ['bar1', 'bar2'],
+                        ['bar1', 'bar3'],
+                        ['bar1', 'caisse2'],
+                        ['bar1', 'caisse1'],
+						['bar1', 'parquet3'],
+						['bar1', 'couloir1'],
+                        ['bar1', 'couloir2'],
+                        ['bar1', 'couloir3'],
+
+                        ['bar2', 'esc1'],
+                        ['bar2', 'esc2'],
+                        ['bar2', 'bar3'],
+                        ['bar2', 'caisse3'],
+                        ['bar2', 'caisse2'],
+                        ['bar2', 'caisse1'],
+						['bar2', 'couloir1'],
+                        ['bar2', 'couloir2'],
+                        ['bar2', 'couloir3'],
+
+                        ['bar3', 'esc1'],
+                        ['bar3', 'esc2'],
+                        ['bar3', 'caisse3'],
+                        ['bar3', 'caisse2'],
+                        ['bar3', 'caisse2'],
+                        ['bar3', 'esc3'],
+                        ['bar3', 'parquet3'],
+						['bar3', 'couloir1'],
+                        ['bar3', 'couloir2'],
+                        ['bar3', 'couloir3'],
+                        ['bar3', 'couloir8'],
+
+                        ['salle1', 'parquet3',false,false,true],
+
+                        ['salle3', 'parquet2'],
+
+                        ['parquet2', 'esc3'],
+
+                        ['parquet3', 'caisse3'],
+                        ['parquet3', 'caisse2'],
+                        ['parquet3', 'couloir8'],
+                        ['parquet3', 'esc3'],
+
+                        ['caisse1', 'caisse2'],
+                        ['caisse1', 'esc1'],
+                        ['caisse1', 'esc2'],
+						['caisse1', 'couloir1'],
+                        ['caisse1', 'couloir2'],
+                        ['caisse1', 'couloir3'],
+
+                        ['caisse2', 'caisse3'],
+                        ['caisse2', 'esc1'],
+                        ['caisse2', 'esc2'],
+                        ['caisse2', 'esc3'],
+						['caisse2', 'couloir1'],
+                        ['caisse2', 'couloir2'],
+                        ['caisse2', 'couloir3'],
+
+                        ['caisse3', 'esc2'],
+                        ['caisse3', 'esc3'],
+                        ['caisse3', 'couloir2'],
+						['caisse3', 'couloir8'],
+                        ['caisse3', 'couloir3'],
+
+                        ['chambre6', 'couloir6'],
+
+                        ['chambre7', 'couloir7'],
+
+                        ['chambre8', 'couloir8'],
+ 
+                        ['esc1', 'esc2'],
+                        ['esc1', 'couloir1'],
+                        ['esc1', 'couloir2'],
+                        ['esc1', 'couloir3'],
+
+                        ['esc2', 'couloir1'],
+                        ['esc2', 'couloir2'],
+                        ['esc2', 'couloir3'],
+
+                        ['esc3', 'couloir8'],
+
+                        ['couloir1', 'couloir2'],
+                        ['couloir1', 'couloir3'],
+                        ['couloir1', 'couloir4'],
+                        ['couloir1', 'couloir5'],
+
+                        ['couloir2', 'couloir3'],
+                        ['couloir2', 'couloir4'],
+                        ['couloir2', 'couloir5'],
+
+                        ['couloir3', 'couloir4'],
+                        ['couloir3', 'couloir5'],
+
+                        ['couloir4', 'couloir5'],
+
+                        ['couloir5', 'couloir6'],
+                        ['couloir5', 'couloir7'],
+                        ['couloir5', 'couloir8'],
+
+                        ['couloir6', 'couloir7'],
+                        ['couloir6', 'couloir8'],
+
+                        ['couloir7', 'couloir8']
+
+            ];
+
+            $(window).on("load", function() {
                 var top       = $('#mapimage').offset().top;
                 var left      = $('#mapimage').offset().left;
                 var height    = $('#mapimage').height();
@@ -493,7 +246,7 @@
 
                 var paper = Raphael(top, left, width, height);
                 var theme = new Theme(debug);
-                var conan = new Conan(paper, centerCoordonate, viewLine, debug, theme);
+                var conan = new Conan(paper, centers, lines, debug, theme);
             });
         </script>
     </head>
