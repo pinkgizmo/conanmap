@@ -37,7 +37,7 @@ Theme.prototype.getZone = function() {
         var res = `{
             "stroke": "black",
             "fill": "white",
-            "fill-opacity": 0.5,
+            "fill-opacity": 0.1,
             "stroke-width": 1,
             "stroke-opacity": 0.5,
             "stroke-linecap": "round",
@@ -52,29 +52,15 @@ Theme.prototype.getZone = function() {
  * Get attributes for highlighted area
  */
 Theme.prototype.getHighlighted = function() {
-    if (!this.debug) {
-        var res = `{
-            "stroke": "white",
-            "stroke-width": 3,
-            "stroke-opacity": 1,
-            "stroke-linecap": "round",
-            "stroke-linejoin": "round",
-            "fill": "white",
-            "fill-opacity": 0.4
-        }`;
-    } else {
-        //debug
-        var res = `{
-            "stroke": "black",
-            "fill": "black",
-            "fill-opacity": 0.5,
-            "stroke-width": 3,
-            "stroke-opacity": 0.5,
-            "stroke-linecap": "round",
-            "stroke-linejoin": "round"
-        }`;
-
-    }
+    var res = `{
+        "stroke": "white",
+        "stroke-width": 3,
+        "stroke-opacity": 1,
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "fill": "white",
+        "fill-opacity": 0.4
+    }`;
     return $.parseJSON(res);
 };
 
@@ -503,18 +489,10 @@ Conan
  */
 function Conan(centers, viewLine) {
 
-    var mapimage  = $('#mapimage');
-    var top       = mapimage.offset().top;
-    var left      = mapimage.offset().left;
-    var height    = mapimage.height();
-    var width     = mapimage.width();
-
-    this.paper    = Raphael(top, left, width, height);
     this.tiles    = new ServiceTiles(centers);
     this.viewLine = new ServiceLines(viewLine);
     this.debug    = (window.location.hash === '#debug');
-    this.theme    = new Theme(this.debug);
-    this.toRemove = [];
+    this.render    = new Render(this.debug);
 
     this.processCoordonates();
     this.mapArea();
@@ -556,26 +534,22 @@ Conan.prototype.mapArea = function() {
 
     $.each(self.tiles.getTiles(), function(key, tile) {
 
-        var coords = tile.getPerimeter();
+        var zone = self.render.initZone(tile.getPerimeter());
 
-        var zone = self.paper.path(coords).attr(self.theme.getZone());
         zone.hover(
             function() {
                 self.displayViewLines(tile.getId());
+                self.render.run();
             },
             function() {
-                self.clean();
+                self.render.clean();
             }
         );
 
-        //DEBUG : display tile ids on the tile centers
-        if (self.debug) {
-            var centers = tile.getCenters();
-            $.each(centers, function(key, center) {
-                var txt = self.paper.text(center.getX(), center.getY(), tile.getId() + key);
-                txt.attr(self.theme.getText());
-            });
-        }
+        var centers = tile.getCenters();
+        $.each(centers, function(key, center) {
+            self.render.initText(tile.getId() + key, center);
+        });
     });
 };
 
@@ -632,78 +606,259 @@ Conan.prototype.displayViewLines = function(tileId) {
                 var destinationTileId = self.tiles.getTileId(destCenterId);
 
                 //highligt zones
-                self.highlight(destinationTileId);
+                var tile = self.tiles.getTile(destinationTileId);
+                self.render.addZone(tile.getPerimeter());
 
                 //draw line
-                var drawnLine = self.drawLine(source.getX(), source.getY(), destination.getX(), destination.getY(), line.hasDebug());
-                self.toRemove.push(drawnLine);
+                self.render.addLine(source.getX(), source.getY(), destination.getX(), destination.getY(), line.hasDebug());
 
                 //draw circle
-                var circle = self.drawCircle(destination.getX(),  destination.getY());
-                self.toRemove.push(circle);
+                self.render.addCenter(destination.getX(),  destination.getY());
             });
+
         });
     }
 };
 
+/******************************************
+ Render Service
+ *******************************************/
+
 /**
- * Clean method to remove drawn elements
-*/
-Conan.prototype.clean = function() {
+ * Render - constructor
+ *
+ * @params {Boolean} debug - is page in debug mode
+ */
+function Render(debug) {
+
+    this.init     = [];
+    this.file     = [];
+    this.elements = [];
+
+    this.debug = debug;
+    this.theme = new Theme(debug);
+
+    var mapimage  = $('#mapimage');
+    var top       = mapimage.offset().top;
+    var left      = mapimage.offset().left;
+    var height    = mapimage.height();
+    var width     = mapimage.width();
+
+    this.paper = Raphael(top, left, width, height);
+}
+
+/**
+ * Sort the file by priority
+ *
+ * @returns {Render}
+ */
+Render.prototype.sortFile = function() {
+    this.file.sort(function(a, b) {
+        return a.prio > b.prio;
+    });
+    return this;
+};
+
+/**
+ * Display all the elements configured in render
+ *
+ * @returns {Render}
+ */
+Render.prototype.run = function() {
     var self = this;
 
-    $.each(self.toRemove, function(index, element){
+    self.sortFile();
+    $.each(self.file, function(key, element){
+
+       if (element.id === 'Line') {
+           self.drawLine(element.data);
+       }
+       if (element.id === 'Center') {
+           self.drawCenter(element.data);
+       }
+       if (element.id === 'Zone') {
+            self.drawZone(element.data);
+       }
+    });
+    self.pushInitToFront();
+    return self;
+};
+
+/**
+ * Push the init zone in front (for hover behaviour)
+ *
+ * @returns {Render}
+ */
+Render.prototype.pushInitToFront = function() {
+    $.each(this.init, function(key, element) {
+        element.toFront();
+    });
+    return this;
+};
+
+/**
+ * Remove all drawn elements (execpet init zones)
+ *
+ * @returns {Render}
+ */
+Render.prototype.clean = function() {
+    var self = this;
+
+    $.each(self.elements, function(index, element){
         element.remove();
     });
 
-    self.toRemove = [];
+    self.file = [];
+    self.elements = [];
+    return this;
 };
 
 /**
- * Highlight a case
+ * Add an init zone
  *
- * @param {String} tileId - Id of the tile to highlight
+ * @param {Array} coords - Zone perimeter coordonate
+ *
+ * @return {Element} - Raphael element
  */
-Conan.prototype.highlight = function(tileId) {
-    var tile = this.tiles.getTile(tileId);
-    var zone = this.paper.path(tile.getPerimeter()).attr(this.theme.getHighlighted());
-    this.toRemove.push(zone);
-    return zone;
+Render.prototype.initZone = function(coords) {
+    var element = this.paper.path(coords).attr(this.theme.getZone()).toFront();
+    this.init.push(element);
+    return element;
 };
 
 /**
- * Draw a line with Raphael
+ * Display a debug text in tiles centers
  *
- * @param {number} xFrom  - x coordonate of the source point
- * @param {number} yFrom  - y coordonate of the source point
- * @param {number} xTo    - x coordonate of the dest point
- * @param {number} yTo    - y coordonate of the dest point
- * @param {boolean} debug - is the line in debug mode ?
+ * @param {String} text   - text to display
+ * @param {Center} center - Coordonates
+ *
+ * @returns {Render}
  */
-Conan.prototype.drawLine = function(xFrom, yFrom, xTo, yTo, debug) {
+Render.prototype.initText = function(text, center) {
+    if (this.debug) {
+        this.paper.text(center.getX(), center.getY(), text).attr(this.theme.getText());
+    }
+    return this;
+};
+
+/**
+ * Add a line in the render
+ *
+ * @param {Number} xFrom
+ * @param {Number} yFrom
+ * @param {Number} xTo
+ * @param {Number} yTo
+ * @param {Boolean} debug
+ *
+ * @returns {Render}
+ */
+Render.prototype.addLine = function(xFrom, yFrom, xTo, yTo, debug) {
+    var data = {};
+    data['id'] = 'Line';
+    data['prio'] = '20';
+
+    data['data'] = {};
+    data['data']['xFrom'] = xFrom;
+    data['data']['yFrom'] = yFrom;
+    data['data']['xTo']   = xTo;
+    data['data']['yTo']   = yTo;
+    data['data']['debug'] = debug;
+
+    this.file.push(data);
+    return this;
+};
+
+/**
+ * Add center to the render
+ *
+ * @param {Number} x
+ * @param {Number} y
+ *
+ * @returns {Render}
+ */
+Render.prototype.addCenter = function(x, y) {
+    var data = {};
+    data['id'] = 'Center';
+    data['prio'] = '30';
+
+    data['data'] = {};
+    data['data']['x'] = x;
+    data['data']['y'] = y;
+
+    this.file.push(data);
+    return this;
+};
+
+/**
+ * Add zone to the render
+ *
+ * @param {Array} coords - Zone perimeter coordonates
+ *
+ * @returns {Render}
+ */
+Render.prototype.addZone = function(coords) {
+    var data = {};
+    data['id'] = 'Zone';
+    data['prio'] = '10';
+
+    data['data'] = {};
+    data['data']['coords'] = coords;
+
+    this.file.push(data);
+    return this;
+};
+
+/**
+ * Draw a line
+ *
+ * @param {Object} data - Line data
+ *
+ * @returns {Render}
+ */
+Render.prototype.drawLine = function(data) {
     var self = this;
 
     var theme = self.theme.getViewLine();
-    if (debug) {
+    if (data.debug) {
         theme = self.theme.getViewLineDebug()
     }
 
-    return this.paper
-        .path("M" + xFrom + " " + yFrom + "L"+ xTo + " " + yTo)
-        .attr(theme)
-        .toBack();
+    var element = this.paper
+        .path("M" + data.xFrom + " " + data.yFrom + "L"+ data.xTo + " " + data.yTo)
+        .attr(theme);
+
+    this.elements.push(element);
+    return this;
 };
 
 /**
- * Draw a cirle with Raphael
+ * Draw a center
  *
- * @param {number} x - x coordonate of the center
- * @param {number} y - y coordonate of the center
+ * @param {Object} data - Center data
+ *
+ * @returns {Render}
  */
-Conan.prototype.drawCircle = function(x, y) {
-    var self = this;
-    return this.paper
-        .circle(x, y, 8)
-        .attr(self.theme.getCenter())
-        .toBack();
+Render.prototype.drawCenter = function(data) {
+    var element = this.paper
+        .circle(data.x, data.y, 8)
+        .attr(this.theme.getCenter());
+
+    this.elements.push(element);
+
+    return this;
+};
+
+/**
+ * Draw a zone
+ *
+ * @param {Object} data - Zone data
+ *
+ * @returns {Render}
+ */
+Render.prototype.drawZone = function(data) {
+    var element = this.paper.path(data.coords).attr(this.theme.getHighlighted());
+
+    this.elements.push(element);
+
+    return this;
 };
