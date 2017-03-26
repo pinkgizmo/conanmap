@@ -1,3 +1,8 @@
+/**
+ * @file ConanMap toolset
+ * @author Julien Sudraud
+ * @version 0.1.1
+ */
 "use strict";
 
 /******************************************
@@ -5,7 +10,9 @@ THEME
 *******************************************/
 
 /**
- * Constructor
+ * Theme holder - constructor
+ *
+ * @param {Boolean} debug - Is the theme in debug mode ?
  */
 function Theme(debug) {
     this.debug = debug;
@@ -80,10 +87,59 @@ Theme.prototype.getText = function() {
     return $.parseJSON(res);
 }
 
+/**
+ * Get attributes for centers circle
+ */
+Theme.prototype.getCenter = function() {
+    var res = `{
+        "fill": "#0F0"
+    }`;
+    return $.parseJSON(res);
+}
+
 /******************************************
-Case
+Center
 *******************************************/
 
+/**
+ * Center entity - constructor
+ *
+ * @param {Array} data - center coordonates
+ */
+function Center(data)
+{
+    this.x = data[0];
+    this.y = data[1];
+}
+
+/**
+ * Return the x coordonate
+ *
+ * @return {Number} The x coordonate
+ */
+Center.prototype.getX = function() {
+    return this.x;
+}
+
+/**
+ * Return the y coordonate
+ *
+ * @return {Number} The y coordonate
+ */
+Center.prototype.getY = function() {
+    return this.y;
+}
+
+/******************************************
+Tile
+*******************************************/
+
+/**
+ * Tile entity - constructor 
+ *
+ * @param {Array} id - id of the case
+ * @param {Array} title - a list of centers
+ */
 function Tile(id, tile)
 {
     var self = this;
@@ -101,14 +157,29 @@ function Tile(id, tile)
     }
 }
 
+/**
+ * Get the tile id
+ *
+ * @return {String} The tile id
+ */
 Tile.prototype.getId = function() {
     return this.id;
 }
 
+/**
+ * Get the tile centers
+ *
+ * @return {Array} Centers of the tile
+ */
 Tile.prototype.getCenters = function(suffix) {
     return this.centers;
 }
 
+/**
+ * Get a tile center base on the given suffix
+ *
+ * @return {Center} The center based on given suffix 
+ */
 Tile.prototype.getCenter = function(suffix) {
     return this.centers[suffix];
 }
@@ -117,68 +188,120 @@ Tile.prototype.getCenter = function(suffix) {
 Line
 *******************************************/
 
+/**
+ * Line entity - constructor
+ *
+ * @param {Array} Line definition
+ */
 function Line(line)
 {
-    this.case1 = this.format(line[0]);
-    this.case2 = this.format(line[1]);
+    this.center1 = this.format(line[0]);
+    this.center2 = this.format(line[1]);
     this.type  = (line[2] != "") ? line[2]: false;
     this.text  = (line[3] != "") ? line[3]: false;
     this.debug = (line[4] != "") ? line[4]: false;
 }
 
-Line.prototype.format = function(caseId)
+/**
+ * Format the tile id with a suffix if the suffix is missing
+ *
+ * @param {String} Tile id to format
+ *
+ * @return {String} The fromatted tile id
+ */
+Line.prototype.format = function(tileId)
 {
-    if (caseId.split('-')[1] === undefined) {
-        return caseId + '-A';
+    if (tileId.split('-')[1] === undefined) {
+        return tileId + '-A';
     }
-    return caseId;
+    return tileId;
 }
 
-Line.prototype.getCase1 = function() {
-    return this.case1;
+/**
+ * Getter for center1 id
+ *
+ * @return {String} Center1 id
+ */
+Line.prototype.getCenter1 = function() {
+    return this.center1;
 }
 
-Line.prototype.getCase2 = function() {
-    return this.case2;
+/**
+ * Getter for center2  id
+ *
+ * @return {String} Center2 id
+ */
+Line.prototype.getCenter2 = function() {
+    return this.center2;
 }
 
+/**
+ * Getter for type
+ *
+ * @return {String} Type
+ */
 Line.prototype.getType = function() {
     return this.type;
 }
 
+/**
+ * Getter for additional text
+ *
+ * @return {String} Additional text
+ */
 Line.prototype.getText = function() {
     return this.text;
 }
 
-Line.prototype.getDebug = function() {
+/**
+ * Getter debug mode
+ *
+ * @return {Boolean}
+ */
+Line.prototype.hasDebug = function() {
     return this.debug;
 }
 
+/**
+ * Check if the line is reciproque or not
+ *
+ * @return {Boolean}
+ */
 Line.prototype.isReciproque = function() {
     return true;
 }
 
-Line.prototype.isElligibleToCase = function(caseId) {
+/**
+ * Check if the line used the given center
+ *
+ * @return {Boolean}
+ */
+Line.prototype.isElligibleToCenter = function(centerId) {
 
-    if (this.getCase1() == caseId) {
+    if (this.getCenter1() == centerId) {
         return true;
     }
 
-    if (this.isReciproque && this.getCase2() == caseId) {
+    if (this.isReciproque && this.getCenter2() == centerId) {
         return true;
     }
 
     return false;
 }
 
-Line.prototype.getDestination = function(caseId) {
+/**
+ * For a given center id, return the other center id of the line
+ *
+ * @return {String} Center id
+ */
+Line.prototype.getDestination = function(centerId) {
 
-    if ( this.getCase1() == caseId) {
-        return this.getCase2();
+    if ( this.getCenter1() == centerId) {
+        return this.getCenter2();
     }
 
-    if (this.getCase2() == caseId) {
-        return this.getCase1();
+    if (this.getCenter2() == centerId) {
+        return this.getCenter1();
     }
 }
 
@@ -186,6 +309,11 @@ Line.prototype.getDestination = function(caseId) {
 Service Line
 *******************************************/
 
+/**
+ * Line managment service - constructor
+ *
+ * @param {Object} centers - The centers object definition from user input
+ */
 function ServiceTiles(centers)
 {
     var self = this;
@@ -198,6 +326,13 @@ function ServiceTiles(centers)
     });
 }
 
+/**
+ * Get a tile based on the given id
+ *
+ * @param {String} id - the tile id
+ * 
+ * @return {Tile} 
+ */
 ServiceTiles.prototype.getTile = function(id)
 {
     var selectedTile;
@@ -214,6 +349,11 @@ ServiceTiles.prototype.getTile = function(id)
 Service Line
 *******************************************/
 
+/**
+ * Tiles managment service - constructor
+ *
+ * @param {Array} viewLines - The viewLines array definition from user input
+ */
 function ServiceLines(viewLines)
 {
     var self = this;
@@ -224,24 +364,22 @@ function ServiceLines(viewLines)
 }
 
 /**
- * Getter for viewLine data
+ * Return a array of line thaht used the given center
+ *
+ * @param {String} centerId - A tile center id
+ *
+ * @return {Array} An array of lines
  */
-ServiceLines.prototype.getViewLines = function() {
-    return this.viewLines;
-}
-
-/**
- * Getter for viewLine data
- */
-ServiceLines.prototype.getLinesByCase = function(caseId) {
+ServiceLines.prototype.getLinesByCenter = function(centerId) {
     var self = this;
     var eligibleLines = [];
 
-    $.each(this.getViewLines(), function(key, line){
-        if (line.isElligibleToCase(caseId)) {
+    $.each(this.viewLines, function(key, line){
+        if (line.isElligibleToCenter(centerId)) {
             eligibleLines.push(line);
         }
     });
+
     return eligibleLines;
 }
 
@@ -250,7 +388,13 @@ Conan
 *******************************************/
 
 /**
- * Constructor
+ * ConanMap - constructor
+ *
+ * @param {Raphael} paper    - Raphael render tool 
+ * @param {Object}  centers  - Center data definition
+ * @param {Array}   viewline - Viewlines data definition
+ * @param {Boolean} debug    - Debug mode flag
+ * @param {Theme}   theme    - Theme holder
  */
 function Conan(paper, centers, viewLine, debug, theme) {
     this.paper    = paper;
@@ -258,8 +402,6 @@ function Conan(paper, centers, viewLine, debug, theme) {
     this.viewLine = new ServiceLines(viewLine);
     this.debug    = debug;
     this.theme    = theme;
-
-
     this.toRemove = [];
 
     this.mapArea();
@@ -267,17 +409,19 @@ function Conan(paper, centers, viewLine, debug, theme) {
 
 /**
  * Wrapper for console.log
+ *
+ * @param {Mixed} data - Data to log
  */
-Conan.prototype.log = function(mixed) {
+Conan.prototype.log = function(data) {
     var self = this;
 
     if (self.debug) {
-        console.log(mixed);
+        console.log(data);
     }
 };
 
 /**
- * Create Raphael zones based on html map coordonates
+ * Instanciante Raphael zones based on html map coordonates
  */
 Conan.prototype.mapArea = function() {
     var self = this;
@@ -303,7 +447,7 @@ Conan.prototype.mapArea = function() {
                 }
             );
 
-            //DEBUG : display case id on the case
+            //DEBUG : display tile ids on the tile centers
             if (self.debug) {
                 var centers = self.tiles.getTile(id).getCenters();
                 $.each(centers, function(key, center) {
@@ -317,6 +461,10 @@ Conan.prototype.mapArea = function() {
 
 /**
  * Transform area coordonates into Raphael coordonates
+ *
+ * @param {String} coords - Coordonate for the html map area coords
+ *
+ * @return {Array} - Array of coordonates in Raphael format
  */
 Conan.prototype.coordConvert = function(coords) {
     var self = this;
@@ -337,8 +485,10 @@ Conan.prototype.coordConvert = function(coords) {
 
 /**
  * Display all view lines for a case
+ *
+ * @param {String} tileId - Tile id
  */
-Conan.prototype.displayViewLines = function(caseId) {
+Conan.prototype.displayViewLines = function(tileId) {
     var self = this;
     var source;
     var centerId;
@@ -346,7 +496,7 @@ Conan.prototype.displayViewLines = function(caseId) {
     var circle;
 
     //the current case data
-    source = self.tiles.getTile(caseId);
+    source = self.tiles.getTile(tileId);
     
     if (lines.length > 0) {
         //loop on each center of the current case
@@ -356,7 +506,7 @@ Conan.prototype.displayViewLines = function(caseId) {
             var centerId = source.id + '-' + suffix;
 
              //all the line for a given case
-            var lines = self.viewLine.getLinesByCase(centerId);
+            var lines = self.viewLine.getLinesByCenter(centerId);
 
             //loop on each line of sight
             $.each(lines, function(key, line) {    
@@ -371,7 +521,7 @@ Conan.prototype.displayViewLines = function(caseId) {
                 var destCoords = self.tiles.getTile(dest).getCenter(destSuffix);
                 
                 //draw line
-                var drawnLine = self.drawLine(sourceCoords[0], sourceCoords[1], destCoords[0], destCoords[1], line.getDebug());
+                var drawnLine = self.drawLine(sourceCoords[0], sourceCoords[1], destCoords[0], destCoords[1], line.hasDebug());
                 self.toRemove.push(drawnLine);
 
                 //draw circle
@@ -384,9 +534,9 @@ Conan.prototype.displayViewLines = function(caseId) {
 };
 
 /**
- * Remove needed elements
- */
-Conan.prototype.clean = function(id) {
+ * Clean method to remove drawn elements
+*/
+Conan.prototype.clean = function() {
     var self = this;
 
     $.each(self.toRemove, function(index, element){
@@ -398,6 +548,12 @@ Conan.prototype.clean = function(id) {
 
 /**
  * Draw a line with Raphael
+ *
+ * @param {number} xFrom - x coordonate of the source point
+ * @param {number} yFrom - y coordonate of the source point
+ * @param {number} xTo   - x coordonate of the dest point
+ * @param {number} yTo   - y coordonate of the dest point
+ * @param {number} debug - is the line in debug mode ?
  */
 Conan.prototype.drawLine = function(xFrom, yFrom, xTo, yTo, debug = false) {
     var self = this;
@@ -414,12 +570,15 @@ Conan.prototype.drawLine = function(xFrom, yFrom, xTo, yTo, debug = false) {
 };
 
 /**
- * Draw a circle with Raphael
+ * Draw a cirle with Raphael
+ *
+ * @param {number} xTo   - x coordonate of the center
+ * @param {number} yTo   - y coordonate of the center
  */
-Conan.prototype.drawCircle = function(xTo, yTo) {
+Conan.prototype.drawCircle = function(x, y) {
     var self = this;
     return this.paper
-        .circle(xTo,yTo,8)
-        .attr("fill", "#0F0")
+        .circle(x, y, 8)
+        .attr(self.theme.getCenter())
         .toBack();
 };
