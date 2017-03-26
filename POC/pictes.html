@@ -13,13 +13,10 @@
 
             var hash = window.location.hash;
             var debug = (hash == '#debug') ? true : false;
-            var debug = true;
+            //var debug = true;
 
             var centers = `{
-    "ext1": [
-        45,
-        223
-    ],
+    "ext1": [45,223],
     "ext2": [
         243,
         53
@@ -44,11 +41,7 @@
         818,
         898
     ],
-    "village1": {
-        "A": [293,197],
-
-        "B": [220,240]
-    },
+    "village1": {"A": [293,197],"B": [220,240]},
     "village2": [
         464,
         126
@@ -101,13 +94,13 @@
 
            var lines = [
 
-                ['ext1', 'village1-A', false, false, true],
-                ['ext2', 'village1-A', false, false, true],
+              /*  ['ext1', 'village1-A', false, false, false],
+                ['ext2', 'village1-A', false, false, false],
 
-                ['village2', 'village1-B', false, false, true],
+                ['village2', 'village1-B', false, false, false],
                 ['village3', 'village1-B'],
-
-                /*['ext1', 'ext2'],
+			*/
+				['ext1', 'ext2'],
 
                 ['ext2', 'village1'],
                 ['ext2', 'village3'],
@@ -149,7 +142,7 @@
 
                 ['village8', 'village9'],
 
-                ['village8', 'village9'],*/
+                ['village8', 'village9'],
 
             ];
             /*var viewLine = `{
