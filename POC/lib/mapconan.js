@@ -294,7 +294,7 @@ Line.prototype.isElligibleToCenter = function(centerId) {
  *
  * @return {String} Center id
  */
-Line.prototype.getDestination = function(centerId) {
+Line.prototype.getDestinationCenterId = function(centerId) {
 
     if ( this.getCenter1() == centerId) {
         return this.getCenter2();
@@ -343,6 +343,45 @@ ServiceTiles.prototype.getTile = function(id)
         }
     });
     return selectedTile;
+}
+
+/**
+ * Return a tile id from a given center id
+ *
+ * @param {String} centerId - A center id
+ * 
+ * @return {String} tile id 
+ */
+ServiceTiles.prototype.getTileId = function(centerId)
+{
+    return centerId.split('-')[0];
+}
+
+/**
+ * Return a suffix id from a given center id
+ *
+ * @param {String} centerId - A center id
+ * 
+ * @return {String} suffix id 
+ */
+ServiceTiles.prototype.getSuffixId = function(centerId)
+{
+    return centerId.split('-')[1];
+}
+
+/**
+ * Get tile coordonates from a givent center id
+ *
+ * @param {String} centerId - A tile center id 
+ * 
+ * @return {Center} 
+ */
+ServiceTiles.prototype.getCoordsFromCenterId = function(centerId)
+{
+    var tileId     = this.getTileId(centerId);
+    var tileSuffix = this.getSuffixId(centerId);
+
+    return this.getTile(tileId).getCenter(tileSuffix);
 }
 
 /******************************************
@@ -490,20 +529,16 @@ Conan.prototype.coordConvert = function(coords) {
  */
 Conan.prototype.displayViewLines = function(tileId) {
     var self = this;
-    var source;
-    var centerId;
-    var destination;
-    var circle;
 
     //the current tile data
-    source = self.tiles.getTile(tileId);
+    var sourceTile = self.tiles.getTile(tileId);
     
     if (lines.length > 0) {
         //loop on each center of the current tile
-        $.each(source.getCenters(), function(suffix, sourceCoords) { 
+        $.each(sourceTile.getCenters(), function(centerSuffix, source) { 
 
             //one of the center of the tile
-            var centerId = source.id + '-' + suffix;
+            var centerId = sourceTile.getId() + '-' + centerSuffix;
 
              //all the line for a given center
             var lines = self.viewLine.getLinesByCenter(centerId);
@@ -511,18 +546,15 @@ Conan.prototype.displayViewLines = function(tileId) {
             //loop on each line of sight
             $.each(lines, function(key, line) {    
 
-                destination = line.getDestination(centerId);
-                var dest = destination.split('-')[0];
-                var destSuffix = destination.split('-')[1];
-              
-                var destCoords = self.tiles.getTile(dest).getCenter(destSuffix);
-                
+                //get destination center
+                var destination = self.tiles.getCoordsFromCenterId(line.getDestinationCenterId(centerId));
+
                 //draw line
-                var drawnLine = self.drawLine(sourceCoords.getX(), sourceCoords.getY(), destCoords.getX(), destCoords.getY(), line.hasDebug());
+                var drawnLine = self.drawLine(source.getX(), source.getY(), destination.getX(), destination.getY(), line.hasDebug());
                 self.toRemove.push(drawnLine);
 
                 //draw circle
-                circle = self.drawCircle(destCoords.getX(),  destCoords.getY());
+                var circle = self.drawCircle(destination.getX(),  destination.getY());
                 self.toRemove.push(circle);
                 
             });
