@@ -49,6 +49,36 @@ Theme.prototype.getZone = function() {
 }
 
 /**
+ * Get attributes for highlighted area
+ */
+Theme.prototype.getHighlighted = function() {
+    if (!this.debug) {
+        var res = `{
+            "stroke": "white",
+            "stroke-width": 3,
+            "stroke-opacity": 1,
+            "stroke-linecap": "round",
+            "stroke-linejoin": "round",
+            "fill": "white",
+            "fill-opacity": 0.4
+        }`;
+    } else {
+        //debug
+        var res = `{
+            "stroke": "black",
+            "fill": "black",
+            "fill-opacity": 0.5,
+            "stroke-width": 3,
+            "stroke-opacity": 0.5,
+            "stroke-linecap": "round",
+            "stroke-linejoin": "round"
+        }`;
+
+    }
+    return $.parseJSON(res);
+}
+
+/**
  * Get attributes for viewlines
  */
 Theme.prototype.getViewLine = function() {
@@ -135,7 +165,7 @@ Tile
 *******************************************/
 
 /**
- * Tile entity - constructor 
+ * Tile entity - constructor
  *
  * @param {Array} id - id of the tile
  * @param {Array} title - a list of centers
@@ -145,8 +175,9 @@ function Tile(id, tile)
     var self = this;
     var defaultZone = 'A';
 
-    self.centers = {};
-    self.id = id;
+    self.centers   = {};
+    self.id        = id;
+    self.perimeter = [];
 
     if ($.isArray(tile)) {
         self.centers[defaultZone] = new Center(tile);
@@ -178,11 +209,33 @@ Tile.prototype.getCenters = function(suffix) {
 /**
  * Get a tile center base on the given suffix
  *
- * @return {Center} The center based on given suffix 
+ * @return {Center} The center based on given suffix
  */
 Tile.prototype.getCenter = function(suffix) {
     return this.centers[suffix];
 }
+
+/**
+ * Set tile perimeter coordonates
+ *
+ * @param {coords} Perimeter coordonates
+ *
+ * @return {Tile}
+ */
+Tile.prototype.setPerimeter = function(perimeter) {
+    this.perimeter = perimeter;
+    return this;
+}
+
+/**
+ * Return tile perimeter coordonates
+ *
+ * @return {Array}
+ */
+Tile.prototype.getPerimeter = function() {
+    return this.perimeter;
+}
+
 
 /******************************************
 Line
@@ -327,11 +380,21 @@ function ServiceTiles(centers)
 }
 
 /**
+ * Get the list of tiles
+ *
+ * @return {Tile}
+ */
+ServiceTiles.prototype.getTiles = function()
+{
+    return this.tiles;
+}
+
+/**
  * Get a tile based on the given id
  *
  * @param {String} id - the tile id
- * 
- * @return {Tile} 
+ *
+ * @return {Tile}
  */
 ServiceTiles.prototype.getTile = function(id)
 {
@@ -349,8 +412,8 @@ ServiceTiles.prototype.getTile = function(id)
  * Return a tile id from a given center id
  *
  * @param {String} centerId - A center id
- * 
- * @return {String} tile id 
+ *
+ * @return {String} tile id
  */
 ServiceTiles.prototype.getTileId = function(centerId)
 {
@@ -361,8 +424,8 @@ ServiceTiles.prototype.getTileId = function(centerId)
  * Return a suffix id from a given center id
  *
  * @param {String} centerId - A center id
- * 
- * @return {String} suffix id 
+ *
+ * @return {String} suffix id
  */
 ServiceTiles.prototype.getSuffixId = function(centerId)
 {
@@ -370,11 +433,36 @@ ServiceTiles.prototype.getSuffixId = function(centerId)
 }
 
 /**
+ * Add tile perimeter coordonates
+ *
+ * @param {String} tileId     - A tile id
+ * @param {Array} coordonates - Tile perimeters coordonates
+ *
+ * @return {ServiceTiles}
+ */
+ServiceTiles.prototype.addPerimeter = function(tileId, coordonates)
+{
+    this.getTile(tileId).setPerimeter(coordonates);
+    return this;
+}
+
+/**
+ * Get tile perimeter coordonate
+ *
+ * @return {Array}
+ */
+ServiceTiles.prototype.getPerimeter = function()
+{
+    return this.getTile(tileId).getPerimeter();
+}
+
+
+/**
  * Get tile coordonates from a givent center id
  *
- * @param {String} centerId - A tile center id 
- * 
- * @return {Center} 
+ * @param {String} centerId - A tile center id
+ *
+ * @return {Center}
  */
 ServiceTiles.prototype.getCoordsFromCenterId = function(centerId)
 {
@@ -429,7 +517,7 @@ Conan
 /**
  * ConanMap - constructor
  *
- * @param {Raphael} paper    - Raphael render tool 
+ * @param {Raphael} paper    - Raphael render tool
  * @param {Object}  centers  - Center data definition
  * @param {Array}   viewline - Viewlines data definition
  * @param {Boolean} debug    - Debug mode flag
@@ -443,6 +531,7 @@ function Conan(paper, centers, viewLine, debug, theme) {
     this.theme    = theme;
     this.toRemove = [];
 
+    this.processCoordonates();
     this.mapArea();
 }
 
@@ -459,41 +548,48 @@ Conan.prototype.log = function(data) {
     }
 };
 
+
+Conan.prototype.processCoordonates = function() {
+    var self = this;
+    $("#map area").each(function(){
+        var area = $(this);
+        var coords = area.attr('coords');
+        var id = area.attr('id');
+
+        if (id != undefined) {
+            coords = self.coordConvert(coords);
+            self.tiles.addPerimeter(id, coords);
+        }
+    });
+}
+
 /**
  * Instanciante Raphael zones based on html map coordonates
  */
 Conan.prototype.mapArea = function() {
     var self = this;
 
-    $("#map area").each(function(){
+    $.each(self.tiles.getTiles(), function(key, tile) {
 
-        var area = $(this);
-        var coords = area.attr('coords');
-        var id = area.attr('id');
+        var coords = tile.getPerimeter();
 
-        if (id != undefined) {
-
-            coords = self.coordConvert(coords);
-
-            var zone = self.paper.path(coords).attr(self.theme.getZone());
-            zone.id = id;
-            zone.hover(
-                function() {
-                    self.displayViewLines(this.id);
-                },
-                function() {
-                    self.clean();
-                }
-            );
-
-            //DEBUG : display tile ids on the tile centers
-            if (self.debug) {
-                var centers = self.tiles.getTile(id).getCenters();
-                $.each(centers, function(key, center) {
-                    var txt = self.paper.text(center.getX(), center.getY(), id + key);
-                    txt.attr(self.theme.getText());
-                });
+        var zone = self.paper.path(coords).attr(self.theme.getZone());
+        zone.hover(
+            function() {
+                self.displayViewLines(tile.getId());
+            },
+            function() {
+                self.clean();
             }
+        );
+
+        //DEBUG : display tile ids on the tile centers
+        if (self.debug) {
+            var centers = tile.getCenters();
+            $.each(centers, function(key, center) {
+                var txt = self.paper.text(center.getX(), center.getY(), tile.getId() + key);
+                txt.attr(self.theme.getText());
+            });
         }
     });
 };
@@ -508,17 +604,16 @@ Conan.prototype.mapArea = function() {
 Conan.prototype.coordConvert = function(coords) {
     var self = this;
 
-    var res = [];
+    var res = ['M'];
     coords = coords.split(',');
-    $.each(coords, function(index){
-        if (index == 0) {
-            res.push('M');
-        } else if (index % 2 == 0) {
+
+    $.each(coords, function(index) {
+        if (index != 0 && index % 2 == 0) {
             res.push('L');
         }
         res.push(coords[index]);
-
     });
+
     return res;
 };
 
@@ -532,10 +627,10 @@ Conan.prototype.displayViewLines = function(tileId) {
 
     //the current tile data
     var sourceTile = self.tiles.getTile(tileId);
-    
+
     if (lines.length > 0) {
         //loop on each center of the current tile
-        $.each(sourceTile.getCenters(), function(centerSuffix, source) { 
+        $.each(sourceTile.getCenters(), function(centerSuffix, source) {
 
             //one of the center of the tile
             var centerId = sourceTile.getId() + '-' + centerSuffix;
@@ -544,10 +639,17 @@ Conan.prototype.displayViewLines = function(tileId) {
             var lines = self.viewLine.getLinesByCenter(centerId);
 
             //loop on each line of sight
-            $.each(lines, function(key, line) {    
+            $.each(lines, function(key, line) {
 
+                //destination center id
+                var destCenterId= line.getDestinationCenterId(centerId);
                 //get destination center
-                var destination = self.tiles.getCoordsFromCenterId(line.getDestinationCenterId(centerId));
+                var destination = self.tiles.getCoordsFromCenterId(destCenterId);
+                //get destination tile
+                var destinationTileId = self.tiles.getTileId(destCenterId);
+
+                //highligt zones
+                self.highlight(destinationTileId);
 
                 //draw line
                 var drawnLine = self.drawLine(source.getX(), source.getY(), destination.getX(), destination.getY(), line.hasDebug());
@@ -556,7 +658,6 @@ Conan.prototype.displayViewLines = function(tileId) {
                 //draw circle
                 var circle = self.drawCircle(destination.getX(),  destination.getY());
                 self.toRemove.push(circle);
-                
             });
         });
     }
@@ -573,6 +674,22 @@ Conan.prototype.clean = function() {
     });
 
     self.toRemove = [];
+};
+
+/**
+ * Highlight a case
+ *
+ * @param {number} xFrom - x coordonate of the source point
+ * @param {number} yFrom - y coordonate of the source point
+ * @param {number} xTo   - x coordonate of the dest point
+ * @param {number} yTo   - y coordonate of the dest point
+ * @param {number} debug - is the line in debug mode ?
+ */
+Conan.prototype.highlight = function(tileId) {
+    var tile = this.tiles.getTile(tileId);
+    var zone = this.paper.path(tile.getPerimeter()).attr(this.theme.getHighlighted());
+    this.toRemove.push(zone);
+    return zone;
 };
 
 /**
@@ -601,8 +718,8 @@ Conan.prototype.drawLine = function(xFrom, yFrom, xTo, yTo, debug = false) {
 /**
  * Draw a cirle with Raphael
  *
- * @param {number} xTo   - x coordonate of the center
- * @param {number} yTo   - y coordonate of the center
+ * @param {number} x - x coordonate of the center
+ * @param {number} y - y coordonate of the center
  */
 Conan.prototype.drawCircle = function(x, y) {
     var self = this;
