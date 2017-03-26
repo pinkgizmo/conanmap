@@ -137,7 +137,7 @@ Tile
 /**
  * Tile entity - constructor 
  *
- * @param {Array} id - id of the case
+ * @param {Array} id - id of the tile
  * @param {Array} title - a list of centers
  */
 function Tile(id, tile)
@@ -148,12 +148,12 @@ function Tile(id, tile)
     self.centers = {};
     self.id = id;
 
-    if (!$.isArray(tile)) {
-        $.each(tile, function(key, centers) {
-            self.centers[key] = centers;
-        });
+    if ($.isArray(tile)) {
+        self.centers[defaultZone] = new Center(tile);
     } else {
-        self.centers[defaultZone] = tile;
+        $.each(tile, function(suffix, coords) {
+            self.centers[suffix] = new Center(coords);
+        });
     }
 }
 
@@ -306,7 +306,7 @@ Line.prototype.getDestination = function(centerId) {
 }
 
 /******************************************
-Service Line
+Service Tiles
 *******************************************/
 
 /**
@@ -346,11 +346,11 @@ ServiceTiles.prototype.getTile = function(id)
 }
 
 /******************************************
-Service Line
+Service Lines
 *******************************************/
 
 /**
- * Tiles managment service - constructor
+ * Lines managment service - constructor
  *
  * @param {Array} viewLines - The viewLines array definition from user input
  */
@@ -451,7 +451,7 @@ Conan.prototype.mapArea = function() {
             if (self.debug) {
                 var centers = self.tiles.getTile(id).getCenters();
                 $.each(centers, function(key, center) {
-                    var txt = self.paper.text(center[0], center[1], id + key);
+                    var txt = self.paper.text(center.getX(), center.getY(), id + key);
                     txt.attr(self.theme.getText());
                 });
             }
@@ -484,7 +484,7 @@ Conan.prototype.coordConvert = function(coords) {
 };
 
 /**
- * Display all view lines for a case
+ * Display all view lines for a tile
  *
  * @param {String} tileId - Tile id
  */
@@ -495,25 +495,22 @@ Conan.prototype.displayViewLines = function(tileId) {
     var destination;
     var circle;
 
-    //the current case data
+    //the current tile data
     source = self.tiles.getTile(tileId);
     
     if (lines.length > 0) {
-        //loop on each center of the current case
+        //loop on each center of the current tile
         $.each(source.getCenters(), function(suffix, sourceCoords) { 
 
-            //one of the center of the case
+            //one of the center of the tile
             var centerId = source.id + '-' + suffix;
 
-             //all the line for a given case
+             //all the line for a given center
             var lines = self.viewLine.getLinesByCenter(centerId);
 
             //loop on each line of sight
             $.each(lines, function(key, line) {    
-          
-                //one of the center of the case
-                centerId = source.id + '-' + suffix;
-                
+
                 destination = line.getDestination(centerId);
                 var dest = destination.split('-')[0];
                 var destSuffix = destination.split('-')[1];
@@ -521,11 +518,11 @@ Conan.prototype.displayViewLines = function(tileId) {
                 var destCoords = self.tiles.getTile(dest).getCenter(destSuffix);
                 
                 //draw line
-                var drawnLine = self.drawLine(sourceCoords[0], sourceCoords[1], destCoords[0], destCoords[1], line.hasDebug());
+                var drawnLine = self.drawLine(sourceCoords.getX(), sourceCoords.getY(), destCoords.getX(), destCoords.getY(), line.hasDebug());
                 self.toRemove.push(drawnLine);
 
                 //draw circle
-                circle = self.drawCircle(destCoords[0],  destCoords[1]);
+                circle = self.drawCircle(destCoords.getX(),  destCoords.getY());
                 self.toRemove.push(circle);
                 
             });
