@@ -11,9 +11,6 @@
 
         <script type="text/javascript">
 
-            var hash = window.location.hash;
-            var debug = (hash == '#debug') ? true : false;
- 
             var centers = `{
                 "ext1"  : [59,165],
                 "ext2"  : [28,469],
@@ -48,176 +45,150 @@
                 "cale"  : [823,263]
             }`;
 
-			var lines = [
+            var lines = [
 
-                        ['ext1','ext2'],
-                        ['ext1','ext3'],
+                ['ext1','ext2'],
+                ['ext1','ext3'],
 
-                        ['ext2','int1'],
-                        ['ext2','int2'],
-                        ['ext2','ext3'],
-                        ['ext2','balcon'],
+                ['ext2','int1'],
+                ['ext2','int2'],
+                ['ext2','ext3'],
+                ['ext2','balcon'],
 
-                        ['int1','int2'],
-                        ['int1','salle7'],
-                        ['int1','salle8'],
-                        ['int1','coursive1'],
-                        ['int1','coursive4'],
-                        ['int1','balcon'],
-                        ['int1','int3'],
+                ['int1','int2'],
+                ['int1','salle7'],
+                ['int1','salle8'],
+                ['int1','coursive1'],
+                ['int1','coursive4'],
+                ['int1','balcon'],
+                ['int1','int3'],
 
-                        ['int2','fosse'],
-                        ['int2','balcon'],
-                        ['int2','int3'],
-                        ['int2','salle6'],
-                        ['int2','coursive1'],
+                ['int2','fosse'],
+                ['int2','balcon'],
+                ['int2','int3'],
+                ['int2','salle6'],
+                ['int2','coursive1'],
 
-                        ['int3','fosse'],
-                        ['int3','balcon'],
-                        ['int3','salle1'],
-                        ['int3','salle6'],
-                        ['int3','int3'],
-						['int3','coursive1'],
+                ['int3','fosse'],
+                ['int3','balcon'],
+                ['int3','salle1'],
+                ['int3','salle6'],
+                ['int3','int3'],
+                ['int3','coursive1'],
 
-                        ['fosse','balcon'],
-                        ['fosse','coursive1'],
+                ['fosse','balcon'],
+                ['fosse','coursive1'],
 
-                        ['balcon','coursive3'],
-                        ['balcon','coursive4'],
-                        ['balcon','coursive1'],
+                ['balcon','coursive3'],
+                ['balcon','coursive4'],
+                ['balcon','coursive1'],
 
-                        ['esc1','salle2'],
-                        ['esc1','coursive1'],
-						['esc1','salle1',false,false,true],
+                ['esc1','salle2'],
+                ['esc1','coursive1'],
+                ['esc1','salle1',false,false,true],
 
-                        ['esc2','salle3'],
-                        ['esc2','coursive2'],
+                ['esc2','salle3'],
+                ['esc2','coursive2'],
 
-                        ['esc3','salle6'],
-                        ['esc3','salle7'],
-                        ['esc3','coursive5'],
+                ['esc3','salle6'],
+                ['esc3','salle7'],
+                ['esc3','coursive5'],
 
-                        ['esc4','salle5'],
-                        ['esc4','coursive7'],
-                        ['esc4','salle4'],
-                        ['esc4','salle3'],
+                ['esc4','salle5'],
+                ['esc4','coursive7'],
+                ['esc4','salle4'],
+                ['esc4','salle3'],
 
-                        ['coursive1','coursive2'],
-                        ['coursive1','salle2'],
-                        ['coursive1','salle6'],
+                ['coursive1','coursive2'],
+                ['coursive1','salle2'],
+                ['coursive1','salle6'],
 
-                        ['coursive2','coursive3'],
-                        ['coursive2','coursive4'],
-                        ['coursive2','coursive5'],
-                        ['coursive2','coursive6'],
-						['coursive2','salle3'],
+                ['coursive2','coursive3'],
+                ['coursive2','coursive4'],
+                ['coursive2','coursive5'],
+                ['coursive2','coursive6'],
+                ['coursive2','salle3'],
 
-                        ['coursive3','coursive4'],
-                        ['coursive3','coursive5'],
-                        ['coursive3','coursive6'],
-                        ['coursive3','prison1'],
-                        ['coursive3','salle4'],
+                ['coursive3','coursive4'],
+                ['coursive3','coursive5'],
+                ['coursive3','coursive6'],
+                ['coursive3','prison1'],
+                ['coursive3','salle4'],
 
-                        ['coursive4','coursive5'],
-                        ['coursive4','coursive6'],
-                        ['coursive4','prison2'],
-                        ['coursive4','salle5'],
+                ['coursive4','coursive5'],
+                ['coursive4','coursive6'],
+                ['coursive4','prison2'],
+                ['coursive4','salle5'],
 
-                        ['coursive5','coursive6'],
-                        ['coursive5','salle6'],
-                        ['coursive5','salle7'],
+                ['coursive5','coursive6'],
+                ['coursive5','salle6'],
+                ['coursive5','salle7'],
 
-                        ['coursive6','coursive7'],
-                        ['coursive6','salle8'],
-                        ['coursive6','salle9'],
+                ['coursive6','coursive7'],
+                ['coursive6','salle8'],
+                ['coursive6','salle9'],
 
-                        ['coursive7','salle5'],
-                        ['coursive7','cale'],
+                ['coursive7','salle5'],
+                ['coursive7','cale'],
 
-                        ['prison1','salle4'],
+                ['prison1','salle4'],
 
-                        ['prison2','salle5'],
+                ['prison2','salle5'],
 
-                        ['salle1','salle2'],
+                ['salle1','salle2'],
 
-                        ['salle3','salle5'],
-                        ['salle3','salle4'],
+                ['salle3','salle5'],
+                ['salle3','salle4'],
 
-                        ['salle4','salle5'],
+                ['salle4','salle5'],
 
-                        ['salle6','salle7'],
+                ['salle6','salle7'],
 
-                        ['salle7','salle8'],
-       
+                ['salle7','salle8'],
 
-						
-                        ['salle8','salle9']
-
+                ['salle8','salle9']
             ];
 
-            var icons = '{}';
-
-            /*
-            var icons = '{
-                "c1": {
-                    "icon1": {
-                        "coordonates": {"x": 123, "y": 321},
-                        "img": ""
-                    },
-                    "icon2": {
-                        "coordonates": { "x": 123, "y": 321},
-                        "img": ""
-                    }
-                }
-            }';*/
-
             $(window).on("load", function() {
-                var top       = $('#mapimage').offset().top;
-                var left      = $('#mapimage').offset().left;
-                var height    = $('#mapimage').height();
-                var width     = $('#mapimage').width();
-
-                var paper = Raphael(top, left, width, height);
-                var theme = new Theme(debug);
-                var conan = new Conan(paper, centers, lines, debug, theme);
+                new Conan(centers, lines);
             });
         </script>
     </head>
     <body>
         <div>
-            <img id="mapimage" src="./Citadelle.png" alt="" usemap="#map" />
+            <img id="mapimage" src="maps/Citadelle.png" alt="" usemap="#map" />
             <map name="map" id="map">
-				<area alt="" title="" href="#" shape="poly" id="ext1" coords="121,340,0,338,0,0,123,1" />
-				<area alt="" title="" href="#" shape="poly" id="ext2" coords="1,341,122,341,122,388,143,387,143,377,165,379,166,550,123,552,123,574,84,574,69,586,68,595,0,595" />
-				<area alt="" title="" href="#" shape="poly" id="ext3" coords="1,597,67,596,69,911,2,911" />
-				<area alt="" title="" href="#" shape="poly" id="int1" coords="167,379,251,381,249,360,285,360,290,378,325,382,325,564,170,564,168,551" />
-				<area alt="" title="" href="#" shape="poly" id="int2" coords="327,566,327,383,390,381,534,381,613,381,616,569,538,567,537,485,456,484,456,568" />
-				<area alt="" title="" href="#" shape="poly" id="int3" coords="331,570,457,569,457,666,538,667,539,570,613,571,615,751,349,749,346,676,340,669,329,669,329,634,335,638,344,639,349,586" />
-				<area alt="" title="" href="#" shape="poly" id="fosse" coords="459,486,537,487,537,665,459,666" />
-				<area alt="" title="" href="#" shape="poly" id="salle1" coords="112,596,329,596,327,735,112,733" />
-				<area alt="" title="" href="#" shape="poly" id="salle2" coords="114,737,327,738,327,779,341,779,341,859,142,860,114,839" />
-				<area alt="" title="" href="#" shape="poly" id="esc1" coords="342,779,410,777,412,866,342,859" />
-				<area alt="" title="" href="#" shape="poly" id="coursive1" coords="413,778,658,781,659,875,411,867" />
-				<area alt="" title="" href="#" shape="poly" id="coursive2" coords="661,780,680,780,680,762,776,761,776,765,802,765,801,867,660,876" />
-				<area alt="" title="" href="#" shape="poly" id="coursive3" coords="681,544,777,544,777,636,778,680,778,761,679,760,678,741,657,724,654,699,662,701,676,699,677,678,667,672,656,673,656,626,662,628,676,627,678,604,667,597,655,597,654,553,663,554,677,553" />
-				<area alt="" title="" href="#" shape="poly" id="coursive4" coords="680,375,778,376,778,541,681,541,678,529,669,525,653,525,655,475,677,474,677,454,666,448,656,449,654,403,663,405,676,406,680,406" />
-				<area alt="" title="" href="#" shape="poly" id="coursive5" coords="682,375,778,373,776,252,667,250,664,254,619,258,618,357,646,355" />
-				<area alt="" title="" href="#" shape="poly" id="coursive6" coords="667,250,778,249,778,204,762,78,755,78,750,43,638,42,636,122,640,237" />
-				<area alt="" title="" href="#" shape="poly" id="coursive7" coords="766,76,779,61,780,41,1011,37,1008,227,913,227,910,203,864,205,856,217,831,215,828,201,781,201" />
-				<area alt="" title="" href="#" shape="poly" id="esc2" coords="803,767,904,766,905,857,805,866" />
-				<area alt="" title="" href="#" shape="poly" id="esc3" coords="532,259,614,258,616,359,532,353" />
-				<area alt="" title="" href="#" shape="poly" id="esc4" coords="913,229,1008,231,998,309,914,308" />
-				<area alt="" title="" href="#" shape="poly" id="salle3" coords="912,761,998,761,996,872,926,872,908,857,906,767,910,765" />
-				<area alt="" title="" href="#" shape="poly" id="salle4" coords="912,759,997,760,1002,545,981,548,963,532,931,530,954,540,955,545,909,547,909,636,880,631,878,668,907,671,908,673" />
-				<area alt="" title="" href="#" shape="poly" id="salle5" coords="914,311,997,311,996,524,961,528,931,529,911,528,911,456,881,453,879,417,909,415" />
-				<area alt="" title="" href="#" shape="poly" id="prison1" coords="798,555,880,552,878,631,880,739,801,745" />
-				<area alt="" title="" href="#" shape="poly" id="prison2" coords="801,348,876,346,878,414,878,456,879,528,801,528" />
-				<area alt="" title="" href="#" shape="poly" id="cale" coords="795,217,828,220,854,219,856,223,884,226,888,320,798,321" />
-				<area alt="" title="" href="#" shape="poly" id="salle6" coords="530,261,529,352,351,355,351,259" />
-				<area alt="" title="" href="#" shape="poly" id="salle7" coords="347,196,349,355,288,353,286,360,247,360,249,355,186,355,170,332,171,195" />
-				<area alt="" title="" href="#" shape="poly" id="salle8" coords="171,195,347,195,347,161,350,99,346,44,207,41,197,50,171,65" />
-				<area alt="" title="" href="#" shape="poly" id="salle9" coords="351,101,364,100,369,91,370,43,599,41,600,236,368,238,366,160,351,160" />
-				<area alt="" title="" href="#" shape="poly" id="balcon" coords="616,383,652,383,653,752,616,752" />
+                <area alt="" title="" href="#" shape="poly" id="ext1" coords="121,340,0,338,0,0,123,1" />
+                <area alt="" title="" href="#" shape="poly" id="ext2" coords="1,341,122,341,122,388,143,387,143,377,165,379,166,550,123,552,123,574,84,574,69,586,68,595,0,595" />
+                <area alt="" title="" href="#" shape="poly" id="ext3" coords="1,597,67,596,69,911,2,911" />
+                <area alt="" title="" href="#" shape="poly" id="int1" coords="167,379,251,381,249,360,285,360,290,378,325,382,325,564,170,564,168,551" />
+                <area alt="" title="" href="#" shape="poly" id="int2" coords="327,566,327,383,390,381,534,381,613,381,616,569,538,567,537,485,456,484,456,568" />
+                <area alt="" title="" href="#" shape="poly" id="int3" coords="331,570,457,569,457,666,538,667,539,570,613,571,615,751,349,749,346,676,340,669,329,669,329,634,335,638,344,639,349,586" />
+                <area alt="" title="" href="#" shape="poly" id="fosse" coords="459,486,537,487,537,665,459,666" />
+                <area alt="" title="" href="#" shape="poly" id="salle1" coords="112,596,329,596,327,735,112,733" />
+                <area alt="" title="" href="#" shape="poly" id="salle2" coords="114,737,327,738,327,779,341,779,341,859,142,860,114,839" />
+                <area alt="" title="" href="#" shape="poly" id="esc1" coords="342,779,410,777,412,866,342,859" />
+                <area alt="" title="" href="#" shape="poly" id="coursive1" coords="413,778,658,781,659,875,411,867" />
+                <area alt="" title="" href="#" shape="poly" id="coursive2" coords="661,780,680,780,680,762,776,761,776,765,802,765,801,867,660,876" />
+                <area alt="" title="" href="#" shape="poly" id="coursive3" coords="681,544,777,544,777,636,778,680,778,761,679,760,678,741,657,724,654,699,662,701,676,699,677,678,667,672,656,673,656,626,662,628,676,627,678,604,667,597,655,597,654,553,663,554,677,553" />
+                <area alt="" title="" href="#" shape="poly" id="coursive4" coords="680,375,778,376,778,541,681,541,678,529,669,525,653,525,655,475,677,474,677,454,666,448,656,449,654,403,663,405,676,406,680,406" />
+                <area alt="" title="" href="#" shape="poly" id="coursive5" coords="682,375,778,373,776,252,667,250,664,254,619,258,618,357,646,355" />
+                <area alt="" title="" href="#" shape="poly" id="coursive6" coords="667,250,778,249,778,204,762,78,755,78,750,43,638,42,636,122,640,237" />
+                <area alt="" title="" href="#" shape="poly" id="coursive7" coords="766,76,779,61,780,41,1011,37,1008,227,913,227,910,203,864,205,856,217,831,215,828,201,781,201" />
+                <area alt="" title="" href="#" shape="poly" id="esc2" coords="803,767,904,766,905,857,805,866" />
+                <area alt="" title="" href="#" shape="poly" id="esc3" coords="532,259,614,258,616,359,532,353" />
+                <area alt="" title="" href="#" shape="poly" id="esc4" coords="913,229,1008,231,998,309,914,308" />
+                <area alt="" title="" href="#" shape="poly" id="salle3" coords="912,761,998,761,996,872,926,872,908,857,906,767,910,765" />
+                <area alt="" title="" href="#" shape="poly" id="salle4" coords="912,759,997,760,1002,545,981,548,963,532,931,530,954,540,955,545,909,547,909,636,880,631,878,668,907,671,908,673" />
+                <area alt="" title="" href="#" shape="poly" id="salle5" coords="914,311,997,311,996,524,961,528,931,529,911,528,911,456,881,453,879,417,909,415" />
+                <area alt="" title="" href="#" shape="poly" id="prison1" coords="798,555,880,552,878,631,880,739,801,745" />
+                <area alt="" title="" href="#" shape="poly" id="prison2" coords="801,348,876,346,878,414,878,456,879,528,801,528" />
+                <area alt="" title="" href="#" shape="poly" id="cale" coords="795,217,828,220,854,219,856,223,884,226,888,320,798,321" />
+                <area alt="" title="" href="#" shape="poly" id="salle6" coords="530,261,529,352,351,355,351,259" />
+                <area alt="" title="" href="#" shape="poly" id="salle7" coords="347,196,349,355,288,353,286,360,247,360,249,355,186,355,170,332,171,195" />
+                <area alt="" title="" href="#" shape="poly" id="salle8" coords="171,195,347,195,347,161,350,99,346,44,207,41,197,50,171,65" />
+                <area alt="" title="" href="#" shape="poly" id="salle9" coords="351,101,364,100,369,91,370,43,599,41,600,236,368,238,366,160,351,160" />
+                <area alt="" title="" href="#" shape="poly" id="balcon" coords="616,383,652,383,653,752,616,752" />
             </map>
         </div>
     </body>

@@ -11,9 +11,6 @@
 
         <script type="text/javascript">
 
-            var hash = window.location.hash;
-            var debug = (hash == '#debug') ? true : false;
-
             var centers = `{
                 "mer1"  : [ 39, 111],
                 "mer2"  : [ 169, 50],
@@ -24,594 +21,571 @@
                 "mer7"  : [ 89, 400],
                 "mer8"  : [ 83, 480],
                 "mer9"  : [ 266, 428],
-				"mer10" : [ 430, 413],
-				"mer11" : [ 634, 400],
-				"mer12" : [ 790, 383],
-				"mer13" : [ 1003, 289],
-				"mer14" : [ 1012, 401],
-				"mer15" : [ 47, 842],
-				"mer16" : [ 252, 858],
-				"mer17" : [ 498, 854],
-				"mer18" : [ 710, 841],
-				"mer19" : [ 894, 837],
-				"mer20" : [ 1024, 729],
-				"nav1" : [ 112, 256],
-				"nav2" : [ 244, 191],
-				"nav3" : [ 249, 308],
-				"nav4" : [ 310, 251],
-				"nav5" : [ 396, 170],
-				"nav6" : [ 401, 300],
-				"nav7" : [ 473, 231],
-				"nav8" : [ 597, 137],
-				"nav9" : [ 606, 216],
-				"nav10" : [ 601, 300],
-				"nav11" : [ 711, 211],
-				"nav12" : [ 807, 133],
-				"nav13" : [ 825, 260],
-				"nav14" : [ 967, 184],
-				"bat1" : [ 126, 658],
-				"bat2" : [ 262, 565],
-				"bat3" : [ 278, 720],
-				"bat4" : [ 321, 643],
-				"bat5" : [ 419, 551],
-				"bat6" : [ 433, 703],
-				"bat7" : [ 526, 619],
-				"bat8" : [ 625, 510],
-				"bat9" : [ 641, 605],
-				"bat10" : [ 650, 700],
-				"bat11" : [ 730, 596],
-				"bat12" : [ 781, 505],
-				"bat13" : [ 798, 669],
-				"bat14" : [ 914, 568]
+                "mer10" : [ 430, 413],
+                "mer11" : [ 634, 400],
+                "mer12" : [ 790, 383],
+                "mer13" : [ 1003, 289],
+                "mer14" : [ 1012, 401],
+                "mer15" : [ 47, 842],
+                "mer16" : [ 252, 858],
+                "mer17" : [ 498, 854],
+                "mer18" : [ 710, 841],
+                "mer19" : [ 894, 837],
+                "mer20" : [ 1024, 729],
+                "nav1" : [ 112, 256],
+                "nav2" : [ 244, 191],
+                "nav3" : [ 249, 308],
+                "nav4" : [ 310, 251],
+                "nav5" : [ 396, 170],
+                "nav6" : [ 401, 300],
+                "nav7" : [ 473, 231],
+                "nav8" : [ 597, 137],
+                "nav9" : [ 606, 216],
+                "nav10" : [ 601, 300],
+                "nav11" : [ 711, 211],
+                "nav12" : [ 807, 133],
+                "nav13" : [ 825, 260],
+                "nav14" : [ 967, 184],
+                "bat1" : [ 126, 658],
+                "bat2" : [ 262, 565],
+                "bat3" : [ 278, 720],
+                "bat4" : [ 321, 643],
+                "bat5" : [ 419, 551],
+                "bat6" : [ 433, 703],
+                "bat7" : [ 526, 619],
+                "bat8" : [ 625, 510],
+                "bat9" : [ 641, 605],
+                "bat10" : [ 650, 700],
+                "bat11" : [ 730, 596],
+                "bat12" : [ 781, 505],
+                "bat13" : [ 798, 669],
+                "bat14" : [ 914, 568]
             }`;
 
              var lines = [
-			 
-				 ['mer1', 'mer2'],
-				 ['mer1', 'mer3'],
-				 ['mer1', 'mer4'],
-				 ['mer1', 'ponton2'],
-				 ['mer1', 'mer5'],
-				 
-				 ['mer2', 'mer3'],
-				 ['mer2', 'mer5'],
-				 ['mer2', 'mer4'],
-				 ['mer2', 'nav1'],
-				 ['mer2', 'nav2'],
-				 
-				 ['mer3', 'mer4'],
-				 ['mer3', 'mer5'],
-				 ['mer3', 'nav2'],
-				 ['mer3', 'nav5'],
-				 
-				 ['mer4', 'mer5'],
-				 ['mer4', 'mer6'],
-				 ['mer4', 'nav5'],
-				 ['mer4', 'nav8'],
-				 
-				 ['mer5', 'mer6'],
-				 ['mer5', 'nav8'],
-				 ['mer5', 'nav12'],
-				 
-				 ['mer6', 'nav12'],
-				 ['mer6', 'nav14'],
-				 
-				['mer7', 'mer8'],
-				['mer7', 'mer9'],
-				['mer7', 'mer10'],
-				['mer7', 'mer11'],
-				['mer7', 'mer12'],
-				['mer7', 'mer14'],
-				['mer7', 'nav1'],
-				['mer7', 'bat1'],
-				['mer7', 'bat2'],
 
-				['mer8', 'mer9'],	
-				['mer8', 'mer10'],	
-				['mer8', 'nav1'],	
-				['mer8', 'bat1'],	
+                 ['mer1', 'mer2'],
+                 ['mer1', 'mer3'],
+                 ['mer1', 'mer4'],
+                 ['mer1', 'ponton2'],
+                 ['mer1', 'mer5'],
 
-				['mer9', 'mer10'],	
-				['mer9', 'mer11'],	
-				['mer9', 'mer12'],	
-				['mer9', 'mer14'],	
-				['mer9', 'nav3'],	
-				['mer9', 'nav6'],	
-				['mer9', 'bat5'],	
-				['mer9', 'bat2'],
-				
-				['mer10', 'mer11'],	
-				['mer10', 'mer12'],	
-				['mer10', 'mer13'],	
-				['mer10', 'mer14'],	
-				['mer10', 'nav6'],	
-				['mer10', 'nav10'],	
-				['mer10', 'bat5'],	
-				
-				['mer11', 'mer12'],	
-				['mer11', 'mer14'],	
-				['mer11', 'nav10'],	
-				['mer11', 'bat8'],	
-				
-				['mer12', 'mer13'],	
-				['mer12', 'mer14'],	
-				['mer12', 'nav10'],	
-				['mer12', 'nav13'],	
-				['mer12', 'bat8'],	
-				['mer12', 'bat12'],	
-				['mer12', 'bat14'],	
-				
-				['mer13', 'mer14'],	
-				['mer13', 'nav13'],	
-				['mer13', 'nav14'],	
-				['mer13', 'bat14'],	
-				
-				['mer14', 'nav13'],	
-				['mer14', 'nav14'],	
-				['mer14', 'bat14'],
-				
-				['mer15', 'mer16'],	
-				['mer15', 'mer17'],	
-				['mer15', 'mer18'],	
-				['mer15', 'mer19'],	
-				['mer15', 'bat1'],
-				
-				['mer16', 'mer17'],	
-				['mer16', 'mer18'],	
-				['mer16', 'mer19'],	
-				['mer16', 'bat1'],	
-				['mer16', 'bat3'],	
-				
-				['mer17', 'mer18'],	
-				['mer17', 'mer19'],	
-				['mer17', 'bat6'],	
-				['mer17', 'bat10'],	
-				
-				['mer18', 'mer19'],	
-				['mer18', 'mer20'],	
-				['mer18', 'bat10'],	
-				
-				['mer19', 'mer20'],	
-				['mer19', 'bat13'],	
-				['mer19', 'bat14'],	
-				
-				['mer20', 'bat14'],	
-				
-				['nav1', 'bat1'],	
-				['nav1', 'bat2'],	
-				['nav1', 'bat3'],	
-				['nav1', 'bat4'],	
-				['nav1', 'bat5'],	
-				['nav1', 'bat6'],	
-				['nav1', 'bat7'],	
-				['nav1', 'bat8'],	
-				['nav1', 'bat9'],	
-				['nav1', 'bat11'],	
-				['nav1', 'bat12'],	
-				['nav1', 'bat13'],	
-				['nav1', 'bat14'],	
-				['nav1', 'nav2'],	
-				['nav1', 'nav3'],	
-				['nav1', 'nav4'],	
-				['nav1', 'nav5'],	
-				['nav1', 'nav6'],	
-				['nav1', 'bat14'],	
-				['nav1', 'nav10'],
-				
-				['nav2', 'bat1'],	
-				['nav2', 'bat2'],	
-				['nav2', 'bat3'],	
-				['nav2', 'bat4'],	
-				['nav2', 'bat5'],	
-				['nav2', 'bat6'],	
-				['nav2', 'bat12'],	
-				['nav2', 'bat14'],	
-				['nav2', 'nav3'],	
-				['nav2', 'nav4'],	
-				['nav2', 'nav5'],	
-				['nav2', 'nav7'],	
-				['nav2', 'nav8'],	
-				['nav2', 'nav9'],	
-				['nav2', 'nav10'],	
-				['nav2', 'nav11'],	
-				['nav2', 'nav12'],	
-				['nav2', 'nav13'],	
-					
-				['nav3', 'bat1'],
-				['nav3', 'bat2'],
-				['nav3', 'bat3'],
-				['nav3', 'bat4'],
-				['nav3', 'bat5'],
-				['nav3', 'bat6'],
-				['nav3', 'bat7'],
-				['nav3', 'bat8'],
-				['nav3', 'bat9'],
-				['nav3', 'bat10'],
-				['nav3', 'bat11'],
-				['nav3', 'bat12'],
-				['nav3', 'bat13'],
-				['nav3', 'bat14'],
-				['nav3', 'nav4'],
-				['nav3', 'nav6'],
-				['nav3', 'nav7'],
-				['nav3', 'nav8'],
-				['nav3', 'nav9'],
-				['nav3', 'nav10'],
-				['nav3', 'nav11'],
-				['nav3', 'nav12'],
-				['nav3', 'nav13'],
-				['nav3', 'nav14'],
-				['nav3', 'mer9'],
+                 ['mer2', 'mer3'],
+                 ['mer2', 'mer5'],
+                 ['mer2', 'mer4'],
+                 ['mer2', 'nav1'],
+                 ['mer2', 'nav2'],
 
-				['nav4', 'bat1'],
-				['nav4', 'bat2'],
-				['nav4', 'bat4'],
-				['nav4', 'bat5'],
-				['nav4', 'bat6'],
-				['nav4', 'bat7'],
-				['nav4', 'bat8'],
-				['nav4', 'bat9'],
-				['nav4', 'bat10'],
-				['nav4', 'bat11'],
-				['nav4', 'bat12'],
-				['nav4', 'bat14'],
-				['nav4', 'nav5'],
-				['nav4', 'nav6'],
-				['nav4', 'nav7'],
-				['nav4', 'nav8'],
-				['nav4', 'nav9'],
-				['nav4', 'nav10'],
-				['nav4', 'nav11'],
-				['nav4', 'nav12'],
-				['nav4', 'nav13'],
+                 ['mer3', 'mer4'],
+                 ['mer3', 'mer5'],
+                 ['mer3', 'nav2'],
+                 ['mer3', 'nav5'],
 
-				['nav5', 'bat1'],
-				['nav5', 'bat2'],
-				['nav5', 'bat4'],
-				['nav5', 'bat5'],
-				['nav5', 'bat6'],
-				['nav5', 'bat7'],
-				['nav5', 'bat8'],
-				['nav5', 'bat9'],
-				['nav5', 'bat10'],
-				['nav5', 'bat11'],
-				['nav5', 'bat12'],
-				['nav5', 'bat14'],
-				['nav5', 'nav6'],
-				['nav5', 'nav7'],
-				['nav5', 'nav8'],
-				['nav5', 'nav9'],
-				['nav5', 'nav10'],
-				['nav5', 'nav11'],
-				['nav5', 'nav12'],
-				['nav5', 'nav13'],
-				['nav5', 'nav14'],
+                 ['mer4', 'mer5'],
+                 ['mer4', 'mer6'],
+                 ['mer4', 'nav5'],
+                 ['mer4', 'nav8'],
 
-				['nav6', 'bat1'],
-				['nav6', 'bat2'],
-				['nav6', 'bat4'],
-				['nav6', 'bat5'],
-				['nav6', 'bat6'],
-				['nav6', 'bat7'],
-				['nav6', 'bat8'],
-				['nav6', 'bat9'],
-				['nav6', 'bat10'],
-				['nav6', 'bat11'],
-				['nav6', 'bat12'],
-				['nav6', 'bat14'],
-				['nav6', 'nav7'],
-				['nav6', 'nav8'],
-				['nav6', 'nav9'],
-				['nav6', 'nav10'],
-				['nav6', 'nav11'],
-				['nav6', 'nav12'],
-				['nav6', 'nav13'],
-				['nav6', 'nav14'],
+                 ['mer5', 'mer6'],
+                 ['mer5', 'nav8'],
+                 ['mer5', 'nav12'],
 
-				['nav7', 'bat1'],
-				['nav7', 'bat2'],
-				['nav7', 'bat4'],
-				['nav7', 'bat5'],
-				['nav7', 'bat6'],
-				['nav7', 'bat7'],
-				['nav7', 'bat8'],
-				['nav7', 'bat9'],
-				['nav7', 'bat10'],
-				['nav7', 'bat11'],
-				['nav7', 'bat12'],
-				['nav7', 'bat14'],
-				['nav7', 'nav8'],
-				['nav7', 'nav9'],
-				['nav7', 'nav10'],
-				['nav7', 'nav11'],
-				['nav7', 'nav12'],
-				['nav7', 'nav13'],
-				 
-				['nav8', 'bat1'],
-				['nav8', 'bat2'],
-				['nav8', 'bat4'],
-				['nav8', 'bat5'],
-				['nav8', 'bat6'],
-				['nav8', 'bat7'],
-				['nav8', 'bat8'],
-				['nav8', 'bat9'],
-				['nav8', 'bat10'],
-				['nav8', 'bat11'],
-				['nav8', 'bat12'],
-				['nav8', 'bat13'],
-				['nav8', 'bat14'],
-				['nav8', 'nav9'],
-				['nav8', 'nav10'],
-				['nav8', 'nav11'],
-				['nav8', 'nav12'],
-				['nav8', 'nav14'],
+                 ['mer6', 'nav12'],
+                 ['mer6', 'nav14'],
 
-				['nav9', 'bat1'],
-				['nav9', 'bat2'],
-				['nav9', 'bat4'],
-				['nav9', 'bat5'],
-				['nav9', 'bat6'],
-				['nav9', 'bat7'],
-				['nav9', 'bat8'],
-				['nav9', 'bat9'],
-				['nav9', 'bat10'],
-				['nav9', 'bat11'],
-				['nav9', 'bat12'],
-				['nav9', 'bat13'],
-				['nav9', 'bat14'],
-				['nav9', 'nav10'],
-				['nav9', 'nav11'],
-				['nav9', 'nav12'],
-				['nav9', 'nav13'],
-		 
-				['nav10', 'bat1'],
-				['nav10', 'bat2'],
-				['nav10', 'bat4'],
-				['nav10', 'bat5'],
-				['nav10', 'bat6'],
-				['nav10', 'bat7'],
-				['nav10', 'bat8'],
-				['nav10', 'bat9'],
-				['nav10', 'bat10'],
-				['nav10', 'bat11'],
-				['nav10', 'bat12'],
-				['nav10', 'bat14'],
-				['nav10', 'nav11'],
-				['nav10', 'nav13'],
-				['nav10', 'nav14'],
-		   
-				['nav11', 'bat1'],
-				['nav11', 'bat2'],
-				['nav11', 'bat4'],
-				['nav11', 'bat5'],
-				['nav11', 'bat6'],
-				['nav11', 'bat7'],
-				['nav11', 'bat8'],
-				['nav11', 'bat9'],
-				['nav11', 'bat10'],
-				['nav11', 'bat11'],
-				['nav11', 'bat12'],
-				['nav11', 'bat13'],
-				['nav11', 'bat14'],
-				['nav11', 'nav12'],
-				['nav11', 'nav13'],
-				['nav11', 'nav14'],
-			
-				['nav12', 'bat6'],
-				['nav12', 'bat7'],
-				['nav12', 'bat8'],
-				['nav12', 'bat9'],
-				['nav12', 'bat10'],
-				['nav12', 'bat11'],
-				['nav12', 'bat12'],
-				['nav12', 'bat13'],
-				['nav12', 'bat14'],
-				['nav12', 'nav13'],
-				['nav12', 'nav14'],
-			
-				['nav13', 'bat1'],
-				['nav13', 'bat2'],
-				['nav13', 'bat3'],
-				['nav13', 'bat4'],
-				['nav13', 'bat5'],
-				['nav13', 'bat6'],
-				['nav13', 'bat7'],
-				['nav13', 'bat8'],
-				['nav13', 'bat9'],
-				['nav13', 'bat10'],
-				['nav13', 'bat11'],
-				['nav13', 'bat12'],
-				['nav13', 'bat13'],
-				['nav13', 'bat14'],
-				['nav13', 'nav14'],
-		   
-				['nav14', 'bat1'],
-				['nav14', 'bat2'],
-				['nav14', 'bat3'],
-				['nav14', 'bat4'],
-				['nav14', 'bat5'],
-				['nav14', 'bat6'],
-				['nav14', 'bat7'],
-				['nav14', 'bat8'],
-				['nav14', 'bat9'],
-				['nav14', 'bat10'],
-				['nav14', 'bat11'],
-				['nav14', 'bat12'],
-				['nav14', 'bat13'],
-				['nav14', 'bat14'],
-		   
-				['bat1', 'bat2'],
-				['bat1', 'bat3'],
-				['bat1', 'bat4'],
-				['bat1', 'bat5'],
-				['bat1', 'bat6'],
-				['bat1', 'bat8'],
-				['bat1', 'bat12'],
+                ['mer7', 'mer8'],
+                ['mer7', 'mer9'],
+                ['mer7', 'mer10'],
+                ['mer7', 'mer11'],
+                ['mer7', 'mer12'],
+                ['mer7', 'mer14'],
+                ['mer7', 'nav1'],
+                ['mer7', 'bat1'],
+                ['mer7', 'bat2'],
 
-				['bat2', 'bat3'],
-				['bat2', 'bat4'],
-				['bat2', 'bat5'],
-				['bat2', 'bat6'],
-				['bat2', 'bat7'],
-				['bat2', 'bat8'],
-				['bat2', 'bat9'],
-				['bat2', 'bat10'],
-				['bat2', 'bat11'],
-				['bat2', 'bat12'],
-				['bat2', 'bat13'],
-				['bat2', 'bat14'],
-			
-				['bat3', 'bat4'],
-				['bat3', 'bat6'],
-				['bat3', 'bat7'],
-				['bat3', 'bat8'],
-				['bat3', 'bat9'],
-				['bat3', 'bat10'],
-				['bat3', 'bat11'],
-				['bat3', 'bat12'],
-				['bat3', 'bat13'],
+                ['mer8', 'mer9'],
+                ['mer8', 'mer10'],
+                ['mer8', 'nav1'],
+                ['mer8', 'bat1'],
 
-				['bat4', 'bat5'],
-				['bat4', 'bat6'],
-				['bat4', 'bat7'],
-				['bat4', 'bat8'],
-				['bat4', 'bat9'],
-				['bat4', 'bat10'],
-				['bat4', 'bat11'],
-				['bat4', 'bat12'],
-				['bat4', 'bat13'],
-			
-				['bat5', 'bat6'],
-				['bat5', 'bat7'],
-				['bat5', 'bat8'],
-				['bat5', 'bat9'],
-				['bat5', 'bat10'],
-				['bat5', 'bat11'],
-				['bat5', 'bat12'],
-				['bat5', 'bat13'],
-				['bat5', 'bat14'],
-			
-				['bat6', 'bat7'],
-				['bat6', 'bat8'],
-				['bat6', 'bat9'],
-				['bat6', 'bat10'],
-				['bat6', 'bat11'],
-				['bat6', 'bat12'],
-				['bat6', 'bat13'],
+                ['mer9', 'mer10'],
+                ['mer9', 'mer11'],
+                ['mer9', 'mer12'],
+                ['mer9', 'mer14'],
+                ['mer9', 'nav3'],
+                ['mer9', 'nav6'],
+                ['mer9', 'bat5'],
+                ['mer9', 'bat2'],
 
-				['bat7', 'bat8'],
-				['bat7', 'bat9'],
-				['bat7', 'bat10'],
-				['bat7', 'bat11'],
-				['bat7', 'bat12'],
-				['bat7', 'bat13'],
-		   
-				['bat8', 'bat9'],
-				['bat8', 'bat10'],
-				['bat8', 'bat11'],
-				['bat8', 'bat12'],
-				['bat8', 'bat14'],
-			
-				['bat9', 'bat10'],
-				['bat9', 'bat11'],
-				['bat9', 'bat12'],
-				['bat9', 'bat13'],
-		   
-				['bat10', 'bat11'],
-				['bat10', 'bat13'],
-				['bat10', 'bat14'],
-			
-				['bat11', 'bat12'],
-				['bat11', 'bat13'],
-				['bat11', 'bat14'],
-		   
-				['bat12', 'bat13'],
-				['bat12', 'bat14'],
-			
-				['bat13', 'bat14']
+                ['mer10', 'mer11'],
+                ['mer10', 'mer12'],
+                ['mer10', 'mer13'],
+                ['mer10', 'mer14'],
+                ['mer10', 'nav6'],
+                ['mer10', 'nav10'],
+                ['mer10', 'bat5'],
 
-			];
+                ['mer11', 'mer12'],
+                ['mer11', 'mer14'],
+                ['mer11', 'nav10'],
+                ['mer11', 'bat8'],
 
-            var icons = '{}';
+                ['mer12', 'mer13'],
+                ['mer12', 'mer14'],
+                ['mer12', 'nav10'],
+                ['mer12', 'nav13'],
+                ['mer12', 'bat8'],
+                ['mer12', 'bat12'],
+                ['mer12', 'bat14'],
 
-            /*
-            var icons = '{
-                "c1": {
-                    "icon1": {
-                        "coordonates": ['x": 123, "y": 321},
-                        "img": ""
-                    },
-                    "icon2": {
-                        "coordonates": { "x": 123, "y": 321},
-                        "img": ""
-                    }
-                }
-            }';*/
+                ['mer13', 'mer14'],
+                ['mer13', 'nav13'],
+                ['mer13', 'nav14'],
+                ['mer13', 'bat14'],
+
+                ['mer14', 'nav13'],
+                ['mer14', 'nav14'],
+                ['mer14', 'bat14'],
+
+                ['mer15', 'mer16'],
+                ['mer15', 'mer17'],
+                ['mer15', 'mer18'],
+                ['mer15', 'mer19'],
+                ['mer15', 'bat1'],
+
+                ['mer16', 'mer17'],
+                ['mer16', 'mer18'],
+                ['mer16', 'mer19'],
+                ['mer16', 'bat1'],
+                ['mer16', 'bat3'],
+
+                ['mer17', 'mer18'],
+                ['mer17', 'mer19'],
+                ['mer17', 'bat6'],
+                ['mer17', 'bat10'],
+
+                ['mer18', 'mer19'],
+                ['mer18', 'mer20'],
+                ['mer18', 'bat10'],
+
+                ['mer19', 'mer20'],
+                ['mer19', 'bat13'],
+                ['mer19', 'bat14'],
+
+                ['mer20', 'bat14'],
+
+                ['nav1', 'bat1'],
+                ['nav1', 'bat2'],
+                ['nav1', 'bat3'],
+                ['nav1', 'bat4'],
+                ['nav1', 'bat5'],
+                ['nav1', 'bat6'],
+                ['nav1', 'bat7'],
+                ['nav1', 'bat8'],
+                ['nav1', 'bat9'],
+                ['nav1', 'bat11'],
+                ['nav1', 'bat12'],
+                ['nav1', 'bat13'],
+                ['nav1', 'bat14'],
+                ['nav1', 'nav2'],
+                ['nav1', 'nav3'],
+                ['nav1', 'nav4'],
+                ['nav1', 'nav5'],
+                ['nav1', 'nav6'],
+                ['nav1', 'bat14'],
+                ['nav1', 'nav10'],
+
+                ['nav2', 'bat1'],
+                ['nav2', 'bat2'],
+                ['nav2', 'bat3'],
+                ['nav2', 'bat4'],
+                ['nav2', 'bat5'],
+                ['nav2', 'bat6'],
+                ['nav2', 'bat12'],
+                ['nav2', 'bat14'],
+                ['nav2', 'nav3'],
+                ['nav2', 'nav4'],
+                ['nav2', 'nav5'],
+                ['nav2', 'nav7'],
+                ['nav2', 'nav8'],
+                ['nav2', 'nav9'],
+                ['nav2', 'nav10'],
+                ['nav2', 'nav11'],
+                ['nav2', 'nav12'],
+                ['nav2', 'nav13'],
+
+                ['nav3', 'bat1'],
+                ['nav3', 'bat2'],
+                ['nav3', 'bat3'],
+                ['nav3', 'bat4'],
+                ['nav3', 'bat5'],
+                ['nav3', 'bat6'],
+                ['nav3', 'bat7'],
+                ['nav3', 'bat8'],
+                ['nav3', 'bat9'],
+                ['nav3', 'bat10'],
+                ['nav3', 'bat11'],
+                ['nav3', 'bat12'],
+                ['nav3', 'bat13'],
+                ['nav3', 'bat14'],
+                ['nav3', 'nav4'],
+                ['nav3', 'nav6'],
+                ['nav3', 'nav7'],
+                ['nav3', 'nav8'],
+                ['nav3', 'nav9'],
+                ['nav3', 'nav10'],
+                ['nav3', 'nav11'],
+                ['nav3', 'nav12'],
+                ['nav3', 'nav13'],
+                ['nav3', 'nav14'],
+                ['nav3', 'mer9'],
+
+                ['nav4', 'bat1'],
+                ['nav4', 'bat2'],
+                ['nav4', 'bat4'],
+                ['nav4', 'bat5'],
+                ['nav4', 'bat6'],
+                ['nav4', 'bat7'],
+                ['nav4', 'bat8'],
+                ['nav4', 'bat9'],
+                ['nav4', 'bat10'],
+                ['nav4', 'bat11'],
+                ['nav4', 'bat12'],
+                ['nav4', 'bat14'],
+                ['nav4', 'nav5'],
+                ['nav4', 'nav6'],
+                ['nav4', 'nav7'],
+                ['nav4', 'nav8'],
+                ['nav4', 'nav9'],
+                ['nav4', 'nav10'],
+                ['nav4', 'nav11'],
+                ['nav4', 'nav12'],
+                ['nav4', 'nav13'],
+
+                ['nav5', 'bat1'],
+                ['nav5', 'bat2'],
+                ['nav5', 'bat4'],
+                ['nav5', 'bat5'],
+                ['nav5', 'bat6'],
+                ['nav5', 'bat7'],
+                ['nav5', 'bat8'],
+                ['nav5', 'bat9'],
+                ['nav5', 'bat10'],
+                ['nav5', 'bat11'],
+                ['nav5', 'bat12'],
+                ['nav5', 'bat14'],
+                ['nav5', 'nav6'],
+                ['nav5', 'nav7'],
+                ['nav5', 'nav8'],
+                ['nav5', 'nav9'],
+                ['nav5', 'nav10'],
+                ['nav5', 'nav11'],
+                ['nav5', 'nav12'],
+                ['nav5', 'nav13'],
+                ['nav5', 'nav14'],
+
+                ['nav6', 'bat1'],
+                ['nav6', 'bat2'],
+                ['nav6', 'bat4'],
+                ['nav6', 'bat5'],
+                ['nav6', 'bat6'],
+                ['nav6', 'bat7'],
+                ['nav6', 'bat8'],
+                ['nav6', 'bat9'],
+                ['nav6', 'bat10'],
+                ['nav6', 'bat11'],
+                ['nav6', 'bat12'],
+                ['nav6', 'bat14'],
+                ['nav6', 'nav7'],
+                ['nav6', 'nav8'],
+                ['nav6', 'nav9'],
+                ['nav6', 'nav10'],
+                ['nav6', 'nav11'],
+                ['nav6', 'nav12'],
+                ['nav6', 'nav13'],
+                ['nav6', 'nav14'],
+
+                ['nav7', 'bat1'],
+                ['nav7', 'bat2'],
+                ['nav7', 'bat4'],
+                ['nav7', 'bat5'],
+                ['nav7', 'bat6'],
+                ['nav7', 'bat7'],
+                ['nav7', 'bat8'],
+                ['nav7', 'bat9'],
+                ['nav7', 'bat10'],
+                ['nav7', 'bat11'],
+                ['nav7', 'bat12'],
+                ['nav7', 'bat14'],
+                ['nav7', 'nav8'],
+                ['nav7', 'nav9'],
+                ['nav7', 'nav10'],
+                ['nav7', 'nav11'],
+                ['nav7', 'nav12'],
+                ['nav7', 'nav13'],
+
+                ['nav8', 'bat1'],
+                ['nav8', 'bat2'],
+                ['nav8', 'bat4'],
+                ['nav8', 'bat5'],
+                ['nav8', 'bat6'],
+                ['nav8', 'bat7'],
+                ['nav8', 'bat8'],
+                ['nav8', 'bat9'],
+                ['nav8', 'bat10'],
+                ['nav8', 'bat11'],
+                ['nav8', 'bat12'],
+                ['nav8', 'bat13'],
+                ['nav8', 'bat14'],
+                ['nav8', 'nav9'],
+                ['nav8', 'nav10'],
+                ['nav8', 'nav11'],
+                ['nav8', 'nav12'],
+                ['nav8', 'nav14'],
+
+                ['nav9', 'bat1'],
+                ['nav9', 'bat2'],
+                ['nav9', 'bat4'],
+                ['nav9', 'bat5'],
+                ['nav9', 'bat6'],
+                ['nav9', 'bat7'],
+                ['nav9', 'bat8'],
+                ['nav9', 'bat9'],
+                ['nav9', 'bat10'],
+                ['nav9', 'bat11'],
+                ['nav9', 'bat12'],
+                ['nav9', 'bat13'],
+                ['nav9', 'bat14'],
+                ['nav9', 'nav10'],
+                ['nav9', 'nav11'],
+                ['nav9', 'nav12'],
+                ['nav9', 'nav13'],
+
+                ['nav10', 'bat1'],
+                ['nav10', 'bat2'],
+                ['nav10', 'bat4'],
+                ['nav10', 'bat5'],
+                ['nav10', 'bat6'],
+                ['nav10', 'bat7'],
+                ['nav10', 'bat8'],
+                ['nav10', 'bat9'],
+                ['nav10', 'bat10'],
+                ['nav10', 'bat11'],
+                ['nav10', 'bat12'],
+                ['nav10', 'bat14'],
+                ['nav10', 'nav11'],
+                ['nav10', 'nav13'],
+                ['nav10', 'nav14'],
+
+                ['nav11', 'bat1'],
+                ['nav11', 'bat2'],
+                ['nav11', 'bat4'],
+                ['nav11', 'bat5'],
+                ['nav11', 'bat6'],
+                ['nav11', 'bat7'],
+                ['nav11', 'bat8'],
+                ['nav11', 'bat9'],
+                ['nav11', 'bat10'],
+                ['nav11', 'bat11'],
+                ['nav11', 'bat12'],
+                ['nav11', 'bat13'],
+                ['nav11', 'bat14'],
+                ['nav11', 'nav12'],
+                ['nav11', 'nav13'],
+                ['nav11', 'nav14'],
+
+                ['nav12', 'bat6'],
+                ['nav12', 'bat7'],
+                ['nav12', 'bat8'],
+                ['nav12', 'bat9'],
+                ['nav12', 'bat10'],
+                ['nav12', 'bat11'],
+                ['nav12', 'bat12'],
+                ['nav12', 'bat13'],
+                ['nav12', 'bat14'],
+                ['nav12', 'nav13'],
+                ['nav12', 'nav14'],
+
+                ['nav13', 'bat1'],
+                ['nav13', 'bat2'],
+                ['nav13', 'bat3'],
+                ['nav13', 'bat4'],
+                ['nav13', 'bat5'],
+                ['nav13', 'bat6'],
+                ['nav13', 'bat7'],
+                ['nav13', 'bat8'],
+                ['nav13', 'bat9'],
+                ['nav13', 'bat10'],
+                ['nav13', 'bat11'],
+                ['nav13', 'bat12'],
+                ['nav13', 'bat13'],
+                ['nav13', 'bat14'],
+                ['nav13', 'nav14'],
+
+                ['nav14', 'bat1'],
+                ['nav14', 'bat2'],
+                ['nav14', 'bat3'],
+                ['nav14', 'bat4'],
+                ['nav14', 'bat5'],
+                ['nav14', 'bat6'],
+                ['nav14', 'bat7'],
+                ['nav14', 'bat8'],
+                ['nav14', 'bat9'],
+                ['nav14', 'bat10'],
+                ['nav14', 'bat11'],
+                ['nav14', 'bat12'],
+                ['nav14', 'bat13'],
+                ['nav14', 'bat14'],
+
+                ['bat1', 'bat2'],
+                ['bat1', 'bat3'],
+                ['bat1', 'bat4'],
+                ['bat1', 'bat5'],
+                ['bat1', 'bat6'],
+                ['bat1', 'bat8'],
+                ['bat1', 'bat12'],
+
+                ['bat2', 'bat3'],
+                ['bat2', 'bat4'],
+                ['bat2', 'bat5'],
+                ['bat2', 'bat6'],
+                ['bat2', 'bat7'],
+                ['bat2', 'bat8'],
+                ['bat2', 'bat9'],
+                ['bat2', 'bat10'],
+                ['bat2', 'bat11'],
+                ['bat2', 'bat12'],
+                ['bat2', 'bat13'],
+                ['bat2', 'bat14'],
+
+                ['bat3', 'bat4'],
+                ['bat3', 'bat6'],
+                ['bat3', 'bat7'],
+                ['bat3', 'bat8'],
+                ['bat3', 'bat9'],
+                ['bat3', 'bat10'],
+                ['bat3', 'bat11'],
+                ['bat3', 'bat12'],
+                ['bat3', 'bat13'],
+
+                ['bat4', 'bat5'],
+                ['bat4', 'bat6'],
+                ['bat4', 'bat7'],
+                ['bat4', 'bat8'],
+                ['bat4', 'bat9'],
+                ['bat4', 'bat10'],
+                ['bat4', 'bat11'],
+                ['bat4', 'bat12'],
+                ['bat4', 'bat13'],
+
+                ['bat5', 'bat6'],
+                ['bat5', 'bat7'],
+                ['bat5', 'bat8'],
+                ['bat5', 'bat9'],
+                ['bat5', 'bat10'],
+                ['bat5', 'bat11'],
+                ['bat5', 'bat12'],
+                ['bat5', 'bat13'],
+                ['bat5', 'bat14'],
+
+                ['bat6', 'bat7'],
+                ['bat6', 'bat8'],
+                ['bat6', 'bat9'],
+                ['bat6', 'bat10'],
+                ['bat6', 'bat11'],
+                ['bat6', 'bat12'],
+                ['bat6', 'bat13'],
+
+                ['bat7', 'bat8'],
+                ['bat7', 'bat9'],
+                ['bat7', 'bat10'],
+                ['bat7', 'bat11'],
+                ['bat7', 'bat12'],
+                ['bat7', 'bat13'],
+
+                ['bat8', 'bat9'],
+                ['bat8', 'bat10'],
+                ['bat8', 'bat11'],
+                ['bat8', 'bat12'],
+                ['bat8', 'bat14'],
+
+                ['bat9', 'bat10'],
+                ['bat9', 'bat11'],
+                ['bat9', 'bat12'],
+                ['bat9', 'bat13'],
+
+                ['bat10', 'bat11'],
+                ['bat10', 'bat13'],
+                ['bat10', 'bat14'],
+
+                ['bat11', 'bat12'],
+                ['bat11', 'bat13'],
+                ['bat11', 'bat14'],
+
+                ['bat12', 'bat13'],
+                ['bat12', 'bat14'],
+
+                ['bat13', 'bat14']
+
+            ];
 
             $(window).on("load", function() {
-                var top       = $('#mapimage').offset().top;
-                var left      = $('#mapimage').offset().left;
-                var height    = $('#mapimage').height();
-                var width     = $('#mapimage').width();
-
-                var paper = Raphael(top, left, width, height);
-                var theme = new Theme(debug);
-                var conan = new Conan(paper, centers, lines, debug, theme);
+                new Conan(centers, lines);
             });
         </script>
     </head>
     <body>
         <div>
-            <img id="mapimage" src="./Bateaux.png" alt="" usemap="#map" />
+            <img id="mapimage" src="maps/Bateaux.png" alt="" usemap="#map" />
             <map name="map" id="map">
-				<area alt="" title="" href="#" shape="poly" id="mer1" coords="4,2,16,2,142,134,48,158,22,205,24,279,2,290" />
-				<area alt="" title="" href="#" shape="poly" id="mer2" coords="18,0,146,131,247,109,252,1" />
-				<area alt="" title="" href="#" shape="poly" id="mer3" coords="254,1,251,109,336,92,414,82,424,0" />
-				<area alt="" title="" href="#" shape="poly" id="mer4" coords="425,2,415,82,543,71,633,64,677,3,679,1" />
-				<area alt="" title="" href="#" shape="poly" id="mer5" coords="680,1,636,62,736,54,778,54,821,56,856,62,896,73,942,95,912,0" />
-				<area alt="" title="" href="#" shape="poly" id="mer6" coords="913,1,946,95,981,121,1017,143,1049,176,1062,174,1062,2" />
-				<area alt="" title="" href="#" shape="poly" id="mer7" coords="2,291,24,281,28,330,57,368,86,374,139,381,178,383,216,386,214,431,2,453" />
-				<area alt="" title="" href="#" shape="poly" id="mer8" coords="2,456,215,433,213,486,180,491,177,474,85,490,88,506,67,519,47,533,32,548,23,565,15,584,8,612,12,675,2,676" />
-				<area alt="" title="" href="#" shape="poly" id="mer9" coords="219,386,214,484,293,473,291,442,325,438,313,390" />
-				<area alt="" title="" href="#" shape="poly" id="mer10" coords="316,390,326,435,436,425,440,448,550,441,543,378,465,381,454,384,358,389" />
-				<area alt="" title="" href="#" shape="poly" id="mer11" coords="544,377,548,442,721,424,711,363" />
-				<area alt="" title="" href="#" shape="poly" id="mer12" coords="714,363,723,423,850,414,893,326,848,340,798,354" />
-				<area alt="" title="" href="#" shape="poly" id="mer13" coords="895,323,872,370,1061,332,1062,175,1048,178,1025,214,986,257,951,287" />
-				<area alt="" title="" href="#" shape="poly" id="mer14" coords="850,415,872,371,1061,334,1061,610,1029,611,1057,561,1045,541,993,497,945,441,921,422,897,415" />
-				<area alt="" title="" href="#" shape="poly" id="mer15" coords="1,678,11,675,15,723,31,765,54,796,77,810,102,821,137,825,160,821,125,908,1,908" />
-				<area alt="" title="" href="#" shape="poly" id="mer16" coords="162,820,127,908,413,908,338,816,247,819" />
-				<area alt="" title="" href="#" shape="poly" id="mer17" coords="341,817,418,909,645,908,585,793" />
-				<area alt="" title="" href="#" shape="poly" id="mer18" coords="587,792,648,907,861,908,744,775" />
-				<area alt="" title="" href="#" shape="poly" id="mer19" coords="746,773,866,909,1062,909,1062,877,882,756" />
-				<area alt="" title="" href="#" shape="poly" id="mer20" coords="888,756,1062,872,1061,614,1030,615,999,652,986,685,964,715,945,736,935,743" />
-				<area alt="" title="" href="#" shape="poly" id="nav1" coords="45,213,58,181,187,147,198,360,79,347,60,325,51,289" />
-				<area alt="" title="" href="#" shape="poly" id="nav2" coords="190,153,300,130,307,199,295,204,284,208,275,221,268,233,266,247,193,253" />
-				<area alt="" title="" href="#" shape="poly" id="nav3" coords="193,255,265,250,268,269,276,285,289,295,302,301,315,302,319,360,263,360,223,357,203,358" />
-				<area alt="" title="" href="#" shape="poly" id="nav4" coords="307,201,321,201,339,205,351,218,360,238,361,254,357,271,350,282,341,292,330,298,321,300,306,300,292,295,283,290,276,282,271,274,267,263,266,249,268,236,272,225,279,213,292,204" />
-				<area alt="" title="" href="#" shape="poly" id="nav5" coords="303,129,307,199,321,201,336,204,347,213,357,227,362,242,422,233,418,211,490,203,484,108" />
-				<area alt="" title="" href="#" shape="poly" id="nav6" coords="363,240,421,235,422,260,495,253,502,350,320,361,315,300,327,297,340,291,350,281,359,260" />
-				<area alt="" title="" href="#" shape="poly" id="nav7" coords="420,211,423,258,534,249,531,202" />
-				<area alt="" title="" href="#" shape="poly" id="nav8" coords="484,106,491,203,531,200,683,168,692,162,707,159,701,88" />
-				<area alt="" title="" href="#" shape="poly" id="nav9" coords="533,201,536,248,686,258,673,246,662,236,660,222,659,211,660,200,664,186,674,175,681,170" />
-				<area alt="" title="" href="#" shape="poly" id="nav10" coords="496,253,535,250,686,259,699,264,715,262,719,333,613,344,556,352,504,353" />
-				<area alt="" title="" href="#" shape="poly" id="nav11" coords="708,160,723,162,738,170,750,180,758,200,761,216,757,231,749,246,736,256,727,261,717,262,709,263,697,261,689,256,679,251,667,240,663,225,659,213,662,199,666,188,672,179,681,168" />
-				<area alt="" title="" href="#" shape="poly" id="nav12" coords="703,86,709,161,722,161,734,166,746,174,753,183,758,192,761,204,778,204,797,202,815,201,831,200,926,191,920,116,896,106,873,98,850,90,827,85,800,81,781,80" />
-				<area alt="" title="" href="#" shape="poly" id="nav13" coords="761,206,927,191,933,271,915,284,888,293,859,306,814,319,774,328,722,335,715,263,730,258,745,248,752,237,758,225" />
-				<area alt="" title="" href="#" shape="poly" id="nav14" coords="921,113,938,267,979,222,1011,184,978,152" />
-				<area alt="" title="" href="#" shape="poly" id="bat1" coords="201,508,232,799,172,797,130,798,104,792,81,782,68,770,56,754,46,737,44,723,43,709,41,691,40,678,37,661,37,640,36,629,34,612,36,597,40,583,47,569,56,553,76,537,104,526,152,516" />
-				<area alt="" title="" href="#" shape="poly" id="bat2" coords="201,507,253,503,304,497,318,600,307,605,295,610,286,622,280,632,278,648,217,653" />
-				<area alt="" title="" href="#" shape="poly" id="bat3" coords="218,654,276,648,281,663,292,678,304,687,316,691,330,691,341,792,294,793,270,795,234,794" />
-				<area alt="" title="" href="#" shape="poly" id="bat4" coords="319,600,330,600,343,604,355,612,363,621,368,636,369,654,364,667,357,677,347,685,338,689,331,691,319,691,310,689,303,686,296,682,290,676,283,664,278,647,280,632,285,619,302,605" />
-				<area alt="" title="" href="#" shape="poly" id="bat5" coords="308,495,319,599,331,600,343,604,354,610,363,622,370,637,406,632,494,623,493,601,532,595,518,470" />
-				<area alt="" title="" href="#" shape="poly" id="bat6" coords="369,637,494,623,498,650,538,648,552,769,341,794,328,690,343,684,356,674,365,662,368,650" />
-				<area alt="" title="" href="#" shape="poly" id="bat7" coords="494,600,557,594,563,641,499,651" />
-				<area alt="" title="" href="#" shape="poly" id="bat8" coords="520,470,716,450,727,551,714,554,708,558,558,592,534,594" />
-				<area alt="" title="" href="#" shape="poly" id="bat9" coords="559,593,705,560,694,569,689,582,686,601,692,615,697,627,708,635,717,642,566,642" />
-				<area alt="" title="" href="#" shape="poly" id="bat10" coords="540,647,563,644,737,645,748,746,553,769" />
-				<area alt="" title="" href="#" shape="poly" id="bat11" coords="727,553,740,554,756,558,770,571,778,585,778,609,770,623,764,634,752,640,738,643,723,641,709,635,701,628,694,618,690,612,687,594,691,575,708,559" />
-				<area alt="" title="" href="#" shape="poly" id="bat12" coords="717,450,814,440,832,585,779,591,772,575,763,562,751,557,738,551,727,550" />
-				<area alt="" title="" href="#" shape="poly" id="bat13" coords="779,592,831,586,849,745,749,759,738,645,753,637,766,629,777,611" />
-				<area alt="" title="" href="#" shape="poly" id="bat14" coords="819,431,852,741,900,732,936,721,953,703,965,681,972,652,972,617,971,590,965,548,957,511,951,485,945,465,927,452,902,438,870,431" />
+                <area alt="" title="" href="#" shape="poly" id="mer1" coords="4,2,16,2,142,134,48,158,22,205,24,279,2,290" />
+                <area alt="" title="" href="#" shape="poly" id="mer2" coords="18,0,146,131,247,109,252,1" />
+                <area alt="" title="" href="#" shape="poly" id="mer3" coords="254,1,251,109,336,92,414,82,424,0" />
+                <area alt="" title="" href="#" shape="poly" id="mer4" coords="425,2,415,82,543,71,633,64,677,3,679,1" />
+                <area alt="" title="" href="#" shape="poly" id="mer5" coords="680,1,636,62,736,54,778,54,821,56,856,62,896,73,942,95,912,0" />
+                <area alt="" title="" href="#" shape="poly" id="mer6" coords="913,1,946,95,981,121,1017,143,1049,176,1062,174,1062,2" />
+                <area alt="" title="" href="#" shape="poly" id="mer7" coords="2,291,24,281,28,330,57,368,86,374,139,381,178,383,216,386,214,431,2,453" />
+                <area alt="" title="" href="#" shape="poly" id="mer8" coords="2,456,215,433,213,486,180,491,177,474,85,490,88,506,67,519,47,533,32,548,23,565,15,584,8,612,12,675,2,676" />
+                <area alt="" title="" href="#" shape="poly" id="mer9" coords="219,386,214,484,293,473,291,442,325,438,313,390" />
+                <area alt="" title="" href="#" shape="poly" id="mer10" coords="316,390,326,435,436,425,440,448,550,441,543,378,465,381,454,384,358,389" />
+                <area alt="" title="" href="#" shape="poly" id="mer11" coords="544,377,548,442,721,424,711,363" />
+                <area alt="" title="" href="#" shape="poly" id="mer12" coords="714,363,723,423,850,414,893,326,848,340,798,354" />
+                <area alt="" title="" href="#" shape="poly" id="mer13" coords="895,323,872,370,1061,332,1062,175,1048,178,1025,214,986,257,951,287" />
+                <area alt="" title="" href="#" shape="poly" id="mer14" coords="850,415,872,371,1061,334,1061,610,1029,611,1057,561,1045,541,993,497,945,441,921,422,897,415" />
+                <area alt="" title="" href="#" shape="poly" id="mer15" coords="1,678,11,675,15,723,31,765,54,796,77,810,102,821,137,825,160,821,125,908,1,908" />
+                <area alt="" title="" href="#" shape="poly" id="mer16" coords="162,820,127,908,413,908,338,816,247,819" />
+                <area alt="" title="" href="#" shape="poly" id="mer17" coords="341,817,418,909,645,908,585,793" />
+                <area alt="" title="" href="#" shape="poly" id="mer18" coords="587,792,648,907,861,908,744,775" />
+                <area alt="" title="" href="#" shape="poly" id="mer19" coords="746,773,866,909,1062,909,1062,877,882,756" />
+                <area alt="" title="" href="#" shape="poly" id="mer20" coords="888,756,1062,872,1061,614,1030,615,999,652,986,685,964,715,945,736,935,743" />
+                <area alt="" title="" href="#" shape="poly" id="nav1" coords="45,213,58,181,187,147,198,360,79,347,60,325,51,289" />
+                <area alt="" title="" href="#" shape="poly" id="nav2" coords="190,153,300,130,307,199,295,204,284,208,275,221,268,233,266,247,193,253" />
+                <area alt="" title="" href="#" shape="poly" id="nav3" coords="193,255,265,250,268,269,276,285,289,295,302,301,315,302,319,360,263,360,223,357,203,358" />
+                <area alt="" title="" href="#" shape="poly" id="nav4" coords="307,201,321,201,339,205,351,218,360,238,361,254,357,271,350,282,341,292,330,298,321,300,306,300,292,295,283,290,276,282,271,274,267,263,266,249,268,236,272,225,279,213,292,204" />
+                <area alt="" title="" href="#" shape="poly" id="nav5" coords="303,129,307,199,321,201,336,204,347,213,357,227,362,242,422,233,418,211,490,203,484,108" />
+                <area alt="" title="" href="#" shape="poly" id="nav6" coords="363,240,421,235,422,260,495,253,502,350,320,361,315,300,327,297,340,291,350,281,359,260" />
+                <area alt="" title="" href="#" shape="poly" id="nav7" coords="420,211,423,258,534,249,531,202" />
+                <area alt="" title="" href="#" shape="poly" id="nav8" coords="484,106,491,203,531,200,683,168,692,162,707,159,701,88" />
+                <area alt="" title="" href="#" shape="poly" id="nav9" coords="533,201,536,248,686,258,673,246,662,236,660,222,659,211,660,200,664,186,674,175,681,170" />
+                <area alt="" title="" href="#" shape="poly" id="nav10" coords="496,253,535,250,686,259,699,264,715,262,719,333,613,344,556,352,504,353" />
+                <area alt="" title="" href="#" shape="poly" id="nav11" coords="708,160,723,162,738,170,750,180,758,200,761,216,757,231,749,246,736,256,727,261,717,262,709,263,697,261,689,256,679,251,667,240,663,225,659,213,662,199,666,188,672,179,681,168" />
+                <area alt="" title="" href="#" shape="poly" id="nav12" coords="703,86,709,161,722,161,734,166,746,174,753,183,758,192,761,204,778,204,797,202,815,201,831,200,926,191,920,116,896,106,873,98,850,90,827,85,800,81,781,80" />
+                <area alt="" title="" href="#" shape="poly" id="nav13" coords="761,206,927,191,933,271,915,284,888,293,859,306,814,319,774,328,722,335,715,263,730,258,745,248,752,237,758,225" />
+                <area alt="" title="" href="#" shape="poly" id="nav14" coords="921,113,938,267,979,222,1011,184,978,152" />
+                <area alt="" title="" href="#" shape="poly" id="bat1" coords="201,508,232,799,172,797,130,798,104,792,81,782,68,770,56,754,46,737,44,723,43,709,41,691,40,678,37,661,37,640,36,629,34,612,36,597,40,583,47,569,56,553,76,537,104,526,152,516" />
+                <area alt="" title="" href="#" shape="poly" id="bat2" coords="201,507,253,503,304,497,318,600,307,605,295,610,286,622,280,632,278,648,217,653" />
+                <area alt="" title="" href="#" shape="poly" id="bat3" coords="218,654,276,648,281,663,292,678,304,687,316,691,330,691,341,792,294,793,270,795,234,794" />
+                <area alt="" title="" href="#" shape="poly" id="bat4" coords="319,600,330,600,343,604,355,612,363,621,368,636,369,654,364,667,357,677,347,685,338,689,331,691,319,691,310,689,303,686,296,682,290,676,283,664,278,647,280,632,285,619,302,605" />
+                <area alt="" title="" href="#" shape="poly" id="bat5" coords="308,495,319,599,331,600,343,604,354,610,363,622,370,637,406,632,494,623,493,601,532,595,518,470" />
+                <area alt="" title="" href="#" shape="poly" id="bat6" coords="369,637,494,623,498,650,538,648,552,769,341,794,328,690,343,684,356,674,365,662,368,650" />
+                <area alt="" title="" href="#" shape="poly" id="bat7" coords="494,600,557,594,563,641,499,651" />
+                <area alt="" title="" href="#" shape="poly" id="bat8" coords="520,470,716,450,727,551,714,554,708,558,558,592,534,594" />
+                <area alt="" title="" href="#" shape="poly" id="bat9" coords="559,593,705,560,694,569,689,582,686,601,692,615,697,627,708,635,717,642,566,642" />
+                <area alt="" title="" href="#" shape="poly" id="bat10" coords="540,647,563,644,737,645,748,746,553,769" />
+                <area alt="" title="" href="#" shape="poly" id="bat11" coords="727,553,740,554,756,558,770,571,778,585,778,609,770,623,764,634,752,640,738,643,723,641,709,635,701,628,694,618,690,612,687,594,691,575,708,559" />
+                <area alt="" title="" href="#" shape="poly" id="bat12" coords="717,450,814,440,832,585,779,591,772,575,763,562,751,557,738,551,727,550" />
+                <area alt="" title="" href="#" shape="poly" id="bat13" coords="779,592,831,586,849,745,749,759,738,645,753,637,766,629,777,611" />
+                <area alt="" title="" href="#" shape="poly" id="bat14" coords="819,431,852,741,900,732,936,721,953,703,965,681,972,652,972,617,971,590,965,548,957,511,951,485,945,465,927,452,902,438,870,431" />
             </map>
         </div>
     </body>

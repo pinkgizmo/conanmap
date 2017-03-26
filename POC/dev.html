@@ -11,6 +11,10 @@
 
         <script type="text/javascript">
 
+            var hash = window.location.hash;
+            var debug = (hash == '#debug') ? true : false;
+            var debug = true;
+
             var centers = `{
                 "ext1"     : [45, 223],
                 "ext2"     : [243, 53],
@@ -19,7 +23,7 @@
                 "ext5"     : [213, 876],
                 "ext6"     : [1017, 757],
                 "ext7"     : [818, 898],
-                "village1" : [293, 197],
+                "village1" : {"A": [293, 197], "B": [220, 240]},
                 "village2" : [464,126],
                 "village3" : [369,309],
                 "village4" : [735,152],
@@ -36,55 +40,17 @@
 
            var lines = [
 
-                ['ext1', 'ext2'],
+                ['ext1', 'village1-A', false, false, true],
+                ['ext2', 'village1-A', false, false, false],
 
-                ['ext2', 'village1'],
-                ['ext2', 'village3'],
-                ['ext2', 'village5'],
-                ['ext2', 'village7'],
-
-                ['ext3', 'ext6'],
-                ['ext3', 'ext7'],
-                ['ext3', 'village6'],
-                ['ext3', 'village10'],
-
-                ['ext4', 'ext5'],
-
-                ['ext5', 'village7'],
-                ['ext5', 'village11'],
-                ['ext5', 'village12'],
-
-                ['ext6', 'ext7'],
-
-                ['village1', 'village2'],
-                ['village1', 'village3'],
-                ['village1', 'village5'],
-                ['village1', 'village7'],
-
-                ['village2', 'village3'],
-
-                ['village3', 'village6'],
-
-                ['village4', 'village6'],
-                ['village4', 'village10'],
-
-                ['village5', 'village6'],
-                ['village5', 'village8'],
-
-                ['village6', 'village10'],
-
-                ['village7', 'village8'],
-                ['village7', 'village9'],
-
-                ['village8', 'village9'],
-
-                ['village8', 'village9']
-
+                ['village2', 'village1-B', false, false, true],
+                ['village3', 'village1-B'],
             ];
 
-           $(window).on("load", function() {
-               new Conan(centers, lines);
-           });
+            $(window).on("load", function() {
+                var theme = new Theme(debug);
+                new Conan(centers, lines, debug, theme);
+            });
 
         </script>
     </head>
