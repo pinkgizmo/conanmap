@@ -11,11 +11,7 @@
 
         <script type="text/javascript">
 
-            var hash = window.location.hash;
-            var debug = (hash == '#debug') ? true : false;
-            var debug = true;
-
-            var centers = `{
+         var centers = `{
                 "ext1"     : [45, 223],
                 "ext2"     : [243, 53],
                 "ext3"     : [1035, 548],
@@ -47,10 +43,9 @@
                 ['village3', 'village1-B'],
             ];
 
-            $(window).on("load", function() {
-                var theme = new Theme(debug);
-                new Conan(centers, lines, debug, theme);
-            });
+           $(window).on("load", function() {
+               new Conan(centers, lines);
+           });
 
         </script>
     </head>
