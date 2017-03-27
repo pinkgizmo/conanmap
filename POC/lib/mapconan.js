@@ -55,11 +55,11 @@ Theme.prototype.getHighlighted = function() {
     if (!this.debug) {
         var res = `{
             "stroke": "white",
-            "stroke-width": 3,
+            "stroke-width": 0,
             "stroke-opacity": 1,
             "stroke-linecap": "round",
             "stroke-linejoin": "round",
-            "fill": "white",
+            "fill": "green",
             "fill-opacity": 0.4
         }`;
     } else {
