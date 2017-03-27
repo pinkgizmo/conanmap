@@ -52,16 +52,16 @@ Theme.prototype.getZone = function() {
  * Get attributes for highlighted area
  */
 Theme.prototype.getHighlighted = function() {
-    var res = `{
-        "stroke": "white",
-        "stroke-width": 3,
-        "stroke-opacity": 1,
-        "stroke-linecap": "round",
-        "stroke-linejoin": "round",
-        "fill": "white",
-        "fill-opacity": 0.4
-    }`;
-    return $.parseJSON(res);
+      var res = `{
+          "stroke": "white",
+          "stroke-width": 0,
+          "stroke-opacity": 1,
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "fill": "green",
+          "fill-opacity": 0.4
+      }`;
+      return $.parseJSON(res);
 };
 
 /**
