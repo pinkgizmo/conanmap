@@ -492,7 +492,9 @@ function Conan(centers, viewLine) {
     this.tiles    = new ServiceTiles(centers);
     this.viewLine = new ServiceLines(viewLine);
     this.debug    = (window.location.hash === '#debug');
-    this.render    = new Render(this.debug);
+    this.options  = new Options();
+    this.render   = new Render(this.debug, this.options);
+
 
     this.processCoordonates();
     this.mapArea();
@@ -629,22 +631,23 @@ Conan.prototype.displayViewLines = function(tileId) {
  *
  * @params {Boolean} debug - is page in debug mode
  */
-function Render(debug) {
+function Render(debug, options) {
 
     this.init     = [];
     this.file     = [];
     this.elements = [];
 
-    this.debug = debug;
-    this.theme = new Theme(debug);
+    this.debug    = debug;
+    this.options  = options;
+    this.theme    = new Theme(debug);
 
     var mapimage  = $('#mapimage');
-    var top       = mapimage.offset().top;
-    var left      = mapimage.offset().left;
+    var top       = mapimage.position().top;
+    var left      = mapimage.position().left;
     var height    = mapimage.height();
     var width     = mapimage.width();
 
-    this.paper = Raphael(top, left, width, height);
+    this.paper = Raphael(left, top, width, height);
 }
 
 /**
@@ -753,6 +756,11 @@ Render.prototype.initText = function(text, center) {
  * @returns {Render}
  */
 Render.prototype.addLine = function(xFrom, yFrom, xTo, yTo, debug) {
+
+    if (!this.options.getOption('display-line')) {
+        return this
+    }
+
     var data = {};
     data['id'] = 'Line';
     data['prio'] = '20';
@@ -777,6 +785,11 @@ Render.prototype.addLine = function(xFrom, yFrom, xTo, yTo, debug) {
  * @returns {Render}
  */
 Render.prototype.addCenter = function(x, y) {
+
+    if (!this.options.getOption('display-center')) {
+        return this
+    }
+
     var data = {};
     data['id'] = 'Center';
     data['prio'] = '30';
@@ -797,6 +810,11 @@ Render.prototype.addCenter = function(x, y) {
  * @returns {Render}
  */
 Render.prototype.addZone = function(coords) {
+
+    if (!this.options.getOption('display-zone')) {
+        return this
+    }
+
     var data = {};
     data['id'] = 'Zone';
     data['prio'] = '10';
@@ -861,4 +879,46 @@ Render.prototype.drawZone = function(data) {
     this.elements.push(element);
 
     return this;
+};
+
+/******************************************
+ Options
+ *******************************************/
+
+/**
+ * Options - constructor
+ */
+function Options() {
+    var self = this;
+    this.options = {
+        'display-line'   : true,
+        'display-zone'   : true,
+        'display-center' : true
+    };
+
+    $('#options').find('input').click(function() {
+        self.refreshOptions();
+    });
+}
+
+/**
+ * Set options value list from check box
+ */
+Options.prototype.refreshOptions = function() {
+    var self = this;
+    $('#options').find('input').each(function() {
+        var input = $(this);
+        self.options[input.attr('id')] = input.is(':checked');
+    });
+};
+
+/**
+ * Return an option
+ *
+ * @param {String} id - the option code
+ *
+ * @returns {*}
+ */
+Options.prototype.getOption = function(id) {
+    return this.options[id];
 };
