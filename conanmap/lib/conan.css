@@ -14,3 +14,20 @@
 body {
     font-family: 'Crom', sans-serif;
 }
+.home h2 {
+    clear: both;
+}
+
+.home ul {
+    list-style-type: none;
+    clear: both;
+}
+
+.home li {
+    float : left;
+    margin-right: 25px;
+}
+
+.home a {
+    display: block;
+}
