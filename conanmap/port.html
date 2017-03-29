@@ -5,6 +5,8 @@
         <meta charset=utf-8 />
         <title>Port</title>
 
+        <link rel="stylesheet" type="text/css" href="lib/conan.css">
+
         <script src="lib/jquery-3.1.1.js"></script>
         <script src="lib/mapconan.js"></script>
         <script src="lib/raphael.min.js"></script>
@@ -53,105 +55,105 @@
             var lines = [
                 ['int2', 'int4'],
                 ['int2', 'int5'],
-				
-				['int3', 'int4'],
-				['int3', 'int5'],
-				['int3', 'ext4'],
-				['int3', 'esc1'],
-				
-				['int4', 'int5'],
-				
-				['int5', 'ext1'],
-				
-				['int6', 'int7'],
-				['int6', 'int8'],
-				['int6', 'ext2'],
-				
-				['int7', 'int8'],
-				['int7', 'ext2',false,false,true],
-				['int7', 'ext7'],
-				
-				['int8', 'ext7'],
-				
-				['int9', 'int11'],
-				['int9', 'int12'],
-				['int9', 'esc2'],
-				
-				['int10', 'int11'],
-				['int10', 'int12'],
-				['int10', 'esc2'],
-				
-				['int11', 'esc1'],
-				
-				['int12', 'esc1'],
-				
-				['int13', 'int14'],
-				['int13', 'ext5'],
-				['int13', 'quai4'],
-				
-				['int14', 'int15'],
-				['int14', 'int16'],
-				['int14', 'quai4'],
-				
-				['int15', 'int16'],
-				['int15', 'ext7'],
-				
-				['ext1', 'ext2'],
-				['ext1', 'ext6'],
-				
-				['ext2', 'ext6'],
-				
-				['ext3', 'ext4'],
-				['ext3', 'ext5'],
-				['ext3', 'ext6'],
-				['ext3', 'ext7'],
-				
-				['ext4', 'ext5'],
-				['ext4', 'ext6'],
-				['ext4', 'ext7'],
-				['ext4', 'esc1'],
-				['ext4', 'esc2',false,false,true],
-				
-				['ext5', 'ext6'],
-				['ext5', 'ext7'],
-				['ext5', 'ext8'],
-				['ext5', 'quai3'],
-				['ext5', 'eau3',false,false,true],
-				
-				['ext6', 'ext7'],
-				
-				['ext8', 'quai3'],
-				['ext8', 'eau3',false,false,true],
-				
-				['esc1', 'esc2',false,false,true],
-				
-				['esc2', 'eau1',false,false,true],
-				['esc2', 'eau2',false,false,true],
-				
-				['quai1', 'quai2'],
-				['quai1', 'quai3'],
-				['quai1', 'quai4'],
-				['quai1', 'quai5'],
-				['quai1', 'eau1'],
-				
-				['quai2', 'esc2'],
-				['quai2', 'quai3'],
-				['quai2', 'quai4'],
-				['quai2', 'quai5'],
-				['quai2', 'eau1'],
-				['quai2', 'eau2'],	
 
-				['quai3', 'quai4'],
-				['quai3', 'quai5'],				
-				['quai3', 'eau2'],				
-				['quai3', 'eau3'],	
-				
-				['quai4', 'quai5'],
-				['quai4', 'eau3',false,false,true],				
-				['quai4', 'eau4'],
+                ['int3', 'int4'],
+                ['int3', 'int5'],
+                ['int3', 'ext4'],
+                ['int3', 'esc1'],
 
-				['quai5', 'eau4',false,false,true],				
-				['quai5', 'eau5']
+                ['int4', 'int5'],
+
+                ['int5', 'ext1'],
+
+                ['int6', 'int7'],
+                ['int6', 'int8'],
+                ['int6', 'ext2'],
+
+                ['int7', 'int8'],
+                ['int7', 'ext2',false,false,true],
+                ['int7', 'ext7'],
+
+                ['int8', 'ext7'],
+
+                ['int9', 'int11'],
+                ['int9', 'int12'],
+                ['int9', 'esc2'],
+
+                ['int10', 'int11'],
+                ['int10', 'int12'],
+                ['int10', 'esc2'],
+
+                ['int11', 'esc1'],
+
+                ['int12', 'esc1'],
+
+                ['int13', 'int14'],
+                ['int13', 'ext5'],
+                ['int13', 'quai4'],
+
+                ['int14', 'int15'],
+                ['int14', 'int16'],
+                ['int14', 'quai4'],
+
+                ['int15', 'int16'],
+                ['int15', 'ext7'],
+
+                ['ext1', 'ext2'],
+                ['ext1', 'ext6'],
+
+                ['ext2', 'ext6'],
+
+                ['ext3', 'ext4'],
+                ['ext3', 'ext5'],
+                ['ext3', 'ext6'],
+                ['ext3', 'ext7'],
+
+                ['ext4', 'ext5'],
+                ['ext4', 'ext6'],
+                ['ext4', 'ext7'],
+                ['ext4', 'esc1'],
+                ['ext4', 'esc2',false,false,true],
+
+                ['ext5', 'ext6'],
+                ['ext5', 'ext7'],
+                ['ext5', 'ext8'],
+                ['ext5', 'quai3'],
+                ['ext5', 'eau3',false,false,true],
+
+                ['ext6', 'ext7'],
+
+                ['ext8', 'quai3'],
+                ['ext8', 'eau3',false,false,true],
+
+                ['esc1', 'esc2',false,false,true],
+
+                ['esc2', 'eau1',false,false,true],
+                ['esc2', 'eau2',false,false,true],
+
+                ['quai1', 'quai2'],
+                ['quai1', 'quai3'],
+                ['quai1', 'quai4'],
+                ['quai1', 'quai5'],
+                ['quai1', 'eau1'],
+
+                ['quai2', 'esc2'],
+                ['quai2', 'quai3'],
+                ['quai2', 'quai4'],
+                ['quai2', 'quai5'],
+                ['quai2', 'eau1'],
+                ['quai2', 'eau2'],
+
+                ['quai3', 'quai4'],
+                ['quai3', 'quai5'],
+                ['quai3', 'eau2'],
+                ['quai3', 'eau3'],
+
+                ['quai4', 'quai5'],
+                ['quai4', 'eau3',false,false,true],
+                ['quai4', 'eau4'],
+
+                ['quai5', 'eau4',false,false,true],
+                ['quai5', 'eau5']
             ];
 
             $(window).on("load", function() {
@@ -160,7 +162,7 @@
         </script>
     </head>
     <body>
-		<div id="options">
+        <div id="options">
             <form>
                 <input type="checkbox" id="display-line" name="display-line" checked/><label for="display-line">Display lines</label>
                 <input type="checkbox" id="display-zone" name="display-zone" checked/><label for="display-zone">Display zones</label>
@@ -170,43 +172,43 @@
         <div>
             <img id="mapimage" src="maps/Port.png" alt="" usemap="#map" />
             <map name="map" id="map">
-				<area alt="" title="" href="#" shape="poly" id="int1" coords="336,120,329,36,26,34,26,116" />
-				<area alt="" title="" href="#" shape="poly" id="int2" coords="357,25,624,29,480,131,362,132" />
-				<area alt="" title="" href="#" shape="poly" id="int3" coords="24,147,201,146,201,260,20,267" />
-				<area alt="" title="" href="#" shape="poly" id="int4" coords="203,148,248,145,247,122,312,122,315,144,344,145,362,134,480,135,488,253,203,260" />
-				<area alt="" title="" href="#" shape="poly" id="int5" coords="623,38,638,262,491,251,483,134" />
-				<area alt="" title="" href="#" shape="poly" id="int6" coords="839,29,932,143,793,232,783,34" />
-				<area alt="" title="" href="#" shape="poly" id="int7" coords="844,29,935,142,1039,186,1040,31" />
-				<area alt="" title="" href="#" shape="poly" id="int8" coords="795,235,936,145,1044,188,1041,246,790,250" />
-				<area alt="" title="" href="#" shape="poly" id="int9" coords="1,400,175,409,178,500,190,498,189,489,253,492,251,502,259,504,255,548,3,565" />
-				<area alt="" title="" href="#" shape="poly" id="int10" coords="254,579,271,417,427,420,421,611" />
-				<area alt="" title="" href="#" shape="poly" id="int11" coords="0,567,254,551,242,652,235,655,233,666,172,664,170,650,159,649,152,740,4,736" />
-				<area alt="" title="" href="#" shape="poly" id="int12" coords="254,582,416,615,411,751,246,744,246,653" />
-				<area alt="" title="" href="#" shape="poly" id="int13" coords="567,424,606,409,770,405,775,552,568,573" />
-				<area alt="" title="" href="#" shape="poly" id="int14" coords="569,578,778,556,778,563,796,557,807,717,680,712,628,717,575,715" />
-				<area alt="" title="" href="#" shape="poly" id="int15" coords="792,410,952,408,999,404,1034,402,1042,564,795,517" />
-				<area alt="" title="" href="#" shape="poly" id="int16" coords="795,522,1048,571,1049,716,810,726" />
-				<area alt="" title="" href="#" shape="poly" id="ext1" coords="656,1,750,2,757,93,670,141,667,121,632,130,629,80,659,65" />
-				<area alt="" title="" href="#" shape="poly" id="ext2" coords="671,143,756,97,758,148,789,146,787,190,759,192,764,279,675,283" />
-				<area alt="" title="" href="#" shape="poly" id="ext3" coords="1,304,95,303,113,391,2,387" />
-				<area alt="" title="" href="#" shape="poly" id="ext4" coords="99,303,119,302,122,265,183,265,188,304,396,299,387,402,261,400,251,403,186,401,183,395,115,390" />
-				<area alt="" title="" href="#" shape="poly" id="ext5" coords="400,299,389,402,435,405,430,513,541,483,536,399,569,420,605,406,580,383,582,374,629,371,620,294" />
-				<area alt="" title="" href="#" shape="poly" id="ext6" coords="623,293,634,369,851,366,850,285,767,285,762,281,677,285,679,289" />
-				<area alt="" title="" href="#" shape="poly" id="ext7" coords="854,282,912,281,911,248,961,248,964,277,1062,273,1061,360,996,362,998,401,954,405,953,364,854,366" />
-				<area alt="" title="" href="#" shape="poly" id="ext8" coords="430,517,539,486,548,748,419,738" />
-				<area alt="" title="" href="#" shape="poly" id="esc1" coords="187,403,255,404,250,492,189,489" />
-				<area alt="" title="" href="#" shape="poly" id="esc2" coords="169,668,234,671,227,746,168,745" />
-				<area alt="" title="" href="#" shape="poly" id="quai1" coords="2,745,116,749,132,865,3,862" />
-				<area alt="" title="" href="#" shape="poly" id="quai2" coords="119,750,164,751,165,745,225,749,236,754,324,757,324,863,133,863" />
-				<area alt="" title="" href="#" shape="poly" id="quai3" coords="326,865,327,759,417,760,420,742,556,751,557,864" />
-				<area alt="" title="" href="#" shape="poly" id="quai4" coords="560,863,559,750,626,745,629,724,679,713,679,748,799,741,822,864" />
-				<area alt="" title="" href="#" shape="poly" id="quai5" coords="803,741,826,865,1062,865,1059,725" />
-				<area alt="" title="" href="#" shape="poly" id="eau1" coords="256,867,253,909,1,909,2,868" />
-				<area alt="" title="" href="#" shape="poly" id="eau2" coords="256,907,258,868,428,867,423,909" />
-				<area alt="" title="" href="#" shape="poly" id="eau3" coords="424,908,430,868,709,869,676,908" />
-				<area alt="" title="" href="#" shape="poly" id="eau4" coords="682,909,712,870,897,870,911,908" />
-				<area alt="" title="" href="#" shape="poly" id="eau5" coords="900,869,913,908,1062,909,1062,868" />
-				</map>
+                <area alt="" title="" href="#" shape="poly" id="int1" coords="336,120,329,36,26,34,26,116" />
+                <area alt="" title="" href="#" shape="poly" id="int2" coords="357,25,624,29,480,131,362,132" />
+                <area alt="" title="" href="#" shape="poly" id="int3" coords="24,147,201,146,201,260,20,267" />
+                <area alt="" title="" href="#" shape="poly" id="int4" coords="203,148,248,145,247,122,312,122,315,144,344,145,362,134,480,135,488,253,203,260" />
+                <area alt="" title="" href="#" shape="poly" id="int5" coords="623,38,638,262,491,251,483,134" />
+                <area alt="" title="" href="#" shape="poly" id="int6" coords="839,29,932,143,793,232,783,34" />
+                <area alt="" title="" href="#" shape="poly" id="int7" coords="844,29,935,142,1039,186,1040,31" />
+                <area alt="" title="" href="#" shape="poly" id="int8" coords="795,235,936,145,1044,188,1041,246,790,250" />
+                <area alt="" title="" href="#" shape="poly" id="int9" coords="1,400,175,409,178,500,190,498,189,489,253,492,251,502,259,504,255,548,3,565" />
+                <area alt="" title="" href="#" shape="poly" id="int10" coords="254,579,271,417,427,420,421,611" />
+                <area alt="" title="" href="#" shape="poly" id="int11" coords="0,567,254,551,242,652,235,655,233,666,172,664,170,650,159,649,152,740,4,736" />
+                <area alt="" title="" href="#" shape="poly" id="int12" coords="254,582,416,615,411,751,246,744,246,653" />
+                <area alt="" title="" href="#" shape="poly" id="int13" coords="567,424,606,409,770,405,775,552,568,573" />
+                <area alt="" title="" href="#" shape="poly" id="int14" coords="569,578,778,556,778,563,796,557,807,717,680,712,628,717,575,715" />
+                <area alt="" title="" href="#" shape="poly" id="int15" coords="792,410,952,408,999,404,1034,402,1042,564,795,517" />
+                <area alt="" title="" href="#" shape="poly" id="int16" coords="795,522,1048,571,1049,716,810,726" />
+                <area alt="" title="" href="#" shape="poly" id="ext1" coords="656,1,750,2,757,93,670,141,667,121,632,130,629,80,659,65" />
+                <area alt="" title="" href="#" shape="poly" id="ext2" coords="671,143,756,97,758,148,789,146,787,190,759,192,764,279,675,283" />
+                <area alt="" title="" href="#" shape="poly" id="ext3" coords="1,304,95,303,113,391,2,387" />
+                <area alt="" title="" href="#" shape="poly" id="ext4" coords="99,303,119,302,122,265,183,265,188,304,396,299,387,402,261,400,251,403,186,401,183,395,115,390" />
+                <area alt="" title="" href="#" shape="poly" id="ext5" coords="400,299,389,402,435,405,430,513,541,483,536,399,569,420,605,406,580,383,582,374,629,371,620,294" />
+                <area alt="" title="" href="#" shape="poly" id="ext6" coords="623,293,634,369,851,366,850,285,767,285,762,281,677,285,679,289" />
+                <area alt="" title="" href="#" shape="poly" id="ext7" coords="854,282,912,281,911,248,961,248,964,277,1062,273,1061,360,996,362,998,401,954,405,953,364,854,366" />
+                <area alt="" title="" href="#" shape="poly" id="ext8" coords="430,517,539,486,548,748,419,738" />
+                <area alt="" title="" href="#" shape="poly" id="esc1" coords="187,403,255,404,250,492,189,489" />
+                <area alt="" title="" href="#" shape="poly" id="esc2" coords="169,668,234,671,227,746,168,745" />
+                <area alt="" title="" href="#" shape="poly" id="quai1" coords="2,745,116,749,132,865,3,862" />
+                <area alt="" title="" href="#" shape="poly" id="quai2" coords="119,750,164,751,165,745,225,749,236,754,324,757,324,863,133,863" />
+                <area alt="" title="" href="#" shape="poly" id="quai3" coords="326,865,327,759,417,760,420,742,556,751,557,864" />
+                <area alt="" title="" href="#" shape="poly" id="quai4" coords="560,863,559,750,626,745,629,724,679,713,679,748,799,741,822,864" />
+                <area alt="" title="" href="#" shape="poly" id="quai5" coords="803,741,826,865,1062,865,1059,725" />
+                <area alt="" title="" href="#" shape="poly" id="eau1" coords="256,867,253,909,1,909,2,868" />
+                <area alt="" title="" href="#" shape="poly" id="eau2" coords="256,907,258,868,428,867,423,909" />
+                <area alt="" title="" href="#" shape="poly" id="eau3" coords="424,908,430,868,709,869,676,908" />
+                <area alt="" title="" href="#" shape="poly" id="eau4" coords="682,909,712,870,897,870,911,908" />
+                <area alt="" title="" href="#" shape="poly" id="eau5" coords="900,869,913,908,1062,909,1062,868" />
+                </map>
         </div>
     </body>
 </html>
