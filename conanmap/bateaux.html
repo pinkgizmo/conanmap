@@ -134,7 +134,7 @@
                 ['mer12', 'mer14'],
                 ['mer12', 'nav10'],
                 ['mer12', 'nav13'],
-                ['mer12', 'bat8'],
+                ['mer12', 'bat8',false,false,true],
                 ['mer12', 'bat12'],
                 ['mer12', 'bat14'],
 
@@ -167,6 +167,7 @@
                 ['mer18', 'mer19'],
                 ['mer18', 'mer20'],
                 ['mer18', 'bat10'],
+                ['mer18', 'bat13',false,false,true],
 
                 ['mer19', 'mer20'],
                 ['mer19', 'bat13'],
@@ -535,6 +536,13 @@
         </script>
     </head>
     <body>
+		<div id="options">
+            <form>
+                <input type="checkbox" id="display-line" name="display-line" checked/><label for="display-line">Display lines</label>
+                <input type="checkbox" id="display-zone" name="display-zone" checked/><label for="display-zone">Display zones</label>
+                <input type="checkbox" id="display-center" name="display-center" checked/><label for="display-center">Display centers</label>
+            </form>
+        </div>
         <div>
             <img id="mapimage" src="maps/Bateaux.png" alt="" usemap="#map" />
             <map name="map" id="map">

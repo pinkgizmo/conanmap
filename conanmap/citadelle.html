@@ -19,7 +19,7 @@
                 "int2"  : [446,469],
                 "int3"  : [438,654],
                 "fosse"  : [496,575],
-                "salle1"  : [203,658],
+                "salle1"  : [205,659],
                 "salle2"  : [203,820],
                 "salle3"  : [957,820],
                 "salle4"  : [956,654],
@@ -32,7 +32,7 @@
                 "esc2"  : [855,819],
                 "esc3"  : [570,306],
                 "esc4"  : [963,266],
-                "balcon"  : [630,563],
+                "balcon"  : [632,564],
                 "coursive1"  : [533,819],
                 "coursive2"  : [728,820],
                 "coursive3"  : [719,650],
@@ -82,6 +82,7 @@
                 ['balcon','coursive3'],
                 ['balcon','coursive4'],
                 ['balcon','coursive1'],
+                ['balcon','salle1',false,false,true],
 
                 ['esc1','salle2'],
                 ['esc1','coursive1'],
@@ -155,6 +156,13 @@
         </script>
     </head>
     <body>
+		<div id="options">
+            <form>
+                <input type="checkbox" id="display-line" name="display-line" checked/><label for="display-line">Display lines</label>
+                <input type="checkbox" id="display-zone" name="display-zone" checked/><label for="display-zone">Display zones</label>
+                <input type="checkbox" id="display-center" name="display-center" checked/><label for="display-center">Display centers</label>
+            </form>
+        </div>
         <div>
             <img id="mapimage" src="maps/Citadelle.png" alt="" usemap="#map" />
             <map name="map" id="map">

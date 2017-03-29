@@ -53,6 +53,7 @@
                 ['ext1', 'ext2'],
                 ['ext1', 'int1'],
                 ['ext1', 'int2'],
+                ['ext1', 'int3',false,false,true],
                 ['ext1', 'ext3'],
                 ['ext1', 'debris1'],
                 ['ext1', 'debris2'],
@@ -133,6 +134,7 @@
                 ['int3', 'salle2'],
                 ['int3', 'debris2'],
                 ['int3', 'debris3'],
+                ['int3', 'debris1',false,false,true],
 
                 ['int4', 'remp1'],
                 ['int4', 'remp2'],
@@ -156,10 +158,23 @@
                 ['int5', 'debris1'],
                 ['int5', 'tour6'],
 
+                ['salle2', 'remp1',false,false,true],
+                ['salle2', 'remp2',false,false,true],
+                ['salle2', 'remp3',false,false,true],
                 ['salle2', 'remp4'],
+                ['salle2', 'remp5'],
+                ['salle2', 'remp6',false,false,true],
+                ['salle2', 'remp7',false,false,true],
+                ['salle2', 'remp8',false,false,true],
 
+                ['salle1', 'remp1',false,false,true],
+                ['salle1', 'remp2',false,false,true],
+                ['salle1', 'remp3',false,false,true],
+                ['salle1', 'remp4',false,false,true],
                 ['salle1', 'remp5'],
                 ['salle1', 'remp6'],
+                ['salle1', 'remp7',false,false,true],
+                ['salle1', 'remp8',false,false,true],
 
                 ['remp1', 'remp2'],
                 ['remp1', 'remp3'],
@@ -172,6 +187,7 @@
                 ['remp1', 'debris2'],
                 ['remp1', 'debris3'],
 
+                ['remp2', 'remp3',false,false,true],
                 ['remp2', 'remp4'],
                 ['remp2', 'remp5'],
                 ['remp2', 'remp6'],
@@ -189,6 +205,7 @@
                 ['remp3', 'tour2'],
                 ['remp3', 'debris2'],
                 ['remp3', 'debris3'],
+                ['remp3', 'debris4',false,false,true],
 
                 ['remp4', 'remp6'],
                 ['remp4', 'remp7'],
@@ -235,6 +252,13 @@
         </script>
     </head>
     <body>
+		<div id="options">
+            <form>
+                <input type="checkbox" id="display-line" name="display-line" checked/><label for="display-line">Display lines</label>
+                <input type="checkbox" id="display-zone" name="display-zone" checked/><label for="display-zone">Display zones</label>
+                <input type="checkbox" id="display-center" name="display-center" checked/><label for="display-center">Display centers</label>
+            </form>
+        </div>
         <div>
             <img id="mapimage" src="maps/Forteresse.png" alt="" usemap="#map" />
             <map name="map" id="map">
