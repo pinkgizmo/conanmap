@@ -857,9 +857,13 @@ Render.prototype.drawLine = function(data) {
  * @returns {Render}
  */
 Render.prototype.drawCenter = function(data) {
-    var element = this.paper
-        .circle(data.x, data.y, 8)
-        .attr(this.theme.getCenter());
+    var width = 15;
+    var height = 15;
+
+    var x = data.x - (width / 2);
+    var y = data.y - (height / 2);
+
+    var element = this.paper.image('lib/center15.png', x, y, width, height);
 
     this.elements.push(element);
 
