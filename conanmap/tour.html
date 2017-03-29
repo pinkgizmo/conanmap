@@ -5,6 +5,8 @@
         <meta charset=utf-8 />
         <title>Tour</title>
 
+        <link rel="stylesheet" type="text/css" href="lib/conan.css">
+
         <script src="lib/jquery-3.1.1.js"></script>
         <script src="lib/mapconan.js"></script>
         <script src="lib/raphael.min.js"></script>
@@ -55,117 +57,117 @@
             }`;
 
             var lines = [
-				['ext1', 'ext2'],
-				['ext1', 'ext3-A'],
-				['ext1', 'ext5'],
-				['ext1', 'ext6-A'],
-				['ext1', 'ext7'],
-				['ext1', 'cabane'],	
-				['ext1', 'rdc1'],	
-				['ext1', 'rdc3'],	
+                ['ext1', 'ext2'],
+                ['ext1', 'ext3-A'],
+                ['ext1', 'ext5'],
+                ['ext1', 'ext6-A'],
+                ['ext1', 'ext7'],
+                ['ext1', 'cabane'],
+                ['ext1', 'rdc1'],
+                ['ext1', 'rdc3'],
 
-				['ext2', 'ext3-A'],
-				['ext2', 'ext5'],
-				['ext2', 'ext6-A'],
-				['ext2', 'ext7'],
-			   
-				['ext3-A', 'ext7'],
-				['ext3-B', 'ext4-A'],
-               
-				['ext4-B', 'ext5'],
-				['ext4-B', 'ext6-A'],
-				['ext4-B', 'ext7'],
+                ['ext2', 'ext3-A'],
+                ['ext2', 'ext5'],
+                ['ext2', 'ext6-A'],
+                ['ext2', 'ext7'],
 
-				['ext5', 'ext6-A'],
-				['ext5', 'ext7'],
-			   
-				['ext6-A', 'ext7'],
-				['ext6-A', 'rdc1'],
-				['ext6-A', 'rdc2'],
-			   
-				['ext7', 'cabane'],
-				['ext7', 'rdc1'],
-				['ext7', 'rdc3'],
-				
-				['rdc1', 'rdc2'],
-				['rdc1', 'rdc3'],
-				['rdc1', 'rdc5'],
-				
-				['rdc2', 'rdc3'],
-				['rdc2', 'rdc5'],
-				
-				['rdc3', 'rdc5'],
-				['rdc3', 'rdc6'],
-				
-				['rdc4', 'rdc6'],
-				
-				['rdc5', 'rdc6'],
-				
-				['ss1', 'ss3-B'],
-				
-				['ss2', 'ss3-B'],
-				
-				['ss3-A', 'ss4'],
-				
-				['ss4', 'ss5'],
-				['ss4', 'ss6',false,false,true],
-				
-				['ss5', 'ss6',false,false,true],
-				
-				['niv21', 'niv22'],
-				['niv21', 'niv23'],
-				['niv21', 'niv24'],
-				['niv21', 'niv25'],
-				['niv21', 'niv26'],
-				['niv21', 'niv27'],
-				
-				['niv22', 'niv23'],
-				['niv22', 'niv24'],
-				['niv22', 'niv25'],
-				['niv22', 'niv26'],
-				['niv22', 'niv27'],
-				
-				['niv23', 'niv24'],
-				['niv23', 'niv25'],
-				['niv23', 'niv26'],
-				['niv23', 'niv27'],
-				
-				['niv24', 'niv25'],
-				['niv24', 'niv26'],
-				['niv24', 'niv27'],
-				
-				['niv25', 'niv26'],
-				['niv25', 'niv27'],				
-			   
-				['niv26', 'niv27'],	
-				
-				['niv31', 'niv32'],	
-				
-				['niv32', 'niv33'],	
-				
-				['niv33', 'niv34'],	
-				
-				['niv41-A', 'niv44-B'],	
-				['niv41-B', 'niv42-B'],
-				['niv41-B', 'niv45'],
-				['niv41-A', 'niv46'],
-				['niv41-B', 'niv47'],
-				['niv41-B', 'niv48'],
-				
-				['niv42-A', 'niv43-A'],	
-				
-				['niv43-B', 'niv44-A'],	
-				['niv43-B', 'niv46'],	
-				['niv43-A', 'niv47'],		
-				
-				['niv45', 'niv46'],	
-				['niv45', 'niv47'],	
-				['niv45', 'niv48'],	
-				
-				['niv46', 'niv47'],	
-				['niv46', 'niv48'],	
-				
-				['niv47', 'niv48'],	
+                ['ext3-A', 'ext7'],
+                ['ext3-B', 'ext4-A'],
+
+                ['ext4-B', 'ext5'],
+                ['ext4-B', 'ext6-A'],
+                ['ext4-B', 'ext7'],
+
+                ['ext5', 'ext6-A'],
+                ['ext5', 'ext7'],
+
+                ['ext6-A', 'ext7'],
+                ['ext6-A', 'rdc1'],
+                ['ext6-A', 'rdc2'],
+
+                ['ext7', 'cabane'],
+                ['ext7', 'rdc1'],
+                ['ext7', 'rdc3'],
+
+                ['rdc1', 'rdc2'],
+                ['rdc1', 'rdc3'],
+                ['rdc1', 'rdc5'],
+
+                ['rdc2', 'rdc3'],
+                ['rdc2', 'rdc5'],
+
+                ['rdc3', 'rdc5'],
+                ['rdc3', 'rdc6'],
+
+                ['rdc4', 'rdc6'],
+
+                ['rdc5', 'rdc6'],
+
+                ['ss1', 'ss3-B'],
+
+                ['ss2', 'ss3-B'],
+
+                ['ss3-A', 'ss4'],
+
+                ['ss4', 'ss5'],
+                ['ss4', 'ss6',false,false,true],
+
+                ['ss5', 'ss6',false,false,true],
+
+                ['niv21', 'niv22'],
+                ['niv21', 'niv23'],
+                ['niv21', 'niv24'],
+                ['niv21', 'niv25'],
+                ['niv21', 'niv26'],
+                ['niv21', 'niv27'],
+
+                ['niv22', 'niv23'],
+                ['niv22', 'niv24'],
+                ['niv22', 'niv25'],
+                ['niv22', 'niv26'],
+                ['niv22', 'niv27'],
+
+                ['niv23', 'niv24'],
+                ['niv23', 'niv25'],
+                ['niv23', 'niv26'],
+                ['niv23', 'niv27'],
+
+                ['niv24', 'niv25'],
+                ['niv24', 'niv26'],
+                ['niv24', 'niv27'],
+
+                ['niv25', 'niv26'],
+                ['niv25', 'niv27'],
+
+                ['niv26', 'niv27'],
+
+                ['niv31', 'niv32'],
+
+                ['niv32', 'niv33'],
+
+                ['niv33', 'niv34'],
+
+                ['niv41-A', 'niv44-B'],
+                ['niv41-B', 'niv42-B'],
+                ['niv41-B', 'niv45'],
+                ['niv41-A', 'niv46'],
+                ['niv41-B', 'niv47'],
+                ['niv41-B', 'niv48'],
+
+                ['niv42-A', 'niv43-A'],
+
+                ['niv43-B', 'niv44-A'],
+                ['niv43-B', 'niv46'],
+                ['niv43-A', 'niv47'],
+
+                ['niv45', 'niv46'],
+                ['niv45', 'niv47'],
+                ['niv45', 'niv48'],
+
+                ['niv46', 'niv47'],
+                ['niv46', 'niv48'],
+
+                ['niv47', 'niv48'],
             ];
 
             $(window).on("load", function() {
@@ -174,7 +176,7 @@
         </script>
     </head>
     <body>
-	     <div id="options">
+         <div id="options">
             <form>
                 <input type="checkbox" id="display-line" name="display-line" checked/><label for="display-line">Display lines</label>
                 <input type="checkbox" id="display-zone" name="display-zone" checked/><label for="display-zone">Display zones</label>
