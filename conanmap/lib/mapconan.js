@@ -82,6 +82,33 @@ Theme.prototype.getPromontory = function() {
 };
 
 /**
+ * Get attributes for promontory area
+ */
+Theme.prototype.getLevel = function (level) {
+    var color;
+    if (level === 1) {
+        color = '#01A3D6'
+    }
+    if (level === 2) {
+        color = '#8FBEE0'
+    }
+    if (level === 3) {
+        color = '#F3CB58'
+    }
+    var res = `{
+          "stroke": "white",
+          "stroke-width": 0,
+          "stroke-opacity": 1,
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "fill": "` + color + `",
+          "fill-opacity": 0.6
+      }`;
+
+    return $.parseJSON(res);
+};
+
+/**
  * Get attributes for viewlines
  */
 Theme.prototype.getViewLine = function() {
@@ -257,6 +284,14 @@ Tile.prototype.isPromontory = function() {
     return this.promontory;
 };
 
+/**
+ * Return tile level coordonates
+ *
+ * @return {integer}
+ */
+Tile.prototype.getLevel = function () {
+    return this.level;
+};
 
 /******************************************
 Line
@@ -408,7 +443,7 @@ ServiceTiles.prototype.getTiles = function()
  */
 ServiceTiles.prototype.getPromontoryTiles = function()
 {
-    var promontoryTiles = []
+    var promontoryTiles = [];
 
     $.each(this.tiles, function(key, tile){
         if (tile.isPromontory()) {
@@ -417,6 +452,23 @@ ServiceTiles.prototype.getPromontoryTiles = function()
     });
 
     return promontoryTiles;
+};
+
+/**
+ * Get the list of tiles
+ *
+ * @return {Array}
+ */
+ServiceTiles.prototype.getLevelTiles = function () {
+    var levelTiles = [];
+
+    $.each(this.tiles, function (key, tile) {
+        if (tile.getLevel() !== 0) {
+            levelTiles.push(tile);
+        }
+    });
+
+    return levelTiles;
 };
 
 /**
@@ -595,6 +647,14 @@ Conan.prototype.mapArea = function() {
         }
     });
 
+    $('#options').find('input#display-level').click(function () {
+        var input = $(this);
+        self.render.cleanLevel();
+        if (input.is(':checked')) {
+            self.displayLevel();
+        }
+    });
+
     $.each(self.tiles.getTiles(), function(key, tile) {
 
         var zone = self.render.initZone(tile.getPerimeter());
@@ -702,6 +762,25 @@ Conan.prototype.displayPromontory = function() {
     return this;
 };
 
+Conan.prototype.displayLevel = function () {
+    var self = this;
+
+    if (!self.options.getOption('display-level')) {
+        return this
+    }
+
+    var data = {};
+
+    $.each(self.tiles.getLevelTiles(), function (key, tile) {
+        data = {};
+        data['coords'] = tile.getPerimeter();
+        data['level'] = tile.getLevel();
+
+        self.render.drawLevel(data);
+    });
+
+    return this;
+};
 
 /******************************************
  Render Service
@@ -718,6 +797,7 @@ function Render(debug, options) {
     this.file     = [];
     this.elements = [];
     this.promontories = [];
+    this.levels = [];
 
     this.debug    = debug;
     this.options  = options;
@@ -891,7 +971,7 @@ Render.prototype.addCenter = function(x, y) {
  *
  * @returns {Render}
  */
-Render.prototype.addZone = function(coords) {
+Render.prototype.addZone = function (coords) {
 
     if (!this.options.getOption('display-zone')) {
         return this
@@ -983,14 +1063,38 @@ Render.prototype.drawPromontory = function(data) {
 };
 
 /**
- * Draw a promontory
- *
- * @param {Object} data - Zone data
+ * Clean promontories
  *
  * @returns {Render}
  */
 Render.prototype.cleanPromontory = function(data) {
     $.each(this.promontories, function(index, element){
+        element.remove();
+    });
+    return this;
+};
+
+/**
+ * Draw a level
+ *
+ * @param {Object} data - Zone data
+ *
+ * @returns {Render}
+ */
+Render.prototype.drawLevel = function (data) {
+    var element = this.paper.path(data.coords).attr(this.theme.getLevel(data.level));
+    element.toFront();
+    this.levels.push(element);
+    return this;
+};
+
+/**
+ * Clean levels
+ *
+ * @returns {Render}
+ */
+Render.prototype.cleanLevel = function () {
+    $.each(this.levels, function (index, element) {
         element.remove();
     });
     return this;
@@ -1009,7 +1113,8 @@ function Options() {
         'display-line'   : true,
         'display-zone'   : true,
         'display-center' : true,
-        'display-promontory' : false
+        'display-promontory' : false,
+        'display-level': false
     };
 
     $('#options').find('input').click(function() {
