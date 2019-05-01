@@ -65,6 +65,23 @@ Theme.prototype.getHighlighted = function() {
 };
 
 /**
+ * Get attributes for promontory area
+ */
+Theme.prototype.getPromontory = function() {
+    var res = `{
+          "stroke": "white",
+          "stroke-width": 0,
+          "stroke-opacity": 1,
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "fill": "url(assets/hatch.jpg)",
+          "fill-opacity": 0.6
+      }`;
+
+    return $.parseJSON(res);
+};
+
+/**
  * Get attributes for viewlines
  */
 Theme.prototype.getViewLine = function() {
@@ -159,18 +176,27 @@ Tile
 function Tile(id, tile)
 {
     var self = this;
-    var defaultZone = 'A';
 
     self.centers   = {};
     self.id        = id;
     self.perimeter = [];
+    self.promontory = false;
+    self.level = 0;
 
-    if ($.isArray(tile)) {
-        self.centers[defaultZone] = new Center(tile);
-    } else {
-        $.each(tile, function(suffix, coords) {
-            self.centers[suffix] = new Center(coords);
-        });
+    if(typeof(tile.A) !== "undefined"){
+        self.centers['A'] = new Center(tile.A);
+    }
+
+    if(typeof(tile.B) !== "undefined"){
+        self.centers['B'] = new Center(tile.B);
+    }
+
+    if(typeof(tile.promontory) !== "undefined"){
+        self.promontory = tile.promontory;
+    }
+
+    if(typeof(tile.level) !== "undefined"){
+        self.level = tile.level;
     }
 }
 
@@ -220,6 +246,15 @@ Tile.prototype.setPerimeter = function(perimeter) {
  */
 Tile.prototype.getPerimeter = function() {
     return this.perimeter;
+};
+
+/**
+ * Check if the tile is a promontory
+ *
+ * @return {Boolean}
+ */
+Tile.prototype.isPromontory = function() {
+    return this.promontory;
 };
 
 
@@ -364,6 +399,24 @@ function ServiceTiles(centers)
 ServiceTiles.prototype.getTiles = function()
 {
     return this.tiles;
+};
+
+/**
+ * Get the list of tiles
+ *
+ * @return {Array}
+ */
+ServiceTiles.prototype.getPromontoryTiles = function()
+{
+    var promontoryTiles = []
+
+    $.each(this.tiles, function(key, tile){
+        if (tile.isPromontory()) {
+            promontoryTiles.push(tile);
+        }
+    });
+
+    return promontoryTiles;
 };
 
 /**
@@ -534,6 +587,14 @@ Conan.prototype.processCoordonates = function() {
 Conan.prototype.mapArea = function() {
     var self = this;
 
+    $('#options').find('input#display-promontory').click(function() {
+        var input = $(this);
+        self.render.cleanPromontory();
+        if (input.is(':checked')) {
+            self.displayPromontory();
+        }
+    });
+
     $.each(self.tiles.getTiles(), function(key, tile) {
 
         var zone = self.render.initZone(tile.getPerimeter());
@@ -622,6 +683,26 @@ Conan.prototype.displayViewLines = function(tileId) {
     }
 };
 
+Conan.prototype.displayPromontory = function() {
+    var self = this;
+
+    if (!self.options.getOption('display-promontory')) {
+        return this
+    }
+
+    var data = {};
+
+    $.each(self.tiles.getPromontoryTiles(), function(key, tile){
+        data = {};
+        data['coords'] = tile.getPerimeter();
+
+        self.render.drawPromontory(data);
+    });
+
+    return this;
+};
+
+
 /******************************************
  Render Service
  *******************************************/
@@ -636,6 +717,7 @@ function Render(debug, options) {
     this.init     = [];
     this.file     = [];
     this.elements = [];
+    this.promontories = [];
 
     this.debug    = debug;
     this.options  = options;
@@ -880,8 +962,37 @@ Render.prototype.drawCenter = function(data) {
 Render.prototype.drawZone = function(data) {
     var element = this.paper.path(data.coords).attr(this.theme.getHighlighted());
 
+    // console.log(data.coords);
     this.elements.push(element);
 
+    return this;
+};
+
+/**
+ * Draw a promontory
+ *
+ * @param {Object} data - Zone data
+ *
+ * @returns {Render}
+ */
+Render.prototype.drawPromontory = function(data) {
+    var element = this.paper.path(data.coords).attr(this.theme.getPromontory());
+    element.toFront();
+    this.promontories.push(element);
+    return this;
+};
+
+/**
+ * Draw a promontory
+ *
+ * @param {Object} data - Zone data
+ *
+ * @returns {Render}
+ */
+Render.prototype.cleanPromontory = function(data) {
+    $.each(this.promontories, function(index, element){
+        element.remove();
+    });
     return this;
 };
 
@@ -897,7 +1008,8 @@ function Options() {
     this.options = {
         'display-line'   : true,
         'display-zone'   : true,
-        'display-center' : true
+        'display-center' : true,
+        'display-promontory' : false
     };
 
     $('#options').find('input').click(function() {
