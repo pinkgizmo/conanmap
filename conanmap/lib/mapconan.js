@@ -6,8 +6,8 @@
 "use strict";
 
 /******************************************
-THEME
-*******************************************/
+ THEME
+ *******************************************/
 
 /**
  * Theme holder - constructor
@@ -21,7 +21,7 @@ function Theme(debug) {
 /**
  * Get attributes for area overlay
  */
-Theme.prototype.getZone = function() {
+Theme.prototype.getZone = function () {
     if (!this.debug) {
         var res = `{
             "stroke": "black",
@@ -51,8 +51,8 @@ Theme.prototype.getZone = function() {
 /**
  * Get attributes for highlighted area
  */
-Theme.prototype.getHighlighted = function() {
-      var res = `{
+Theme.prototype.getHighlighted = function () {
+    var res = `{
           "stroke": "white",
           "stroke-width": 0,
           "stroke-opacity": 1,
@@ -61,13 +61,13 @@ Theme.prototype.getHighlighted = function() {
           "fill": "green",
           "fill-opacity": 0.4
       }`;
-      return $.parseJSON(res);
+    return $.parseJSON(res);
 };
 
 /**
  * Get attributes for promontory area
  */
-Theme.prototype.getPromontory = function() {
+Theme.prototype.getPromontory = function () {
     var res = `{
           "stroke": "white",
           "stroke-width": 0,
@@ -111,7 +111,7 @@ Theme.prototype.getLevel = function (level) {
 /**
  * Get attributes for viewlines
  */
-Theme.prototype.getViewLine = function() {
+Theme.prototype.getViewLine = function () {
     var res = `{
         "stroke": "white",
         "stroke-width": 2,
@@ -125,7 +125,7 @@ Theme.prototype.getViewLine = function() {
 /**
  * Get attributes for viewlines
  */
-Theme.prototype.getViewLineDebug = function() {
+Theme.prototype.getViewLineDebug = function () {
     var res = `{
         "stroke": "red",
         "stroke-width": 2,
@@ -139,7 +139,7 @@ Theme.prototype.getViewLineDebug = function() {
 /**
  * Get attributes for debug text
  */
-Theme.prototype.getText = function() {
+Theme.prototype.getText = function () {
     var res = `{
         "stroke": "red",
         "stroke-width": 1
@@ -150,7 +150,7 @@ Theme.prototype.getText = function() {
 /**
  * Get attributes for centers circle
  */
-Theme.prototype.getCenter = function() {
+Theme.prototype.getCenter = function () {
     var res = `{
         "fill": "#0F0"
     }`;
@@ -158,16 +158,15 @@ Theme.prototype.getCenter = function() {
 };
 
 /******************************************
-Center
-*******************************************/
+ Center
+ *******************************************/
 
 /**
  * Center entity - constructor
  *
  * @param {Array} data - center coordonates
  */
-function Center(data)
-{
+function Center(data) {
     this.x = data[0];
     this.y = data[1];
 }
@@ -177,7 +176,7 @@ function Center(data)
  *
  * @return {Number} The x coordonate
  */
-Center.prototype.getX = function() {
+Center.prototype.getX = function () {
     return this.x;
 };
 
@@ -186,13 +185,13 @@ Center.prototype.getX = function() {
  *
  * @return {Number} The y coordonate
  */
-Center.prototype.getY = function() {
+Center.prototype.getY = function () {
     return this.y;
 };
 
 /******************************************
-Tile
-*******************************************/
+ Tile
+ *******************************************/
 
 /**
  * Tile entity - constructor
@@ -200,29 +199,28 @@ Tile
  * @param {Array} id - id of the tile
  * @param {Array} tile - a list of centers
  */
-function Tile(id, tile)
-{
+function Tile(id, tile) {
     var self = this;
 
-    self.centers   = {};
-    self.id        = id;
+    self.centers = {};
+    self.id = id;
     self.perimeter = [];
     self.promontory = false;
     self.level = 0;
 
-    if(typeof(tile.A) !== "undefined"){
+    if (typeof (tile.A) !== "undefined") {
         self.centers['A'] = new Center(tile.A);
     }
 
-    if(typeof(tile.B) !== "undefined"){
+    if (typeof (tile.B) !== "undefined") {
         self.centers['B'] = new Center(tile.B);
     }
 
-    if(typeof(tile.promontory) !== "undefined"){
+    if (typeof (tile.promontory) !== "undefined") {
         self.promontory = tile.promontory;
     }
 
-    if(typeof(tile.level) !== "undefined"){
+    if (typeof (tile.level) !== "undefined") {
         self.level = tile.level;
     }
 }
@@ -232,7 +230,7 @@ function Tile(id, tile)
  *
  * @return {String} The tile id
  */
-Tile.prototype.getId = function() {
+Tile.prototype.getId = function () {
     return this.id;
 };
 
@@ -241,7 +239,7 @@ Tile.prototype.getId = function() {
  *
  * @return {Array} Centers of the tile
  */
-Tile.prototype.getCenters = function() {
+Tile.prototype.getCenters = function () {
     return this.centers;
 };
 
@@ -250,7 +248,7 @@ Tile.prototype.getCenters = function() {
  *
  * @return {Center} The center based on given suffix
  */
-Tile.prototype.getCenter = function(suffix) {
+Tile.prototype.getCenter = function (suffix) {
     return this.centers[suffix];
 };
 
@@ -261,7 +259,7 @@ Tile.prototype.getCenter = function(suffix) {
  *
  * @return {Tile}
  */
-Tile.prototype.setPerimeter = function(perimeter) {
+Tile.prototype.setPerimeter = function (perimeter) {
     this.perimeter = perimeter;
     return this;
 };
@@ -271,7 +269,7 @@ Tile.prototype.setPerimeter = function(perimeter) {
  *
  * @return {Array}
  */
-Tile.prototype.getPerimeter = function() {
+Tile.prototype.getPerimeter = function () {
     return this.perimeter;
 };
 
@@ -280,7 +278,7 @@ Tile.prototype.getPerimeter = function() {
  *
  * @return {Boolean}
  */
-Tile.prototype.isPromontory = function() {
+Tile.prototype.isPromontory = function () {
     return this.promontory;
 };
 
@@ -294,20 +292,19 @@ Tile.prototype.getLevel = function () {
 };
 
 /******************************************
-Line
-*******************************************/
+ Line
+ *******************************************/
 
 /**
  * Line entity - constructor
  *
  * @param {Array} line - Line definition
  */
-function Line(line)
-{
+function Line(line) {
     this.center1 = this.format(line[0]);
     this.center2 = this.format(line[1]);
-    this.type  = (line[2] !== "") ? line[2] : false;
-    this.text  = (line[3] !== "") ? line[3] : false;
+    this.type = (line[2] !== "") ? line[2] : false;
+    this.text = (line[3] !== "") ? line[3] : false;
     this.debug = (line[4] !== "") ? line[4] : false;
 }
 
@@ -318,8 +315,7 @@ function Line(line)
  *
  * @return {String} The fromatted tile id
  */
-Line.prototype.format = function(tileId)
-{
+Line.prototype.format = function (tileId) {
     if (tileId.split('-')[1] === undefined) {
         return tileId + '-A';
     }
@@ -331,7 +327,7 @@ Line.prototype.format = function(tileId)
  *
  * @return {String} Center1 id
  */
-Line.prototype.getCenter1 = function() {
+Line.prototype.getCenter1 = function () {
     return this.center1;
 };
 
@@ -340,7 +336,7 @@ Line.prototype.getCenter1 = function() {
  *
  * @return {String} Center2 id
  */
-Line.prototype.getCenter2 = function() {
+Line.prototype.getCenter2 = function () {
     return this.center2;
 };
 
@@ -349,7 +345,7 @@ Line.prototype.getCenter2 = function() {
  *
  * @return {String} Type
  */
-Line.prototype.getType = function() {
+Line.prototype.getType = function () {
     return this.type;
 };
 
@@ -358,7 +354,7 @@ Line.prototype.getType = function() {
  *
  * @return {String} Additional text
  */
-Line.prototype.getText = function() {
+Line.prototype.getText = function () {
     return this.text;
 };
 
@@ -367,7 +363,7 @@ Line.prototype.getText = function() {
  *
  * @return {Boolean}
  */
-Line.prototype.hasDebug = function() {
+Line.prototype.hasDebug = function () {
     return this.debug;
 };
 
@@ -376,7 +372,7 @@ Line.prototype.hasDebug = function() {
  *
  * @return {Boolean}
  */
-Line.prototype.isReciproque = function() {
+Line.prototype.isReciproque = function () {
     return true;
 };
 
@@ -385,7 +381,7 @@ Line.prototype.isReciproque = function() {
  *
  * @return {Boolean}
  */
-Line.prototype.isElligibleToCenter = function(centerId) {
+Line.prototype.isElligibleToCenter = function (centerId) {
     return (this.getCenter1() === centerId || (this.isReciproque && this.getCenter2() === centerId));
 };
 
@@ -394,9 +390,9 @@ Line.prototype.isElligibleToCenter = function(centerId) {
  *
  * @return {String} Center id
  */
-Line.prototype.getDestinationCenterId = function(centerId) {
+Line.prototype.getDestinationCenterId = function (centerId) {
 
-    if ( this.getCenter1() === centerId) {
+    if (this.getCenter1() === centerId) {
         return this.getCenter2();
     }
 
@@ -406,22 +402,21 @@ Line.prototype.getDestinationCenterId = function(centerId) {
 };
 
 /******************************************
-Service Tiles
-*******************************************/
+ Service Tiles
+ *******************************************/
 
 /**
  * Line managment service - constructor
  *
  * @param {Object} centers - The centers object definition from user input
  */
-function ServiceTiles(centers)
-{
+function ServiceTiles(centers) {
     var self = this;
     var tileCenters = $.parseJSON(centers);
 
     self.tiles = [];
 
-    $.each(tileCenters, function(key, tile){
+    $.each(tileCenters, function (key, tile) {
         self.tiles.push(new Tile(key, tile));
     });
 }
@@ -431,8 +426,7 @@ function ServiceTiles(centers)
  *
  * @return {Array}
  */
-ServiceTiles.prototype.getTiles = function()
-{
+ServiceTiles.prototype.getTiles = function () {
     return this.tiles;
 };
 
@@ -441,11 +435,10 @@ ServiceTiles.prototype.getTiles = function()
  *
  * @return {Array}
  */
-ServiceTiles.prototype.getPromontoryTiles = function()
-{
+ServiceTiles.prototype.getPromontoryTiles = function () {
     var promontoryTiles = [];
 
-    $.each(this.tiles, function(key, tile){
+    $.each(this.tiles, function (key, tile) {
         if (tile.isPromontory()) {
             promontoryTiles.push(tile);
         }
@@ -478,10 +471,9 @@ ServiceTiles.prototype.getLevelTiles = function () {
  *
  * @return {Tile}
  */
-ServiceTiles.prototype.getTile = function(id)
-{
+ServiceTiles.prototype.getTile = function (id) {
     var selectedTile = null;
-    $.each(this.tiles, function(key, tile){
+    $.each(this.tiles, function (key, tile) {
         if (tile.getId() === id) {
             selectedTile = tile;
         }
@@ -496,8 +488,7 @@ ServiceTiles.prototype.getTile = function(id)
  *
  * @return {String} tile id
  */
-ServiceTiles.prototype.getTileId = function(centerId)
-{
+ServiceTiles.prototype.getTileId = function (centerId) {
     return centerId.split('-')[0];
 };
 
@@ -508,8 +499,7 @@ ServiceTiles.prototype.getTileId = function(centerId)
  *
  * @return {String} suffix id
  */
-ServiceTiles.prototype.getSuffixId = function(centerId)
-{
+ServiceTiles.prototype.getSuffixId = function (centerId) {
     return centerId.split('-')[1];
 };
 
@@ -521,8 +511,7 @@ ServiceTiles.prototype.getSuffixId = function(centerId)
  *
  * @return {ServiceTiles}
  */
-ServiceTiles.prototype.addPerimeter = function(tileId, coordonates)
-{
+ServiceTiles.prototype.addPerimeter = function (tileId, coordonates) {
     this.getTile(tileId).setPerimeter(coordonates);
     return this;
 };
@@ -534,28 +523,26 @@ ServiceTiles.prototype.addPerimeter = function(tileId, coordonates)
  *
  * @return {Center}
  */
-ServiceTiles.prototype.getCoordsFromCenterId = function(centerId)
-{
-    var tileId     = this.getTileId(centerId);
+ServiceTiles.prototype.getCoordsFromCenterId = function (centerId) {
+    var tileId = this.getTileId(centerId);
     var tileSuffix = this.getSuffixId(centerId);
 
     return this.getTile(tileId).getCenter(tileSuffix);
 };
 
 /******************************************
-Service Lines
-*******************************************/
+ Service Lines
+ *******************************************/
 
 /**
  * Lines managment service - constructor
  *
  * @param {Array} viewLines - The viewLines array definition from user input
  */
-function ServiceLines(viewLines)
-{
+function ServiceLines(viewLines) {
     var self = this;
     self.viewLines = [];
-    $.each(viewLines, function(key, line){
+    $.each(viewLines, function (key, line) {
         self.viewLines.push(new Line(line));
     });
 }
@@ -567,10 +554,10 @@ function ServiceLines(viewLines)
  *
  * @return {Array} An array of lines
  */
-ServiceLines.prototype.getLinesByCenter = function(centerId) {
+ServiceLines.prototype.getLinesByCenter = function (centerId) {
     var eligibleLines = [];
 
-    $.each(this.viewLines, function(key, line){
+    $.each(this.viewLines, function (key, line) {
         if (line.isElligibleToCenter(centerId)) {
             eligibleLines.push(line);
         }
@@ -580,8 +567,8 @@ ServiceLines.prototype.getLinesByCenter = function(centerId) {
 };
 
 /******************************************
-Conan
-*******************************************/
+ Conan
+ *******************************************/
 
 /**
  * ConanMap - constructor
@@ -594,11 +581,11 @@ Conan
  */
 function Conan(centers, viewLine) {
 
-    this.tiles    = new ServiceTiles(centers);
+    this.tiles = new ServiceTiles(centers);
     this.viewLine = new ServiceLines(viewLine);
-    this.debug    = (window.location.hash === '#debug');
-    this.options  = new Options();
-    this.render   = new Render(this.debug, this.options);
+    this.debug = (window.location.hash === '#debug');
+    this.options = new Options();
+    this.render = new Render(this.debug, this.options);
 
 
     this.processCoordonates();
@@ -610,7 +597,7 @@ function Conan(centers, viewLine) {
  *
  * @param {*} data - Data to log
  */
-Conan.prototype.log = function(data) {
+Conan.prototype.log = function (data) {
     var self = this;
 
     if (self.debug) {
@@ -619,9 +606,9 @@ Conan.prototype.log = function(data) {
 };
 
 
-Conan.prototype.processCoordonates = function() {
+Conan.prototype.processCoordonates = function () {
     var self = this;
-    $('#map').find('area').each(function(){
+    $('#map').find('area').each(function () {
         var area = $(this);
         var coords = area.attr('coords');
         var id = area.attr('id');
@@ -636,10 +623,10 @@ Conan.prototype.processCoordonates = function() {
 /**
  * Instanciante Raphael zones based on html map coordonates
  */
-Conan.prototype.mapArea = function() {
+Conan.prototype.mapArea = function () {
     var self = this;
 
-    $('#options').find('input#display-promontory').click(function() {
+    $('#options').find('input#display-promontory').click(function () {
         var input = $(this);
         self.render.cleanPromontory();
         if (input.is(':checked')) {
@@ -655,22 +642,22 @@ Conan.prototype.mapArea = function() {
         }
     });
 
-    $.each(self.tiles.getTiles(), function(key, tile) {
+    $.each(self.tiles.getTiles(), function (key, tile) {
 
         var zone = self.render.initZone(tile.getPerimeter());
 
         zone.hover(
-            function() {
+            function () {
                 self.displayViewLines(tile.getId());
                 self.render.run();
             },
-            function() {
+            function () {
                 self.render.clean();
             }
         );
 
         var centers = tile.getCenters();
-        $.each(centers, function(key, center) {
+        $.each(centers, function (key, center) {
             self.render.initText(tile.getId() + key, center);
         });
     });
@@ -683,11 +670,11 @@ Conan.prototype.mapArea = function() {
  *
  * @return {Array} - Array of coordonates in Raphael format
  */
-Conan.prototype.coordConvert = function(coords) {
+Conan.prototype.coordConvert = function (coords) {
     var res = ['M'];
     var coordonates = coords.split(',');
 
-    $.each(coordonates, function(index) {
+    $.each(coordonates, function (index) {
         if (index !== 0 && index % 2 === 0) {
             res.push('L');
         }
@@ -702,7 +689,7 @@ Conan.prototype.coordConvert = function(coords) {
  *
  * @param {String} tileId - Tile id
  */
-Conan.prototype.displayViewLines = function(tileId) {
+Conan.prototype.displayViewLines = function (tileId) {
     var self = this;
 
     //the current tile data
@@ -710,19 +697,19 @@ Conan.prototype.displayViewLines = function(tileId) {
 
     if (lines.length > 0) {
         //loop on each center of the current tile
-        $.each(sourceTile.getCenters(), function(centerSuffix, source) {
+        $.each(sourceTile.getCenters(), function (centerSuffix, source) {
 
             //one of the center of the tile
             var centerId = sourceTile.getId() + '-' + centerSuffix;
 
-             //all the line for a given center
+            //all the line for a given center
             var lines = self.viewLine.getLinesByCenter(centerId);
 
             //loop on each line of sight
-            $.each(lines, function(key, line) {
+            $.each(lines, function (key, line) {
 
                 //destination center id
-                var destCenterId= line.getDestinationCenterId(centerId);
+                var destCenterId = line.getDestinationCenterId(centerId);
                 //get destination center
                 var destination = self.tiles.getCoordsFromCenterId(destCenterId);
                 //get destination tile
@@ -736,14 +723,14 @@ Conan.prototype.displayViewLines = function(tileId) {
                 self.render.addLine(source.getX(), source.getY(), destination.getX(), destination.getY(), line.hasDebug());
 
                 //draw circle
-                self.render.addCenter(destination.getX(),  destination.getY());
+                self.render.addCenter(destination.getX(), destination.getY());
             });
 
         });
     }
 };
 
-Conan.prototype.displayPromontory = function() {
+Conan.prototype.displayPromontory = function () {
     var self = this;
 
     if (!self.options.getOption('display-promontory')) {
@@ -752,7 +739,7 @@ Conan.prototype.displayPromontory = function() {
 
     var data = {};
 
-    $.each(self.tiles.getPromontoryTiles(), function(key, tile){
+    $.each(self.tiles.getPromontoryTiles(), function (key, tile) {
         data = {};
         data['coords'] = tile.getPerimeter();
 
@@ -793,21 +780,21 @@ Conan.prototype.displayLevel = function () {
  */
 function Render(debug, options) {
 
-    this.init     = [];
-    this.file     = [];
+    this.init = [];
+    this.file = [];
     this.elements = [];
     this.promontories = [];
     this.levels = [];
 
-    this.debug    = debug;
-    this.options  = options;
-    this.theme    = new Theme(debug);
+    this.debug = debug;
+    this.options = options;
+    this.theme = new Theme(debug);
 
-    var mapimage  = $('#mapimage');
-    var top       = mapimage.position().top;
-    var left      = mapimage.position().left;
-    var height    = mapimage.height();
-    var width     = mapimage.width();
+    var mapimage = $('#mapimage');
+    var top = mapimage.position().top;
+    var left = mapimage.position().left;
+    var height = mapimage.height();
+    var width = mapimage.width();
 
     this.paper = Raphael(left, top, width, height);
 }
@@ -817,8 +804,8 @@ function Render(debug, options) {
  *
  * @returns {Render}
  */
-Render.prototype.sortFile = function() {
-    this.file.sort(function(a, b) {
+Render.prototype.sortFile = function () {
+    this.file.sort(function (a, b) {
         return a.prio > b.prio;
     });
     return this;
@@ -829,21 +816,21 @@ Render.prototype.sortFile = function() {
  *
  * @returns {Render}
  */
-Render.prototype.run = function() {
+Render.prototype.run = function () {
     var self = this;
 
     self.sortFile();
-    $.each(self.file, function(key, element){
+    $.each(self.file, function (key, element) {
 
-       if (element.id === 'Line') {
-           self.drawLine(element.data);
-       }
-       if (element.id === 'Center') {
-           self.drawCenter(element.data);
-       }
-       if (element.id === 'Zone') {
+        if (element.id === 'Line') {
+            self.drawLine(element.data);
+        }
+        if (element.id === 'Center') {
+            self.drawCenter(element.data);
+        }
+        if (element.id === 'Zone') {
             self.drawZone(element.data);
-       }
+        }
     });
     self.pushInitToFront();
     return self;
@@ -854,8 +841,8 @@ Render.prototype.run = function() {
  *
  * @returns {Render}
  */
-Render.prototype.pushInitToFront = function() {
-    $.each(this.init, function(key, element) {
+Render.prototype.pushInitToFront = function () {
+    $.each(this.init, function (key, element) {
         element.toFront();
     });
     return this;
@@ -866,10 +853,10 @@ Render.prototype.pushInitToFront = function() {
  *
  * @returns {Render}
  */
-Render.prototype.clean = function() {
+Render.prototype.clean = function () {
     var self = this;
 
-    $.each(self.elements, function(index, element){
+    $.each(self.elements, function (index, element) {
         element.remove();
     });
 
@@ -885,7 +872,7 @@ Render.prototype.clean = function() {
  *
  * @return {Element} - Raphael element
  */
-Render.prototype.initZone = function(coords) {
+Render.prototype.initZone = function (coords) {
     var element = this.paper.path(coords).attr(this.theme.getZone()).toFront();
     this.init.push(element);
     return element;
@@ -899,7 +886,7 @@ Render.prototype.initZone = function(coords) {
  *
  * @returns {Render}
  */
-Render.prototype.initText = function(text, center) {
+Render.prototype.initText = function (text, center) {
     if (this.debug) {
         this.paper.text(center.getX(), center.getY(), text).attr(this.theme.getText());
     }
@@ -917,7 +904,7 @@ Render.prototype.initText = function(text, center) {
  *
  * @returns {Render}
  */
-Render.prototype.addLine = function(xFrom, yFrom, xTo, yTo, debug) {
+Render.prototype.addLine = function (xFrom, yFrom, xTo, yTo, debug) {
 
     if (!this.options.getOption('display-line')) {
         return this
@@ -930,8 +917,8 @@ Render.prototype.addLine = function(xFrom, yFrom, xTo, yTo, debug) {
     data['data'] = {};
     data['data']['xFrom'] = xFrom;
     data['data']['yFrom'] = yFrom;
-    data['data']['xTo']   = xTo;
-    data['data']['yTo']   = yTo;
+    data['data']['xTo'] = xTo;
+    data['data']['yTo'] = yTo;
     data['data']['debug'] = debug;
 
     this.file.push(data);
@@ -946,7 +933,7 @@ Render.prototype.addLine = function(xFrom, yFrom, xTo, yTo, debug) {
  *
  * @returns {Render}
  */
-Render.prototype.addCenter = function(x, y) {
+Render.prototype.addCenter = function (x, y) {
 
     if (!this.options.getOption('display-center')) {
         return this
@@ -995,7 +982,7 @@ Render.prototype.addZone = function (coords) {
  *
  * @returns {Render}
  */
-Render.prototype.drawLine = function(data) {
+Render.prototype.drawLine = function (data) {
     var self = this;
 
     var theme = self.theme.getViewLine();
@@ -1004,7 +991,7 @@ Render.prototype.drawLine = function(data) {
     }
 
     var element = this.paper
-        .path("M" + data.xFrom + " " + data.yFrom + "L"+ data.xTo + " " + data.yTo)
+        .path("M" + data.xFrom + " " + data.yFrom + "L" + data.xTo + " " + data.yTo)
         .attr(theme);
 
     this.elements.push(element);
@@ -1018,7 +1005,7 @@ Render.prototype.drawLine = function(data) {
  *
  * @returns {Render}
  */
-Render.prototype.drawCenter = function(data) {
+Render.prototype.drawCenter = function (data) {
     var width = 15;
     var height = 15;
 
@@ -1039,7 +1026,7 @@ Render.prototype.drawCenter = function(data) {
  *
  * @returns {Render}
  */
-Render.prototype.drawZone = function(data) {
+Render.prototype.drawZone = function (data) {
     var element = this.paper.path(data.coords).attr(this.theme.getHighlighted());
 
     // console.log(data.coords);
@@ -1055,7 +1042,7 @@ Render.prototype.drawZone = function(data) {
  *
  * @returns {Render}
  */
-Render.prototype.drawPromontory = function(data) {
+Render.prototype.drawPromontory = function (data) {
     var element = this.paper.path(data.coords).attr(this.theme.getPromontory());
     element.toFront();
     this.promontories.push(element);
@@ -1067,8 +1054,8 @@ Render.prototype.drawPromontory = function(data) {
  *
  * @returns {Render}
  */
-Render.prototype.cleanPromontory = function(data) {
-    $.each(this.promontories, function(index, element){
+Render.prototype.cleanPromontory = function (data) {
+    $.each(this.promontories, function (index, element) {
         element.remove();
     });
     return this;
@@ -1110,14 +1097,14 @@ Render.prototype.cleanLevel = function () {
 function Options() {
     var self = this;
     this.options = {
-        'display-line'   : true,
-        'display-zone'   : true,
-        'display-center' : true,
-        'display-promontory' : false,
+        'display-line': true,
+        'display-zone': true,
+        'display-center': true,
+        'display-promontory': false,
         'display-level': false
     };
 
-    $('#options').find('input').click(function() {
+    $('#options').find('input').click(function () {
         self.refreshOptions();
     });
 }
@@ -1125,9 +1112,9 @@ function Options() {
 /**
  * Set options value list from check box
  */
-Options.prototype.refreshOptions = function() {
+Options.prototype.refreshOptions = function () {
     var self = this;
-    $('#options').find('input').each(function() {
+    $('#options').find('input').each(function () {
         var input = $(this);
         self.options[input.attr('id')] = input.is(':checked');
     });
@@ -1140,6 +1127,6 @@ Options.prototype.refreshOptions = function() {
  *
  * @returns {*}
  */
-Options.prototype.getOption = function(id) {
+Options.prototype.getOption = function (id) {
     return this.options[id];
 };
