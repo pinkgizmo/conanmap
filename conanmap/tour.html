@@ -14,36 +14,36 @@
         <script type="text/javascript">
 
             var centers = `{
-                "ext1"  : {"A":[631,759]},
-                "ext2"  : {"A":[631,518]},
-                "ext3"  : {"A":[568,281],"B":[700,9]},
-                "ext4"  : {"A":[905,8],"B":[1048,279]},
-                "ext5"  : {"A":[981,498]},
-                "ext6"  : {"A":[944,662],"B":[922,895]},
-                "ext7"  : {"A":[808,781]},
-                "cabane"  : {"A":[988,783]},
-                "rdc1"  : {"A":[812,349]},
-                "rdc2"  : {"A":[662,208]},
-                "rdc3"  : {"A":[879,208]},
-                "rdc4"  : {"A":[792,69]},
-                "rdc5"  : {"A":[973,209]},
-                "rdc6"  : {"A":[712,102]},
-                "ss1"  : {"A":[378,159]},
-                "ss2"  : {"A":[324,356]},
+                "ext1"  : {"A":[631,759],"promontory":true,"level":1},
+                "ext2"  : {"A":[631,518],"level":1},
+                "ext3"  : {"A":[568,281],"B":[700,9],"level":1},
+                "ext4"  : {"A":[905,8],"B":[1048,279],"level":1},
+                "ext5"  : {"A":[981,498],"level":1},
+                "ext6"  : {"A":[944,662],"B":[922,895],"level":1},
+                "ext7"  : {"A":[808,781],"promontory":true},
+                "cabane"  : {"A":[988,783],"level":2},
+                "rdc1"  : {"A":[812,349],"level":2},
+                "rdc2"  : {"A":[662,208],"level":2},
+                "rdc3"  : {"A":[879,208],"level":2},
+                "rdc4"  : {"A":[792,69],"level":2},
+                "rdc5"  : {"A":[973,209],"level":2},
+                "rdc6"  : {"A":[712,102],"level":2},
+                "ss1"  : {"A":[378,159],"level":2},
+                "ss2"  : {"A":[324,356],"level":2},
                 "ss3"  : {"A":[204,318],"B":[278,256]},
-                "ss4"  : {"A":[116,229]},
-                "ss5"  : {"A":[227,124]},
-                "ss6"  : {"A":[147,110]},
-                "niv21"  : {"A":[1311,336]},
-                "niv22"  : {"A":[1455,280]},
-                "niv23"  : {"A":[1398,140]},
-                "niv24"  : {"A":[1241,184]},
-                "niv25"  : {"A":[1349,234]},
-                "niv26"  : {"A":[1411,63]},
-                "niv27"  : {"A":[1486,151]},
-                "niv31"  : {"A":[1237,646]},
-                "niv32"  : {"A":[1346,820]},
-                "niv33"  : {"A":[1473,694]},
+                "ss4"  : {"A":[116,229],"level":2},
+                "ss5"  : {"A":[227,124],"level":3},
+                "ss6"  : {"A":[147,110],"level":3},
+                "niv21"  : {"A":[1311,336],"level":3},
+                "niv22"  : {"A":[1455,280],"level":3},
+                "niv23"  : {"A":[1398,140],"level":3},
+                "niv24"  : {"A":[1241,184],"promontory":true,"level":3},
+                "niv25"  : {"A":[1349,234],"level":3},
+                "niv26"  : {"A":[1411,63],"level":3},
+                "niv27"  : {"A":[1486,151],"level":3},
+                "niv31"  : {"A":[1237,646],"level":3},
+                "niv32"  : {"A":[1346,820],"level":3},
+                "niv33"  : {"A":[1473,694],"promontory":true},
                 "niv34"  : {"A":[1389,537]},
                 "niv35"  : {"A":[1346,690]},
                 "niv41"  : {"A":[435,629],"B":[436,754]},
@@ -183,13 +183,12 @@
 						<input type="checkbox" id="display-line" name="display-line" checked/><label for="display-line">Afficher lignes</label>
 						<input type="checkbox" id="display-zone" name="display-zone" checked/><label for="display-zone">Afficher zones</label>
 						<input type="checkbox" id="display-center" name="display-center" checked/><label for="display-center">Afficher centres</label>
+                        <input type="checkbox" id="display-promontory" name="display-promontory"/><label for="display-promontory">Afficher promontoire</label>
+                        <input type="checkbox" id="display-level" name="display-level"/><label for="display-level">Afficher niveaux</label>
 					</form>
 				</li>
-				<li>
-					<a href="./index.html">Retour accueil</a>
-				</li>
+            </ul>
         </div>
-        <div>
         <div>
             <img id="mapimage" src="assets/maps/Tour.png" alt="" usemap="#map" />
             <map name="map" id="map">
