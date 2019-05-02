@@ -301,11 +301,22 @@ Tile.prototype.getLevel = function () {
  * @param {Array} line - Line definition
  */
 function Line(line) {
-    this.center1 = this.format(line[0]);
-    this.center2 = this.format(line[1]);
-    this.type = (line[2] !== "") ? line[2] : false;
-    this.text = (line[3] !== "") ? line[3] : false;
-    this.debug = (line[4] !== "") ? line[4] : false;
+
+    if ($.isArray(line)) {
+        //retrocompatibility for old line definition
+        this.center1 = this.format(line[0]);
+        this.center2 = this.format(line[1]);
+        this.debug = (line[4] !== "") ? line[4] : false;
+    } else {
+        this.center1 = this.format(line.line[0]);
+        this.center2 = this.format(line.line[1]);
+        if (line.overhang !== "undefined") {
+            this.overhang = line.overhang;
+        }
+        if (line.debug !== "undefined") {
+            this.debug = line.debug;
+        }
+    }
 }
 
 /**
@@ -722,6 +733,11 @@ Conan.prototype.displayViewLines = function (tileId) {
                 //draw line
                 self.render.addLine(source.getX(), source.getY(), destination.getX(), destination.getY(), line.hasDebug());
 
+                //draw overhang
+                if (line.overhang && line.getCenter1() === centerId) {
+                    self.render.addOverhang(destination.getX(), destination.getY());
+                }
+
                 //draw circle
                 self.render.addCenter(destination.getX(), destination.getY());
             });
@@ -825,6 +841,9 @@ Render.prototype.run = function () {
         if (element.id === 'Line') {
             self.drawLine(element.data);
         }
+        if (element.id === 'Overhang') {
+            self.drawOverhang(element.data);
+        }
         if (element.id === 'Center') {
             self.drawCenter(element.data);
         }
@@ -926,6 +945,34 @@ Render.prototype.addLine = function (xFrom, yFrom, xTo, yTo, debug) {
 };
 
 /**
+ * Add an overhang in the render
+ *
+ * @param {Number} xFrom
+ * @param {Number} yFrom
+ * @param {Number} xTo
+ * @param {Number} yTo
+ * @param {Boolean} debug
+ *
+ * @returns {Render}
+ */
+Render.prototype.addOverhang = function (x, y) {
+
+    if (!this.options.getOption('display-overhang')) {
+        return this
+    }
+
+    var data = {};
+    data['id'] = 'Overhang';
+
+    data['data'] = {};
+    data['data']['x'] = x;
+    data['data']['y'] = y;
+
+    this.file.push(data);
+    return this;
+};
+
+/**
  * Add center to the render
  *
  * @param {Number} x
@@ -999,6 +1046,28 @@ Render.prototype.drawLine = function (data) {
 };
 
 /**
+ * Draw a Overhang
+ *
+ * @param {Object} data - Overhang data
+ *
+ * @returns {Render}
+ */
+Render.prototype.drawOverhang = function (data) {
+
+    var width = 15;
+    var height = 15;
+
+    var x = data.x;
+    var y = data.y;
+
+    var element = this.paper.image('assets/images/yellow_dice.png', x, y, width, height);
+
+    this.elements.push(element);
+
+    return this;
+};
+
+/**
  * Draw a center
  *
  * @param {Object} data - Center data
@@ -1029,7 +1098,6 @@ Render.prototype.drawCenter = function (data) {
 Render.prototype.drawZone = function (data) {
     var element = this.paper.path(data.coords).attr(this.theme.getHighlighted());
 
-    // console.log(data.coords);
     this.elements.push(element);
 
     return this;
@@ -1100,6 +1168,7 @@ function Options() {
         'display-line': true,
         'display-zone': true,
         'display-center': true,
+        'display-overhang' : true,
         'display-promontory': false,
         'display-level': false
     };

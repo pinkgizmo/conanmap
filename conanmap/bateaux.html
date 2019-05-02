@@ -65,11 +65,13 @@
             }`;
 
              var lines = [
-
-                 ['mer1', 'mer2'],
+                 {
+                     "line" : ['mer1', 'mer2'],
+                     "debug" : true,
+                     "overhang" : true
+                 },
                  ['mer1', 'mer3'],
                  ['mer1', 'mer4'],
-                 ['mer1', 'ponton2'],
                  ['mer1', 'mer5'],
 
                  ['mer2', 'mer3'],
@@ -108,8 +110,11 @@
                 ['mer8', 'mer9'],
                 ['mer8', 'mer10'],
                 ['mer8', 'nav1'],
-                ['mer8', 'bat1'],
-
+                {
+                     "line" : ['bat1', 'mer8'],
+                     "debug" : true,
+                     "overhang" : true
+                },
                 ['mer9', 'mer10'],
                 ['mer9', 'mer11'],
                 ['mer9', 'mer12'],
@@ -545,6 +550,8 @@
 						<input type="checkbox" id="display-line" name="display-line" checked/><label for="display-line">Afficher lignes</label>
 						<input type="checkbox" id="display-zone" name="display-zone" checked/><label for="display-zone">Afficher zones</label>
 						<input type="checkbox" id="display-center" name="display-center" checked/><label for="display-center">Afficher centres</label>
+                        <input type="checkbox" id="display-overhang" name="display-overhang" checked/><label for="display-overhang">Afficher surplomb</label>
+
 					</form>
 				</li>
             </ul>
