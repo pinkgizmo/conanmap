@@ -74,7 +74,7 @@ Theme.prototype.getPromontory = function () {
           "stroke-opacity": 1,
           "stroke-linecap": "round",
           "stroke-linejoin": "round",
-          "fill": "url(assets/hatch.jpg)",
+          "fill": "url(assets/images/hatch.jpg)",
           "fill-opacity": 0.6
       }`;
 
@@ -1012,7 +1012,7 @@ Render.prototype.drawCenter = function (data) {
     var x = data.x - (width / 2);
     var y = data.y - (height / 2);
 
-    var element = this.paper.image('lib/center15.png', x, y, width, height);
+    var element = this.paper.image('assets/images/center15.png', x, y, width, height);
 
     this.elements.push(element);
 
