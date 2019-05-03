@@ -223,6 +223,14 @@ function Tile(id, tile) {
     if (typeof (tile.level) !== "undefined") {
         self.level = tile.level;
     }
+
+    /**
+     * Retrocompatibility for old tile definition
+     * deprecated
+     */
+    if ($.isArray(tile)) {
+        self.centers['A'] = new Center(tile);
+    }
 }
 
 /**
@@ -303,7 +311,10 @@ Tile.prototype.getLevel = function () {
 function Line(line) {
 
     if ($.isArray(line)) {
-        //retrocompatibility for old line definition
+        /**
+         * Retrocompatibility for old line definition
+         * deprecated
+         */
         this.center1 = this.format(line[0]);
         this.center2 = this.format(line[1]);
         this.debug = (line[4] !== "") ? line[4] : false;
