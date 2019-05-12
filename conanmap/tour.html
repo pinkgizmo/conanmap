@@ -12,6 +12,11 @@
         <script src="lib/raphael.min.js"></script>
 
         <script type="text/javascript">
+            var colors = `{
+               "1" : "#01A3D6",
+               "2" : "#8FBEE0",
+               "3" : "#F3CB58"
+            }`;
 
             var centers = `{
                 "ext1"  : {"A":[631,759],"promontory":true,"level":1},
@@ -171,7 +176,7 @@
             ];
 
             $(window).on("load", function() {
-                new Conan(centers, lines);
+                new Conan(centers, lines, colors);
             });
         </script>
     </head>

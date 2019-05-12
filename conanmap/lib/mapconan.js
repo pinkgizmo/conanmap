@@ -14,8 +14,9 @@
  *
  * @param {Boolean} debug - Is the theme in debug mode ?
  */
-function Theme(debug) {
+function Theme(debug, option) {
     this.debug = debug;
+    this.option = option;
 }
 
 /**
@@ -85,16 +86,9 @@ Theme.prototype.getPromontory = function () {
  * Get attributes for promontory area
  */
 Theme.prototype.getLevel = function (level) {
-    var color;
-    if (level === 1) {
-        color = '#01A3D6'
-    }
-    if (level === 2) {
-        color = '#8FBEE0'
-    }
-    if (level === 3) {
-        color = '#F3CB58'
-    }
+    var colors = this.option.getOption('colors');
+    var color = colors[level];
+
     var res = `{
           "stroke": "white",
           "stroke-width": 0,
@@ -601,12 +595,12 @@ ServiceLines.prototype.getLinesByCenter = function (centerId) {
  * @param {Boolean} debug    - Debug mode flag
  * @param {Theme}   theme    - Theme holder
  */
-function Conan(centers, viewLine) {
+function Conan(centers, viewLine, colors) {
 
     this.tiles = new ServiceTiles(centers);
     this.viewLine = new ServiceLines(viewLine);
     this.debug = (window.location.hash === '#debug');
-    this.options = new Options();
+    this.options = new Options(colors);
     this.render = new Render(this.debug, this.options);
 
 
@@ -815,7 +809,7 @@ function Render(debug, options) {
 
     this.debug = debug;
     this.options = options;
-    this.theme = new Theme(debug);
+    this.theme = new Theme(debug, options);
 
     var mapimage = $('#mapimage');
     var top = mapimage.position().top;
@@ -1173,7 +1167,7 @@ Render.prototype.cleanLevel = function () {
 /**
  * Options - constructor
  */
-function Options() {
+function Options(colors) {
     var self = this;
     this.options = {
         'display-line': true,
@@ -1181,7 +1175,8 @@ function Options() {
         'display-center': true,
         'display-overhang' : true,
         'display-promontory': false,
-        'display-level': false
+        'display-level': false,
+        'colors' : $.parseJSON(colors)
     };
 
     $('#options').find('input').click(function () {
