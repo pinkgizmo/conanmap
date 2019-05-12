@@ -631,7 +631,6 @@ function Conan(centers, viewLine, colors) {
     this.options = new Options(colors);
     this.render = new Render(this.debug, this.options);
 
-
     this.processCoordonates();
     this.mapArea();
 }
@@ -670,33 +669,24 @@ Conan.prototype.processCoordonates = function () {
 Conan.prototype.mapArea = function () {
     var self = this;
 
-    $('#options').find('input#display-promontory').click(function () {
-        var input = $(this);
-        self.render.cleanPromontory();
-        if (input.is(':checked')) {
-            self.displayPromontory();
-        }
+    //Display all permanent elements
+    self.calculatePermanent();
+    $('input#display-level, input#display-promontory').click(function () {
+        self.calculatePermanent();
     });
 
-    $('#options').find('input#display-level').click(function () {
-        var input = $(this);
-        self.render.cleanLevel();
-        if (input.is(':checked')) {
-            self.displayLevel();
-        }
-    });
-
+    //Display hover elements
     $.each(self.tiles.getTiles(), function (key, tile) {
 
         var zone = self.render.initZone(tile.getPerimeter());
 
         zone.hover(
             function () {
-                self.displayViewLines(tile.getId());
-                self.render.run();
+                self.calculateViewLines(tile.getId());
+                self.render.runHover();
             },
             function () {
-                self.render.clean();
+                self.render.cleanHover();
             }
         );
 
@@ -728,12 +718,29 @@ Conan.prototype.coordConvert = function (coords) {
     return res;
 };
 
+Conan.prototype.calculatePermanent = function () {
+
+    var self = this;
+
+    self.render.cleanPermanent();
+
+    if ($('input#display-level').is(':checked')) {
+        self.render.addLevel(self.tiles.getLevelTiles())
+    }
+
+    if ($('input#display-promontory').is(':checked')) {
+        self.render.addPromontory(self.tiles.getPromontoryTiles());
+    }
+
+    self.render.runPermanent();
+};
+
 /**
  * Display all view lines for a tile
  *
  * @param {String} tileId - Tile id
  */
-Conan.prototype.displayViewLines = function (tileId) {
+Conan.prototype.calculateViewLines = function (tileId) {
     var self = this;
 
     //the current tile data
@@ -781,45 +788,6 @@ Conan.prototype.displayViewLines = function (tileId) {
     }
 };
 
-Conan.prototype.displayPromontory = function () {
-    var self = this;
-
-    if (!self.options.getOption('display-promontory')) {
-        return this
-    }
-
-    var data = {};
-
-    $.each(self.tiles.getPromontoryTiles(), function (key, tile) {
-        data = {};
-        data['coords'] = tile.getPerimeter();
-
-        self.render.drawPromontory(data);
-    });
-
-    return this;
-};
-
-Conan.prototype.displayLevel = function () {
-    var self = this;
-
-    if (!self.options.getOption('display-level')) {
-        return this
-    }
-
-    var data = {};
-
-    $.each(self.tiles.getLevelTiles(), function (key, tile) {
-        data = {};
-        data['coords'] = tile.getPerimeter();
-        data['level'] = tile.getLevel();
-
-        self.render.drawLevel(data);
-    });
-
-    return this;
-};
-
 /******************************************
  Render Service
  *******************************************/
@@ -832,10 +800,10 @@ Conan.prototype.displayLevel = function () {
 function Render(debug, options) {
 
     this.init = [];
-    this.file = [];
-    this.elements = [];
-    this.promontories = [];
-    this.levels = [];
+    this.hoverFile = [];
+    this.permanentFile = [];
+    this.permanentElements = [];
+    this.hoverElements = [];
 
     this.debug = debug;
     this.options = options;
@@ -855,23 +823,23 @@ function Render(debug, options) {
  *
  * @returns {Render}
  */
-Render.prototype.sortFile = function () {
-    this.file.sort(function (a, b) {
+Render.prototype.sortFile = function (file) {
+    file.sort(function (a, b) {
         return a.prio > b.prio;
     });
     return this;
 };
 
 /**
- * Display all the elements configured in render
+ * Display all the hover elements configured in render
  *
  * @returns {Render}
  */
-Render.prototype.run = function () {
+Render.prototype.runHover = function () {
     var self = this;
 
-    self.sortFile();
-    $.each(self.file, function (key, element) {
+    self.sortFile(self.hoverFile);
+    $.each(self.hoverFile, function (key, element) {
 
         if (element.id === 'Line') {
             self.drawLine(element.data);
@@ -884,6 +852,28 @@ Render.prototype.run = function () {
         }
         if (element.id === 'Zone') {
             self.drawZone(element.data);
+        }
+    });
+    self.pushInitToFront();
+    return self;
+};
+
+/**
+ * Display all the permanent elements configured in render
+ *
+ * @returns {Render}
+ */
+Render.prototype.runPermanent = function () {
+    var self = this;
+
+    self.sortFile(self.permanentFile);
+    $.each(self.permanentFile, function (key, element) {
+        ;
+        if (element.id === 'Promontory') {
+            self.drawPromontory(element.data);
+        }
+        if (element.id === 'Level') {
+            self.drawLevel(element.data);
         }
     });
     self.pushInitToFront();
@@ -907,15 +897,30 @@ Render.prototype.pushInitToFront = function () {
  *
  * @returns {Render}
  */
-Render.prototype.clean = function () {
+Render.prototype.cleanHover = function () {
     var self = this;
 
-    $.each(self.elements, function (index, element) {
+    $.each(self.hoverElements, function (index, element) {
         element.remove();
     });
 
-    self.file = [];
-    self.elements = [];
+    self.hoverFile = [];
+    self.hoverElements = [];
+    return this;
+};
+
+/**
+ * Clean promontories
+ *
+ * @returns {Render}
+ */
+Render.prototype.cleanPermanent = function () {
+    $.each(this.permanentElements, function (index, element) {
+        element.remove();
+    });
+
+    this.permanentFile = [];
+    this.permanentElements = [];
     return this;
 };
 
@@ -976,7 +981,7 @@ Render.prototype.addLine = function (xFrom, yFrom, xTo, yTo, overhang, debug) {
     data['data']['overhang'] = overhang;
     data['data']['debug'] = debug;
 
-    this.file.push(data);
+    this.hoverFile.push(data);
     return this;
 };
 
@@ -1012,7 +1017,7 @@ Render.prototype.addOverhang = function (x, y, angle) {
     data['data']['x'] = x + deltaX;
     data['data']['y'] = y + deltaY;
 
-    this.file.push(data);
+    this.hoverFile.push(data);
     return this;
 };
 
@@ -1039,7 +1044,7 @@ Render.prototype.addCenter = function (x, y, overhang) {
     data['data']['y'] = y;
     data['data']['overhang'] = overhang;
 
-    this.file.push(data);
+    this.hoverFile.push(data);
     return this;
 };
 
@@ -1063,7 +1068,56 @@ Render.prototype.addZone = function (coords) {
     data['data'] = {};
     data['data']['coords'] = coords;
 
-    this.file.push(data);
+    this.hoverFile.push(data);
+    return this;
+};
+
+Render.prototype.addPromontory = function (tiles) {
+    var self = this;
+
+    if (!self.options.getOption('display-promontory')) {
+        return this
+    }
+
+    var data = {};
+
+    $.each(tiles, function (key, tile) {
+
+        data = {};
+        data['id'] = 'Promontory';
+        data['prio'] = '20';
+
+        data['data'] = {};
+        data['data']['coords'] = tile.getPerimeter();
+
+        self.permanentFile.push(data);
+    });
+
+    return this;
+};
+
+Render.prototype.addLevel = function (tiles) {
+    var self = this;
+
+    if (!self.options.getOption('display-level')) {
+        return this
+    }
+
+    var data = {};
+
+    $.each(tiles, function (key, tile) {
+
+        data = {};
+        data['id'] = 'Level';
+        data['prio'] = '10';
+
+        data['data'] = {};
+        data['data']['coords'] = tile.getPerimeter();
+        data['data']['level'] = tile.getLevel();
+
+        self.permanentFile.push(data);
+    });
+
     return this;
 };
 
@@ -1091,7 +1145,7 @@ Render.prototype.drawLine = function (data) {
         .path("M" + data.xFrom + " " + data.yFrom + "L" + data.xTo + " " + data.yTo)
         .attr(theme);
 
-    this.elements.push(element);
+    this.hoverElements.push(element);
     return this;
 };
 
@@ -1112,7 +1166,7 @@ Render.prototype.drawOverhang = function (data) {
 
     var element = this.paper.image('assets/images/yellow_dice.png', x, y, width, height);
 
-    this.elements.push(element);
+    this.hoverElements.push(element);
 
     return this;
 };
@@ -1138,7 +1192,7 @@ Render.prototype.drawCenter = function (data) {
 
     var element = this.paper.image(image, x, y, width, height);
 
-    this.elements.push(element);
+    this.hoverElements.push(element);
 
     return this;
 };
@@ -1153,7 +1207,7 @@ Render.prototype.drawCenter = function (data) {
 Render.prototype.drawZone = function (data) {
     var element = this.paper.path(data.coords).attr(this.theme.getHighlighted());
 
-    this.elements.push(element);
+    this.hoverElements.push(element);
 
     return this;
 };
@@ -1167,20 +1221,7 @@ Render.prototype.drawZone = function (data) {
  */
 Render.prototype.drawPromontory = function (data) {
     var element = this.paper.path(data.coords).attr(this.theme.getPromontory());
-    element.toFront();
-    this.promontories.push(element);
-    return this;
-};
-
-/**
- * Clean promontories
- *
- * @returns {Render}
- */
-Render.prototype.cleanPromontory = function (data) {
-    $.each(this.promontories, function (index, element) {
-        element.remove();
-    });
+    this.permanentElements.push(element);
     return this;
 };
 
@@ -1193,20 +1234,7 @@ Render.prototype.cleanPromontory = function (data) {
  */
 Render.prototype.drawLevel = function (data) {
     var element = this.paper.path(data.coords).attr(this.theme.getLevel(data.level));
-    element.toFront();
-    this.levels.push(element);
-    return this;
-};
-
-/**
- * Clean levels
- *
- * @returns {Render}
- */
-Render.prototype.cleanLevel = function () {
-    $.each(this.levels, function (index, element) {
-        element.remove();
-    });
+    this.permanentElements.push(element);
     return this;
 };
 
@@ -1233,6 +1261,7 @@ function Options(colors) {
         'colors': colors
     };
 
+    self.refreshOptions();
     $('#options').find('input').click(function () {
         self.refreshOptions();
     });
