@@ -117,11 +117,25 @@ Theme.prototype.getViewLine = function () {
 };
 
 /**
- * Get attributes for viewlines
+ * Get attributes for viewlines debug
  */
 Theme.prototype.getViewLineDebug = function () {
     var res = `{
         "stroke": "red",
+        "stroke-width": 2,
+        "stroke-opacity": 1,
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+    }`;
+    return $.parseJSON(res);
+};
+
+/**
+ * Get attributes for viewlines overhang
+ */
+Theme.prototype.getViewLineOverhang = function () {
+    var res = `{
+        "stroke": "yellow",
         "stroke-width": 2,
         "stroke-opacity": 1,
         "stroke-linecap": "round",
@@ -730,21 +744,23 @@ Conan.prototype.displayViewLines = function (tileId) {
                 var destination = self.tiles.getCoordsFromCenterId(destCenterId);
                 //get destination tile
                 var destinationTileId = self.tiles.getTileId(destCenterId);
+                //has overhang ?
+                var overhang = (line.overhang && line.getCenter1() === centerId);
 
                 //highligt zones
                 var tile = self.tiles.getTile(destinationTileId);
                 self.render.addZone(tile.getPerimeter());
 
-                //draw line
-                self.render.addLine(source.getX(), source.getY(), destination.getX(), destination.getY(), line.hasDebug());
-
-                //draw overhang
-                if (line.overhang && line.getCenter1() === centerId) {
+                //draw overhang dice
+                if (overhang) {
                     self.render.addOverhang(destination.getX(), destination.getY());
                 }
 
+                //draw line
+                self.render.addLine(source.getX(), source.getY(), destination.getX(), destination.getY(), overhang, line.hasDebug());
+
                 //draw circle
-                self.render.addCenter(destination.getX(), destination.getY());
+                self.render.addCenter(destination.getX(), destination.getY(), overhang);
             });
 
         });
@@ -928,7 +944,7 @@ Render.prototype.initText = function (text, center) {
  *
  * @returns {Render}
  */
-Render.prototype.addLine = function (xFrom, yFrom, xTo, yTo, debug) {
+Render.prototype.addLine = function (xFrom, yFrom, xTo, yTo, overhang, debug) {
 
     if (!this.options.getOption('display-line')) {
         return this
@@ -943,6 +959,7 @@ Render.prototype.addLine = function (xFrom, yFrom, xTo, yTo, debug) {
     data['data']['yFrom'] = yFrom;
     data['data']['xTo'] = xTo;
     data['data']['yTo'] = yTo;
+    data['data']['overhang'] = overhang;
     data['data']['debug'] = debug;
 
     this.file.push(data);
@@ -985,7 +1002,7 @@ Render.prototype.addOverhang = function (x, y) {
  *
  * @returns {Render}
  */
-Render.prototype.addCenter = function (x, y) {
+Render.prototype.addCenter = function (x, y, overhang) {
 
     if (!this.options.getOption('display-center')) {
         return this
@@ -998,6 +1015,7 @@ Render.prototype.addCenter = function (x, y) {
     data['data'] = {};
     data['data']['x'] = x;
     data['data']['y'] = y;
+    data['data']['overhang'] = overhang;
 
     this.file.push(data);
     return this;
@@ -1038,8 +1056,13 @@ Render.prototype.drawLine = function (data) {
     var self = this;
 
     var theme = self.theme.getViewLine();
+
+    if (data.overhang) {
+        theme = self.theme.getViewLineOverhang();
+    }
+
     if (data.debug) {
-        theme = self.theme.getViewLineDebug()
+        theme = self.theme.getViewLineDebug();
     }
 
     var element = this.paper
@@ -1086,7 +1109,12 @@ Render.prototype.drawCenter = function (data) {
     var x = data.x - (width / 2);
     var y = data.y - (height / 2);
 
-    var element = this.paper.image('assets/images/center15.png', x, y, width, height);
+    var image = 'assets/images/center15.png';
+    if (data['overhang']) {
+        image = 'assets/images/center15-yellow.png';
+    }
+
+    var element = this.paper.image(image, x, y, width, height);
 
     this.elements.push(element);
 
@@ -1173,10 +1201,10 @@ function Options(colors) {
         'display-line': true,
         'display-zone': true,
         'display-center': true,
-        'display-overhang' : true,
+        'display-overhang': true,
         'display-promontory': false,
         'display-level': false,
-        'colors' : $.parseJSON(colors)
+        'colors': $.parseJSON(colors)
     };
 
     $('#options').find('input').click(function () {
