@@ -1197,6 +1197,10 @@ Render.prototype.cleanLevel = function () {
  */
 function Options(colors) {
     var self = this;
+    if (typeof colors !== "undefined") {
+        colors = $.parseJSON(colors);
+    }
+
     this.options = {
         'display-line': true,
         'display-zone': true,
@@ -1204,7 +1208,7 @@ function Options(colors) {
         'display-overhang': true,
         'display-promontory': false,
         'display-level': false,
-        'colors': $.parseJSON(colors)
+        'colors': colors
     };
 
     $('#options').find('input').click(function () {
