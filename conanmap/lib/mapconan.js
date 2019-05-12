@@ -329,9 +329,15 @@ function Line(line) {
     } else {
         this.center1 = this.format(line.line[0]);
         this.center2 = this.format(line.line[1]);
+
         if (line.overhang !== "undefined") {
             this.overhang = line.overhang;
         }
+
+        if (line.overhang !== "undefined") {
+            this.overhangPosition = line.overhangPosition;
+        }
+
         if (line.debug !== "undefined") {
             this.debug = line.debug;
         }
@@ -368,6 +374,14 @@ Line.prototype.getCenter1 = function () {
  */
 Line.prototype.getCenter2 = function () {
     return this.center2;
+};
+
+Line.prototype.hasOverhang = function () {
+    return this.overhang;
+};
+
+Line.prototype.getOverhangPosition = function () {
+    return this.overhangPosition;
 };
 
 /**
@@ -745,7 +759,7 @@ Conan.prototype.displayViewLines = function (tileId) {
                 //get destination tile
                 var destinationTileId = self.tiles.getTileId(destCenterId);
                 //has overhang ?
-                var overhang = (line.overhang && line.getCenter1() === centerId);
+                var overhang = (line.hasOverhang() && line.getCenter1() === centerId);
 
                 //highligt zones
                 var tile = self.tiles.getTile(destinationTileId);
@@ -753,7 +767,7 @@ Conan.prototype.displayViewLines = function (tileId) {
 
                 //draw overhang dice
                 if (overhang) {
-                    self.render.addOverhang(destination.getX(), destination.getY());
+                    self.render.addOverhang(destination.getX(), destination.getY(), line.getOverhangPosition());
                 }
 
                 //draw line
@@ -977,18 +991,26 @@ Render.prototype.addLine = function (xFrom, yFrom, xTo, yTo, overhang, debug) {
  *
  * @returns {Render}
  */
-Render.prototype.addOverhang = function (x, y) {
+Render.prototype.addOverhang = function (x, y, angle) {
 
     if (!this.options.getOption('display-overhang')) {
         return this
     }
 
+    var rayon = 30;
+    if (typeof angle === "undefined") {
+        angle = 90;
+    }
+
+    var deltaX = rayon * Math.sin(angle * Math.PI/180);
+    var deltaY = rayon * Math.cos(angle * Math.PI/180) * -1;
+
     var data = {};
     data['id'] = 'Overhang';
 
     data['data'] = {};
-    data['data']['x'] = x;
-    data['data']['y'] = y;
+    data['data']['x'] = x + deltaX;
+    data['data']['y'] = y + deltaY;
 
     this.file.push(data);
     return this;
@@ -1085,8 +1107,8 @@ Render.prototype.drawOverhang = function (data) {
     var width = 15;
     var height = 15;
 
-    var x = data.x;
-    var y = data.y;
+    var x = data.x - (width / 2);
+    var y = data.y - (height / 2);
 
     var element = this.paper.image('assets/images/yellow_dice.png', x, y, width, height);
 
