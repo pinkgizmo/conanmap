@@ -516,9 +516,7 @@ ServiceTiles.prototype.getLevelTiles = function () {
     var levelTiles = [];
 
     $.each(this.tiles, function (key, tile) {
-        if (tile.getLevel() !== 0) {
-            levelTiles.push(tile);
-        }
+        levelTiles.push(tile);
     });
 
     return levelTiles;
