@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<!--VERSION 1.1-->
+<html>
+    <head>
+        <meta charset=utf-8 />
+        <title>Crime Alley</title>
+
+		<link rel="stylesheet" type="text/css" href="assets/css/conan.css">
+
+		<script src="lib/jquery-3.1.1.js"></script>
+		<script src="lib/mapconan.js"></script>
+		<script src="lib/raphael.min.js"></script>
+
+        <script type="text/javascript">
+
+			var colors = `{
+               "0" : "#767777",
+			   "1" : "#1D205F",
+               "2" : "#01A3D6",
+               "5" : "#CAE8FC",
+			   "6" : "#EFF976"
+            }`;
+
+            var centers = `{
+                "toit1"  : {"A":[86,97],"promontory":true,"level":6},
+                "toit2"  : {"A":[ 1083,105],"promontory":true,"level":6},
+                "toit3"  : {"A":[ 163,819],"promontory":true,"level":6},
+                "toit4"  : {"A":[ 762,772],"promontory":true,"level":6},
+                "bat1"  : {"A":[ 399,78],"level":5},
+                "bat2"  : {"A":[ 545,170],"level":5},
+                "bat3"  : {"A":[ 683,96],"level":5},
+                "bat4"  : {"A":[64,361],"B":[44,508],"level":5},
+                "bat5"  : {"A":[ 493,790],"level":5},
+                "bat6"  : {"A":[ 1036,821],"level":5},
+                "street1"  : {"A":[274,383],"level":0},
+                "street2"  : {"A":[467,375],"level":0},
+                "street3"  : {"A":[652,331],"level":0},
+                "street4"  : {"A":[781,359],"level":0},
+                "street5"  : {"A":[1098,365],"level":0},
+                "street6"  : {"A":[265,496],"level":0},
+                "street7"  : {"A":[426,585],"level":0},
+                "street8"  : {"A":[622,508],"level":0},
+                "street9"  : {"A":[786,529],"level":0},
+                "street10"  : {"A":[631,644],"level":0},
+                "street11"  : {"A":[777,633],"level":0},
+                "street12"  : {"A":[938,597],"level":0},
+                "street13"  : {"A":[1063,555],"level":0},
+                "street14"  : {"A":[1187,500],"level":0},
+                "street15"  : {"A":[1179,655],"level":0},
+                "truck1"  : {"A":[1103,277],"promontory":true,"level":2},
+                "truck2"  : {"A":[943,444],"promontory":true,"level":2},
+                "car1"  : {"A":[610,583],"promontory":true,"level":1},
+                "car2"  : {"A":[956,521],"promontory":true,"level":1},
+                "car3"  : {"A":[1069,661],"promontory":true,"level":1}
+            }`;
+
+             var lines = [
+
+                 {
+                     "line" : ['toit1', 'bat4'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['toit1', 'bat5'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['toit1', 'toit3'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['toit1', 'street6'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['toit1', 'street7'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 {
+                     "line" : ['toit1', 'street1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+	             {
+                     "line" : ['toit2', 'truck1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },			 
+	             {
+                     "line" : ['toit2', 'truck2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },			 
+	             {
+                     "line" : ['toit2', 'street3'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },			 
+	             {
+                     "line" : ['toit2', 'street4'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },			 
+	             {
+                     "line" : ['toit2', 'street5'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },			 
+	             {
+                     "line" : ['toit2', 'street8'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },			 
+	             {
+                     "line" : ['toit2', 'street11'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },			 
+	             {
+                     "line" : ['toit2', 'street14'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },			 
+	             {
+                     "line" : ['toit2', 'street15'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },			 
+	             {
+                     "line" : ['toit2', 'car1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },			 
+	             {
+                     "line" : ['toit2', 'car3'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },			 
+	             {
+                     "line" : ['toit2', 'bat5'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },			 
+	             {
+                     "line" : ['toit2', 'bat6'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },			 
+	             {
+                     "line" : ['toit2', 'toit3'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },			 
+	             {
+                     "line" : ['toit2', 'toit4'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+
+				 {
+                     "line" : ['toit3', 'toit4'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit3', 'bat2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit3', 'bat4-B'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit3', 'bat5'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit3', 'street1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit3', 'street2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit3', 'street3'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit3', 'street4'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit3', 'street6'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit3', 'street7'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit3', 'street8'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit3', 'street9'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit3', 'street10',false,false,true],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit3', 'street11'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit3', 'street12'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit3', 'street13',false,false,true],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit3', 'street14'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit3', 'car1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit3', 'car2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit3', 'car3'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit3', 'truck1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit3', 'truck2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['toit4', 'bat2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit4', 'bat4-B'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit4', 'bat5'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit4', 'bat6'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit4', 'car1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit4', 'car2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit4', 'car3'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit4', 'truck1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit4', 'truck2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit4', 'street1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit4', 'street2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit4', 'street3'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit4', 'street4'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit4', 'street8'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit4', 'street9'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit4', 'street10'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit4', 'street11'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit4', 'street12'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit4', 'street13'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit4', 'street14'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['toit4', 'street15'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['bat1', 'bat2'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['bat2', 'bat3'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat2', 'bat4'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat2', 'bat5'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat2', 'bat6'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat2', 'street1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat2', 'street2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat2', 'street3'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat2', 'street4'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat2', 'street7'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat2', 'street8'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat2', 'street9'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat2', 'street11'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat2', 'car1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat2', 'truck2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['bat4-B', 'bat5'],
+                     "debug" : false,
+                     "overhang" : false,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat4', 'street1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat4', 'street1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat4', 'street2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat4', 'street3'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat4', 'street4'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat4', 'street5'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat4-B', 'street6'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat4-B', 'street7'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat4-B', 'street9'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat4-B', 'street11'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat4-B', 'street12'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat4-B', 'street14'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat4-B', 'car1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat4-B', 'car2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat4-B', 'car3'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat4', 'truck1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat4', 'truck2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['bat5', 'street1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat5', 'street1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat5', 'street2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat5', 'street3'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat5', 'street4'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat5', 'street6'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat5', 'street7'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat5', 'street8'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat5', 'street9'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat5', 'street10'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat5', 'street11'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat5', 'car1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat5', 'car2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat5', 'truck1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat5', 'truck2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+				 {
+                     "line" : ['bat6', 'street2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat6', 'street3'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat6', 'street9'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat6', 'street11'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat6', 'street12'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat6', 'street13'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat6', 'street14'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat6', 'street15'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat6', 'car2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat6', 'car3'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat6', 'truck1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['bat6', 'truck2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+                 ['street1', 'street2'],
+                 ['street1', 'street3'],
+                 ['street1', 'street4'],
+                 ['street1', 'street5'],
+                 ['street1', 'street8',false,false,true],
+                 ['street1', 'street9'],
+                 ['street1', 'street12'],
+                 {
+                     "line" : ['car2', 'street1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car3', 'street1'],
+                     "debug" : true,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['truck1', 'street1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 135
+                 },
+				 {
+                     "line" : ['truck2', 'street1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+                 ['street2', 'street3'],
+                 ['street2', 'street4'],
+                 ['street2', 'street5'],
+                 ['street2', 'street7'],
+                 ['street2', 'street8'],
+                 ['street2', 'street9'],
+                 ['street2', 'street12'],
+                 {
+                     "line" : ['car1', 'street2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 135
+                 },
+				 {
+                     "line" : ['car3', 'street2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['truck1', 'street2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 135
+                 },
+				 {
+                     "line" : ['truck2', 'street2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+
+                 ['street3', 'street4'],
+                 ['street3', 'street5'],
+                 ['street3', 'street8'],
+                 {
+                     "line" : ['car1', 'street3'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['truck1', 'street3'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 135
+                 },
+				 {
+                     "line" : ['truck2', 'street3'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+                 ['street4', 'street5'],
+                 {
+                     "line" : ['truck1', 'street4'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 135
+                 },
+				 {
+                     "line" : ['truck2', 'street4'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+                 {
+                     "line" : ['truck1', 'street5'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 225
+                 },
+				 {
+                     "line" : ['truck2', 'street5'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+                 ['street5', 'street14'],
+				 
+				 ['street6', 'street7'],
+				 
+				 ['street8', 'street9'],
+				 ['street8', 'street12'],
+				 {
+                     "line" : ['car1', 'street8'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car2', 'street8'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car3', 'street8'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['truck1', 'street8'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['truck2', 'street8'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+				 ['street9', 'street11'],
+				 ['street9', 'street12'],
+				 {
+                     "line" : ['car1', 'street9'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car2', 'street9'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car3', 'street9'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['truck2', 'street9'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },		
+				 
+				 ['street10', 'street11'],
+				 ['street10', 'street12'],
+				 ['street10', 'street13'],
+{
+                     "line" : ['car1', 'street10'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car2', 'street10'],
+                     "debug" : true,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car3', 'street10'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },				 
+
+				 ['street11', 'street12'],
+				 ['street11', 'street13'],
+				 ['street11', 'street14'],
+				 {
+                     "line" : ['car1', 'street11'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car2', 'street11'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car3', 'street11'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['truck2', 'street11'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },	
+
+				 ['street12', 'street13'],
+				 ['street12', 'street14'],
+				 {
+                     "line" : ['car1', 'street12'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car2', 'street12'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car3', 'street12'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['truck2', 'street12'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },	
+
+				 ['street13', 'street14'],
+				 ['street13', 'street15'],
+				 {
+                     "line" : ['car2', 'street13'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car3', 'street13'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['truck2', 'street13'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+
+				 ['street14', 'street15'],
+				 {
+                     "line" : ['car2', 'street14'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car3', 'street14'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['truck1', 'street14'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['truck2', 'street14'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },	
+
+				 {
+                     "line" : ['car2', 'street15'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['car3', 'street15'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['truck1', 'street15'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 {
+                     "line" : ['truck2', 'street15'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+
+
+				 ['car1', 'car2'],
+				 ['car1', 'car3'],				 				 		 
+				 {
+                     "line" : ['truck2', 'car1'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+
+				 ['car2', 'car3'],				 				 		 
+				 {
+                     "line" : ['truck2', 'car2'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },	
+
+				 {
+                     "line" : ['truck1', 'car3'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },	
+				 {
+                     "line" : ['truck2', 'car3'],
+                     "debug" : false,
+                     "overhang" : true,
+                     "overhangPosition" : 45
+                 },
+				 
+				 ['truck1', 'truck2']
+            ];
+
+            $(window).on("load", function() {
+                new Conan(centers, lines, colors);
+            });
+        </script>
+    </head>
+    <body>
+        <div id="options">
+            <ul>
+				<li>
+					<form>
+						<input type="checkbox" id="display-line" name="display-line" checked/><label for="display-line">Afficher lignes</label>
+						<input type="checkbox" id="display-zone" name="display-zone" checked/><label for="display-zone">Afficher zones</label>
+						<input type="checkbox" id="display-center" name="display-center" checked/><label for="display-center">Afficher centres</label>
+						<input type="checkbox" id="display-promontory" name="display-promontory"/><label for="display-promontory">Afficher promontoire</label>
+                        <input type="checkbox" id="display-level" name="display-level"/><label for="display-level">Afficher niveaux</label>
+					</form>
+				</li>
+        </div>
+        <div>
+            <img id="mapimage" src="assets/maps/crimealley.png" id="" usemap="#map" />
+            <map name="map" id="map">
+				<area id="toit1" alt="" title="" href="" coords="-1,1,145,3,142,167,193,188,192,255,2,240" shape="poly">
+				<area id="toit2" alt="" title="" href="" coords="927,0,1213,1,1215,187,902,193,930,153" shape="poly">
+				<area id="toit3" alt="" title="" href="" coords="0,709,343,717,328,907,-1,907" shape="poly">
+				<area id="toit4" alt="" title="" href="" coords="627,719,917,729,925,905,620,906" shape="poly">
+				<area id="bat1" alt="" title="" href="" coords="154,2,154,154,425,148,425,109,432,107,451,131,449,95,425,67,426,5" shape="poly">
+				<area id="bat2" alt="" title="" href="" coords="456,138,467,150,468,193,515,195,637,193,625,162,625,150,627,110,641,124,637,98,626,68,627,4,435,3,433,64,454,93" shape="poly">
+				<area id="bat3" alt="" title="" href="" coords="633,68,646,98,644,128,635,119,635,159,651,195,897,189,919,150,917,2,637,5" shape="poly">
+				<area id="bat4" alt="" title="" href="" coords="2,250,95,261,102,578,0,575" shape="poly">
+				<area id="bat5" alt="" title="" href="" coords="345,760,620,761,618,904,330,907" shape="poly">
+				<area id="bat6" alt="" title="" href="" coords="923,770,1212,770,1214,906,927,903" shape="poly">
+				<area id="street1" alt="" title="" href="" coords="200,322,220,334,215,404,199,409,205,464,420,467,422,444,353,322" shape="poly">
+				<area id="street2" alt="" title="" href="" coords="356,323,375,322,377,254,502,251,502,241,515,240,517,249,544,270,551,459,499,465,420,466,429,451" shape="poly">
+				<area id="street3" alt="" title="" href="" coords="546,278,557,280,589,282,594,275,597,249,661,242,665,249,713,252,726,400,691,397,690,405,684,429,554,460" shape="poly">
+				<area id="street4" alt="" title="" href="" coords="716,251,994,248,988,257,919,262,914,281,915,303,920,343,925,349,953,399,850,391,811,379,840,395,837,404,776,408,764,407,728,398" shape="poly">
+				<area id="street5" alt="" title="" href="" coords="929,346,1212,325,1213,436,1129,425,1128,414,1120,412,1105,412,1080,408,1050,407,956,396" shape="poly">
+				<area id="street6" alt="" title="" href="" coords="202,479,354,478,354,509,314,581,313,673,214,670,216,635,214,589,191,588,191,540,210,530,233,524,237,496,237,486,217,484,203,485" shape="poly">
+				<area id="street7" alt="" title="" href="" coords="356,477,412,477,424,468,505,469,501,678,315,672,317,584,359,512" shape="poly">
+				<area id="street8" alt="" title="" href="" coords="519,463,553,463,686,433,688,444,706,448,700,544,520,538" shape="poly">
+				<area id="street9" alt="" title="" href="" coords="709,448,756,455,759,449,773,448,773,455,835,464,835,474,805,487,810,494,843,483,885,485,879,491,874,541,855,580,702,578,704,548" shape="poly">
+				<area id="street10" alt="" title="" href="" coords="519,617,581,621,691,623,692,664,518,661" shape="poly">
+				<area id="street11" alt="" title="" href="" coords="701,583,855,582,842,619,842,666,697,665,700,625,704,619" shape="poly">
+				<area id="street12" alt="" title="" href="" coords="875,544,886,551,945,558,1005,566,1039,623,974,625,974,651,939,648,936,664,933,670,907,672,845,671,845,629" shape="poly">
+				<area id="street13" alt="" title="" href="" coords="990,496,1043,498,1056,506,1075,507,1085,496,1108,498,1080,622,1041,623,1007,565,1019,558,1024,534,1026,511,1017,502" shape="poly">
+				<area id="street14" alt="" title="" href="" coords="1128,429,1213,438,1213,565,1125,621,1083,623,1108,505,1123,501,1126,485,1129,474,1130,452,1130,439" shape="poly">
+				<area id="street15" alt="" title="" href="" coords="1126,625,1214,570,1213,688,1123,688" shape="poly">
+				<area id="truck1" alt="" title="" href="" coords="960,261,996,261,1019,251,1214,238,1213,314,1022,333,975,338,927,327,924,296,924,272" shape="poly">
+				<area id="truck2" alt="" title="" href="" coords="849,392,1049,408,1062,418,1084,419,1091,419,1126,431,1122,478,1086,486,1061,484,1043,492,846,478" shape="poly">
+				<area id="car1" alt="" title="" href="" coords="524,543,571,546,608,547,695,552,692,616,603,615,570,613,522,612" shape="poly">
+				<area id="car2" alt="" title="" href="" coords="885,488,1018,506,1022,520,1013,555,1001,561,879,541,880,514" shape="poly">
+				<area id="car3" alt="" title="" href="" coords="975,626,1121,626,1120,684,1005,683,998,677,993,672,987,667,979,659,976,650" shape="poly">
+            </map>
+        </div>
+    </body>
+</html>
