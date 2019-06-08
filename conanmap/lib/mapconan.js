@@ -230,7 +230,7 @@ function Tile(id, tile) {
     self.id = id;
     self.perimeter = [];
     self.promontory = false;
-    self.level = 0;
+    self.level = -1;
 
     if (typeof (tile.A) !== "undefined") {
         self.centers['A'] = new Center(tile.A);
@@ -516,7 +516,9 @@ ServiceTiles.prototype.getLevelTiles = function () {
     var levelTiles = [];
 
     $.each(this.tiles, function (key, tile) {
-        levelTiles.push(tile);
+        if (tile.getLevel() !== -1) {
+            levelTiles.push(tile);
+        }
     });
 
     return levelTiles;
