@@ -52,7 +52,7 @@ Theme.prototype.getZone = function () {
 /**
  * Get attributes for highlighted area
  */
-Theme.prototype.getHighlighted = function () {
+Theme.prototype.getHighlightedArea = function () {
     var res = `{
           "stroke": "white",
           "stroke-width": 0,
@@ -60,6 +60,22 @@ Theme.prototype.getHighlighted = function () {
           "stroke-linecap": "round",
           "stroke-linejoin": "round",
           "fill": "green",
+          "fill-opacity": 0.4
+      }`;
+    return $.parseJSON(res);
+};
+
+/**
+ * Get attributes for overhang area
+ */
+Theme.prototype.getOverhangArea = function () {
+    var res = `{
+          "stroke": "white",
+          "stroke-width": 0,
+          "stroke-opacity": 1,
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "fill": "yellow",
           "fill-opacity": 0.4
       }`;
     return $.parseJSON(res);
@@ -770,7 +786,7 @@ Conan.prototype.calculateViewLines = function (tileId) {
 
                 //highligt zones
                 var tile = self.tiles.getTile(destinationTileId);
-                self.render.addZone(tile.getPerimeter());
+                self.render.addZone(tile.getPerimeter(), overhang);
 
                 //draw overhang dice
                 if (overhang) {
@@ -1055,7 +1071,7 @@ Render.prototype.addCenter = function (x, y, overhang) {
  *
  * @returns {Render}
  */
-Render.prototype.addZone = function (coords) {
+Render.prototype.addZone = function (coords, overhang) {
 
     if (!this.options.getOption('display-zone')) {
         return this
@@ -1067,6 +1083,7 @@ Render.prototype.addZone = function (coords) {
 
     data['data'] = {};
     data['data']['coords'] = coords;
+    data['data']['overhang'] = overhang;
 
     this.hoverFile.push(data);
     return this;
@@ -1205,7 +1222,14 @@ Render.prototype.drawCenter = function (data) {
  * @returns {Render}
  */
 Render.prototype.drawZone = function (data) {
-    var element = this.paper.path(data.coords).attr(this.theme.getHighlighted());
+
+    var theme = this.theme.getHighlightedArea();
+
+    if (data.overhang) {
+        theme = this.theme.getOverhangArea();
+    }
+
+    var element = this.paper.path(data.coords).attr(theme);
 
     this.hoverElements.push(element);
 
