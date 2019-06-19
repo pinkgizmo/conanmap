@@ -13,6 +13,32 @@
 
         <script type="text/javascript">
 
+
+        var wall = [{
+        	"value": 2,
+        	"valuePosition": 0.2,
+        	"start": {
+        		"coords": [100, 100],
+        		"arrow": true
+        	},
+        	"end": {
+        		"coords": [300, 300],
+        		"arrow": true
+        	}
+        }, {
+        	"value": 5,
+        	"valuePosition": 0.8,
+        	"start": {
+        		"coords": [400, 400],
+        		"arrow": true
+        	},
+        	"end": {
+        		"coords": [500, 500],
+        		"arrow": true
+        	}
+        }];
+
+
 			var colors = `{
                "0" : "#767777",
 			   "1" : "#1D205F",
@@ -92,91 +118,91 @@
                      "overhang" : true,
                      "overhangPosition" : 45
                  },
-				 
+
 	             {
                      "line" : ['toit2', 'truck1'],
                      "debug" : false,
                      "overhang" : true,
                      "overhangPosition" : 45
-                 },			 
+                 },
 	             {
                      "line" : ['toit2', 'truck2'],
                      "debug" : false,
                      "overhang" : true,
                      "overhangPosition" : 45
-                 },			 
+                 },
 	             {
                      "line" : ['toit2', 'street3'],
                      "debug" : false,
                      "overhang" : true,
                      "overhangPosition" : 45
-                 },			 
+                 },
 	             {
                      "line" : ['toit2', 'street4'],
                      "debug" : false,
                      "overhang" : true,
                      "overhangPosition" : 45
-                 },			 
+                 },
 	             {
                      "line" : ['toit2', 'street5'],
                      "debug" : false,
                      "overhang" : true,
                      "overhangPosition" : 45
-                 },			 
+                 },
 	             {
                      "line" : ['toit2', 'street8'],
                      "debug" : false,
                      "overhang" : true,
                      "overhangPosition" : 45
-                 },			 
+                 },
 	             {
                      "line" : ['toit2', 'street11'],
                      "debug" : false,
                      "overhang" : true,
                      "overhangPosition" : 45
-                 },			 
+                 },
 	             {
                      "line" : ['toit2', 'street14'],
                      "debug" : false,
                      "overhang" : true,
                      "overhangPosition" : 45
-                 },			 
+                 },
 	             {
                      "line" : ['toit2', 'street15'],
                      "debug" : false,
                      "overhang" : true,
                      "overhangPosition" : 45
-                 },			 
+                 },
 	             {
                      "line" : ['toit2', 'car1'],
                      "debug" : false,
                      "overhang" : true,
                      "overhangPosition" : 45
-                 },			 
+                 },
 	             {
                      "line" : ['toit2', 'car3'],
                      "debug" : false,
                      "overhang" : true,
                      "overhangPosition" : 45
-                 },			 
+                 },
 	             {
                      "line" : ['toit2', 'bat5'],
                      "debug" : false,
                      "overhang" : true,
                      "overhangPosition" : 45
-                 },			 
+                 },
 	             {
                      "line" : ['toit2', 'bat6'],
                      "debug" : false,
                      "overhang" : true,
                      "overhangPosition" : 45
-                 },			 
+                 },
 	             {
                      "line" : ['toit2', 'toit3'],
                      "debug" : false,
                      "overhang" : false,
                      "overhangPosition" : 45
-                 },			 
+                 },
 	             {
                      "line" : ['toit2', 'toit4'],
                      "debug" : false,
@@ -316,7 +342,7 @@
                      "overhang" : true,
                      "overhangPosition" : 45
                  },
-				 
+
 				 {
                      "line" : ['toit4', 'bat2'],
                      "debug" : false,
@@ -443,14 +469,14 @@
                      "overhang" : true,
                      "overhangPosition" : 45
                  },
-				 
+
 				 {
                      "line" : ['bat1', 'bat2'],
                      "debug" : false,
                      "overhang" : false,
                      "overhangPosition" : 45
                  },
-				 
+
 				 {
                      "line" : ['bat2', 'bat3'],
                      "debug" : false,
@@ -535,7 +561,7 @@
                      "overhang" : true,
                      "overhangPosition" : 45
                  },
-				 
+
 				 {
                      "line" : ['bat4-B', 'bat5'],
                      "debug" : false,
@@ -644,7 +670,7 @@
                      "overhang" : true,
                      "overhangPosition" : 45
                  },
-				 
+
 				 {
                      "line" : ['bat5', 'street1'],
                      "debug" : false,
@@ -735,7 +761,7 @@
                      "overhang" : true,
                      "overhangPosition" : 45
                  },
-				 
+
 				 {
                      "line" : ['bat6', 'street2'],
                      "debug" : false,
@@ -808,7 +834,7 @@
                      "overhang" : true,
                      "overhangPosition" : 45
                  },
-				 
+
                  ['street1', 'street2'],
                  ['street1', 'street3'],
                  ['street1', 'street4'],
@@ -840,7 +866,7 @@
                      "overhang" : true,
                      "overhangPosition" : 45
                  },
-				 
+
                  ['street2', 'street3'],
                  ['street2', 'street4'],
                  ['street2', 'street5'],
@@ -894,7 +920,7 @@
                      "overhang" : true,
                      "overhangPosition" : 45
                  },
-				 
+
                  ['street4', 'street5'],
                  {
                      "line" : ['truck1', 'street4'],
@@ -908,7 +934,7 @@
                      "overhang" : true,
                      "overhangPosition" : 45
                  },
-				 
+
                  {
                      "line" : ['truck1', 'street5'],
                      "debug" : false,
@@ -922,9 +948,9 @@
                      "overhangPosition" : 45
                  },
                  ['street5', 'street14'],
-				 
+
 				 ['street6', 'street7'],
-				 
+
 				 ['street8', 'street9'],
 				 ['street8', 'street12'],
 				 {
@@ -957,7 +983,7 @@
                      "overhang" : true,
                      "overhangPosition" : 45
                  },
-				 
+
 				 ['street9', 'street11'],
 				 ['street9', 'street12'],
 				 {
@@ -983,8 +1009,8 @@
                      "debug" : false,
                      "overhang" : true,
                      "overhangPosition" : 45
-                 },		
-				 
+                 },
+
 				 ['street10', 'street11'],
 				 ['street10', 'street12'],
 				 ['street10', 'street13'],
@@ -1005,7 +1031,7 @@
                      "debug" : false,
                      "overhang" : true,
                      "overhangPosition" : 45
-                 },				 
+                 },
 
 				 ['street11', 'street12'],
 				 ['street11', 'street13'],
@@ -1033,7 +1059,7 @@
                      "debug" : false,
                      "overhang" : true,
                      "overhangPosition" : 45
-                 },	
+                 },
 
 				 ['street12', 'street13'],
 				 ['street12', 'street14'],
@@ -1060,7 +1086,7 @@
                      "debug" : false,
                      "overhang" : true,
                      "overhangPosition" : 45
-                 },	
+                 },
 
 				 ['street13', 'street14'],
 				 ['street13', 'street15'],
@@ -1107,7 +1133,7 @@
                      "debug" : false,
                      "overhang" : true,
                      "overhangPosition" : 45
-                 },	
+                 },
 
 				 {
                      "line" : ['car2', 'street15'],
@@ -1136,7 +1162,7 @@
 
 
 				 ['car1', 'car2'],
-				 ['car1', 'car3'],				 				 		 
+				 ['car1', 'car3'],
 				 {
                      "line" : ['truck2', 'car1'],
                      "debug" : false,
@@ -1144,32 +1170,32 @@
                      "overhangPosition" : 45
                  },
 
-				 ['car2', 'car3'],				 				 		 
+				 ['car2', 'car3'],
 				 {
                      "line" : ['truck2', 'car2'],
                      "debug" : false,
                      "overhang" : true,
                      "overhangPosition" : 45
-                 },	
+                 },
 
 				 {
                      "line" : ['truck1', 'car3'],
                      "debug" : false,
                      "overhang" : true,
                      "overhangPosition" : 45
-                 },	
+                 },
 				 {
                      "line" : ['truck2', 'car3'],
                      "debug" : false,
                      "overhang" : true,
                      "overhangPosition" : 45
                  },
-				 
+
 				 ['truck1', 'truck2']
             ];
 
             $(window).on("load", function() {
-                new Conan(centers, lines, colors);
+                new Conan(centers, lines, colors, wall);
             });
         </script>
     </head>
@@ -1183,6 +1209,7 @@
 						<input type="checkbox" id="display-center" name="display-center" checked/><label for="display-center">Afficher centres</label>
 						<input type="checkbox" id="display-promontory" name="display-promontory"/><label for="display-promontory">Afficher promontoire</label>
                         <input type="checkbox" id="display-level" name="display-level"/><label for="display-level">Afficher niveaux</label>
+                        <input type="checkbox" id="display-wall" name="display-wall"/><label for="display-wall">Afficher murs</label>
 					</form>
 				</li>
         </div>

@@ -161,6 +161,43 @@ Theme.prototype.getViewLineOverhang = function () {
 };
 
 /**
+ * Get attributes for viewlines
+ */
+Theme.prototype.getWallLine = function () {
+    var res = `{
+        "stroke": "orange",
+        "stroke-width": 4,
+        "stroke-opacity": 1,
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+    }`;
+    return $.parseJSON(res);
+};
+
+/**
+ * Get attributes for viewlines
+ */
+Theme.prototype.getWallCircle = function () {
+    var res = `{
+        "stroke": "orange",
+        "stroke-opacity": 1,
+        "fill": "orange"
+    }`;
+    return $.parseJSON(res);
+};
+
+/**
+ * Get attributes for debug text
+ */
+Theme.prototype.getWallText = function () {
+    var res = `{
+        "stroke": "black",
+        "stroke-width": 1
+    }`;
+    return $.parseJSON(res);
+};
+
+/**
  * Get attributes for debug text
  */
 Theme.prototype.getText = function () {
@@ -462,6 +499,61 @@ Line.prototype.getDestinationCenterId = function (centerId) {
 };
 
 /******************************************
+ Line
+ *******************************************/
+
+/**
+ */
+function Wall(wall) {
+
+    this.value = wall.value;
+    this.valuePosition = wall.valuePosition;
+    this.startCoords = wall.start.coords;
+    this.endCoords = wall.end.coords;
+    this.startArrow = wall.start.arrow;
+    this.endArrow = wall.end.arrow;
+}
+
+/**
+ */
+Wall.prototype.getValue = function () {
+    return this.value;
+};
+
+Wall.prototype.getValuePosition = function () {
+    return this.valuePosition;
+};
+
+Wall.prototype.getStartCoords = function (coord) {
+    if (coord === 'x') {
+        return this.startCoords[0];
+    }
+
+    if (coord === 'y') {
+        return this.startCoords[1];
+    }
+};
+
+Wall.prototype.getEndCoords = function (coord) {
+    if (coord === 'x') {
+        return this.endCoords[0];
+    }
+
+    if (coord === 'y') {
+        return this.endCoords[1];
+    }
+};
+
+Wall.prototype.getStartArrow = function () {
+    return this.startArrow;
+};
+
+Wall.prototype.getEndArrow = function () {
+    return this.endArrow;
+};
+
+
+/******************************************
  Service Tiles
  *******************************************/
 
@@ -627,6 +719,33 @@ ServiceLines.prototype.getLinesByCenter = function (centerId) {
 };
 
 /******************************************
+ Service Wall
+ *******************************************/
+
+/**
+ * Wall managment service - constructor
+ *
+ * @param {Array} wall - The wall array definition from user input
+ */
+function ServiceWall(wall) {
+    var self = this;
+    self.wall = [];
+    $.each(wall, function (key, wall) {
+        self.wall.push(new Wall(wall));
+    });
+}
+
+ServiceWall.prototype.getWalls = function () {
+    var eligibleWalls = [];
+
+    $.each(this.wall, function (key, wall) {
+        eligibleWalls.push(wall);
+    });
+
+    return eligibleWalls;
+};
+
+/******************************************
  Conan
  *******************************************/
 
@@ -639,10 +758,11 @@ ServiceLines.prototype.getLinesByCenter = function (centerId) {
  * @param {Boolean} debug    - Debug mode flag
  * @param {Theme}   theme    - Theme holder
  */
-function Conan(centers, viewLine, colors) {
+function Conan(centers, viewLine, colors, wall) {
 
     this.tiles = new ServiceTiles(centers);
     this.viewLine = new ServiceLines(viewLine);
+    this.wall = new ServiceWall(wall);
     this.debug = (window.location.hash === '#debug');
     this.options = new Options(colors);
     this.render = new Render(this.debug, this.options);
@@ -687,7 +807,7 @@ Conan.prototype.mapArea = function () {
 
     //Display all permanent elements
     self.calculatePermanent();
-    $('input#display-level, input#display-promontory').click(function () {
+    $('input#display-level, input#display-promontory, input#display-wall').click(function () {
         self.calculatePermanent();
     });
 
@@ -746,6 +866,10 @@ Conan.prototype.calculatePermanent = function () {
 
     if ($('input#display-promontory').is(':checked')) {
         self.render.addPromontory(self.tiles.getPromontoryTiles());
+    }
+
+    if ($('input#display-wall').is(':checked')) {
+        self.render.addWall(self.wall.getWalls());
     }
 
     self.render.runPermanent();
@@ -890,6 +1014,9 @@ Render.prototype.runPermanent = function () {
         }
         if (element.id === 'Level') {
             self.drawLevel(element.data);
+        }
+        if (element.id === 'Wall') {
+            self.drawWall(element.data);
         }
     });
     self.pushInitToFront();
@@ -1138,6 +1265,37 @@ Render.prototype.addLevel = function (tiles) {
     return this;
 };
 
+Render.prototype.addWall = function (walls) {
+    var self = this;
+
+    if (!self.options.getOption('display-wall')) {
+        return this
+    }
+
+    var data = {};
+
+    $.each(walls, function (key, wall) {
+
+        data = {};
+        data['id'] = 'Wall';
+        data['prio'] = '30';
+
+        data['data'] = {};
+        data['data']['value'] = wall.getValue();
+        data['data']['valuePosition'] = wall.getValuePosition();
+        data['data']['xFrom'] = wall.getStartCoords('x');
+        data['data']['yFrom'] = wall.getStartCoords('y');
+        data['data']['xTo'] = wall.getEndCoords('x');
+        data['data']['yTo'] = wall.getEndCoords('y');
+        data['data']['startArrow'] = wall.getStartArrow();
+        data['data']['endArrow'] = wall.getEndArrow();
+
+        self.permanentFile.push(data);
+    });
+
+    return this;
+};
+
 /**
  * Draw a line
  *
@@ -1262,6 +1420,40 @@ Render.prototype.drawLevel = function (data) {
     return this;
 };
 
+/**
+ * Draw a wall
+ *
+ * @param {Object} data - Wall data
+ *²
+ * @returns {Render}
+ */
+Render.prototype.drawWall = function (data) {
+    var line = this.paper
+        .path("M" + data.xFrom + " " + data.yFrom + "L" + data.xTo + " " + data.yTo)
+        .attr(this.theme.getWallLine());
+
+    if (data.startArrow) {
+        line.attr({'arrow-start': 'classic-wide-long' });
+    }
+    if (data.endArrow) {
+        line.attr({'arrow-end': 'classic-wide-long'});
+    }
+    this.permanentElements.push(line);
+
+    var xValue = data.xFrom + (data.xTo - data.xFrom ) * data.valuePosition;
+    var yValue = data.yFrom + (data.yTo - data.yFrom ) * data.valuePosition;
+
+    var circle = this.paper
+        .circle(xValue, yValue, 10)
+        .attr( this.theme.getWallCircle());
+
+    this.permanentElements.push(circle);
+
+    this.paper.text(xValue, yValue, data.value).attr(this.theme.getWallText());
+
+    return this;
+};
+
 /******************************************
  Options
  *******************************************/
@@ -1282,6 +1474,7 @@ function Options(colors) {
         'display-overhang': true,
         'display-promontory': false,
         'display-level': false,
+        'display-wall': false,
         'colors': colors
     };
 
